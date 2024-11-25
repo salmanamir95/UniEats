@@ -11,4 +11,10 @@ export class ProductService {
   getCategory(){
     return this.http.get(Constant.API_END_POINT +Constant.Methods.GET_ALL_CATEGORY  );
   }
+  getProducts(){
+    return this.http.get(Constant.API_END_POINT +Constant.Methods.GET_ALL_CATEGORY  );
+  }
+  saveProduct(obj:any){
+    return this.http.post(Constant.API_END_POINT +Constant.Methods.CREATE_PRODUCT,obj  );
+  }
 }

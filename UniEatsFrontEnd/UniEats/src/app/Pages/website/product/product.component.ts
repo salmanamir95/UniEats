@@ -26,18 +26,38 @@ export class ProductComponent implements OnInit{
 
 
   }
-category list:any []=[];
+categoryList:any []=[];
+productsList:any []=[];
   constructor(private productsrv:Productservice){
 
   }
 
   ngOnInit():void{
-
+    this.getProducts();
+this.getAllCategory();
   }
-
+  getProducts(){
+    this.productsrv.getProducts().subscribe(res:any)=>{
+this.categoryList=res.date;
+    }
+  }
   getAllCategory(){
     this.productsrv.getCategory().subscribe(res:any)=>{
+this.categoryList=res.date;
+    }
+  }
 
+
+  onSave(){
+    this.productsrv.saveProduct(this.productObj).subscribe(res:any)=>{
+      debugger;
+      if(res.result){
+        alert("product created");
+        this.getProducts();
+      }
+      else{
+        alert(res.message);
+      }
     }
   }
   openSidePanel() {

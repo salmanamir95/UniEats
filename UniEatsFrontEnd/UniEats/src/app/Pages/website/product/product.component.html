@@ -99,7 +99,10 @@
         <div class="row">
           <div class="col-6">
             <label for="">Category</label>
-            <input type="text" [(ngModel)]="productObj.categoryID" class="form-control " />
+            <select  [(ngModel)]="productObj.categoryID" class="form-select">
+              <option *ngfor="let cat of categoryList" [value]="cate.categoryID">{{cate.categoryName}}</option>
+            </select>
+            <input type="text" class="form-control " />
           </div>
           <div class="col-6">
             <label for="">Delivery Time Span</label>
@@ -117,8 +120,12 @@
             <input type="text" [(ngModel)]="productObj.productDescription" class="form-control " />
           </div>
         </div>
-
-
+        <div class="row">
+          <div class="col-6">
+            <button class="btn btn-success">reset</button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-success" (click)="onSave()">Create Product</button>
       </div>
 
   </div>

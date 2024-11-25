@@ -3,6 +3,7 @@ export const Constant={
 
     Methods:{
         GET_ALL_PRODUCT:'',
-        GET_ALL_CATEGORY:'GetAllCategory'
+        GET_ALL_CATEGORY:'GetAllCategory',
+        CREATE_PRODUCT: 'CreateProduct'
     }
 }
