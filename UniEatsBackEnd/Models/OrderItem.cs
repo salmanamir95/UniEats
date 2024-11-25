@@ -9,7 +9,6 @@ namespace UniEatsBackEnd.Models
 {
     public class OrderItem
     {
-        [Key]
         public int OrderItemId { get; set; }
 
         [Required]
@@ -18,15 +17,18 @@ namespace UniEatsBackEnd.Models
         [Required]
         public int ItemId { get; set; }
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than 0.")]
         public int Quantity { get; set; }
 
-        [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
         public decimal Price { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal Subtotal => Quantity * Price;
+
+        public string ItemDescription { get; set; }
+
+        // Navigation properties
+        public Order Order { get; set; }
+        public FoodItem FoodItem { get; set; }
     }
 }

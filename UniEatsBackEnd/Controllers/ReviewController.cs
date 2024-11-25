@@ -10,7 +10,7 @@ namespace UniEatsBackEnd.Controllers
     [Route("api/[controller]")]
     public class ReviewController : ControllerBase
     {
-        
+
     }
 }
 // UC-11: Give Review

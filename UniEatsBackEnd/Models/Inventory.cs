@@ -9,22 +9,24 @@ namespace UniEatsBackEnd.Models
 {
     public class Inventory
     {
-        [Key]
         public int InventoryId { get; set; }
 
         [Required]
         public int ItemId { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Stock added must be non-negative.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Stock added must be a non-negative value.")]
         public int StockAdded { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Stock removed must be non-negative.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Stock removed must be a non-negative value.")]
         public int StockRemoved { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int CurrentStock => StockAdded - StockRemoved;
 
-        [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+        public DateTime? RestockDate { get; set; }
+
+        // Navigation property (FoodItem)
+        public FoodItem FoodItem { get; set; }
     }
 }

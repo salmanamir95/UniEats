@@ -10,7 +10,7 @@ namespace UniEatsBackEnd.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        
+
     }
 }
 

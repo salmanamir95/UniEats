@@ -8,27 +8,29 @@ namespace UniEatsBackEnd.Models
 {
     public class Payment
     {
-        [Key]
         public int PaymentId { get; set; }
 
         [Required]
         public int OrderId { get; set; }
 
-        [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0.")]
         public decimal Amount { get; set; }
 
-        [Required]
-        [RegularExpression("(Card|Cash)", ErrorMessage = "Invalid payment method.")]
+        [RegularExpression(@"^(Card|Cash|Online|GiftCard)$", ErrorMessage = "Payment method must be one of: 'Card', 'Cash', 'Online', 'GiftCard'.")]
         public string PaymentMethod { get; set; }
 
-        [Required]
-        [RegularExpression("(Paid|Pending)", ErrorMessage = "Invalid payment status.")]
+        [RegularExpression(@"^(Paid|Pending|Refunded)$", ErrorMessage = "Payment status must be one of: 'Paid', 'Pending', or 'Refunded'.")]
         public string PaymentStatus { get; set; } = "Pending";
 
+        [StringLength(100)]
         public string TransactionId { get; set; }
 
-        [Required]
         public DateTime PaymentDate { get; set; } = DateTime.Now;
+
+        [Range(0, double.MaxValue, ErrorMessage = "Refund amount must be greater than or equal to 0.")]
+        public decimal RefundAmount { get; set; } = 0;
+
+        // Navigation property (Order)
+        public Order Order { get; set; }
     }
 }

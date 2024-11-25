@@ -8,7 +8,6 @@ namespace UniEatsBackEnd.Models
 {
     public class Review
     {
-        [Key]
         public int ReviewId { get; set; }
 
         [Required]
@@ -17,13 +16,18 @@ namespace UniEatsBackEnd.Models
         [Required]
         public int ItemId { get; set; }
 
-        [Required]
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         public int Rating { get; set; }
 
+        [StringLength(100)]
+        public string ReviewTitle { get; set; }
+
         public string ReviewText { get; set; }
 
-        [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // Navigation properties (User, FoodItem)
+        public User User { get; set; }
+        public FoodItem FoodItem { get; set; }
     }
 }

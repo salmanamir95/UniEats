@@ -8,24 +8,25 @@ namespace UniEatsBackEnd.Models
 {
     public class Reservation
     {
-        [Key]
         public int ReservationId { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
-        [Required]
         public DateTime ReservationDate { get; set; } = DateTime.Now;
 
-        [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Number of people must be greater than 0.")]
         public int NumberOfPeople { get; set; }
 
-        [Required]
-        [RegularExpression("(Confirmed|Canceled)", ErrorMessage = "Invalid status.")]
+        [RegularExpression(@"^(Confirmed|Canceled)$", ErrorMessage = "Status must be 'Confirmed' or 'Canceled'.")]
         public string Status { get; set; } = "Confirmed";
 
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Table number must be greater than 0.")]
+        public int TableNumber { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // Navigation property (User)
+        public User User { get; set; }
     }
 }

@@ -8,29 +8,32 @@ namespace UniEatsBackEnd.Models
 {
     public class Order
     {
-        [Key]
         public int OrderId { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
-        [Required]
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Total amount must be non-negative.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Total amount must be greater than or equal to 0.")]
         public decimal TotalAmount { get; set; }
 
-        [Required]
-        [RegularExpression("(Pending|Completed|Canceled)", ErrorMessage = "Invalid status.")]
+        [RegularExpression(@"^(Pending|Completed|Canceled)$", ErrorMessage = "Status must be 'Pending', 'Completed', or 'Canceled'.")]
         public string Status { get; set; } = "Pending";
 
-        [Required]
-        [RegularExpression("(Card|Cash)", ErrorMessage = "Invalid payment method.")]
+        [RegularExpression(@"^(Card|Cash|Online|GiftCard)$", ErrorMessage = "Payment method must be one of: 'Card', 'Cash', 'Online', 'GiftCard'.")]
         public string PaymentMethod { get; set; }
 
-        [Required]
-        [RegularExpression("(Pickup|Delivery)", ErrorMessage = "Invalid delivery method.")]
+        [RegularExpression(@"^(Pickup|Delivery)$", ErrorMessage = "Delivery method must be either 'Pickup' or 'Delivery'.")]
         public string DeliveryMethod { get; set; }
+
+        [StringLength(255)]
+        public string DeliveryAddress { get; set; }
+
+        [StringLength(255)]
+        public string OrderNotes { get; set; }
+
+        // Navigation property (User)
+        public User User { get; set; }
     }
 }
