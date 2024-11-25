@@ -5,7 +5,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddControllers();  // <-- Add this line
+
 var app = builder.Build();
+// CORS configuration in ASP.NET Core
+app.UseCors(builder =>
+    builder.WithOrigins("http://localhost:4200")
+           .AllowAnyMethod()
+           .AllowAnyHeader());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,6 +25,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Map controllers
+app.MapControllers(); // <-- Add this line to map the controllers
 
 app.Run();
 
