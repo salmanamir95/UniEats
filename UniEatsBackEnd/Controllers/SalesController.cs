@@ -26,3 +26,4 @@ namespace UniEatsBackEnd.Controllers
 
 // Predict low stock items based on sales trends.
 // Use Case: Add InventoryForecasting functionality in InventoryController.
+

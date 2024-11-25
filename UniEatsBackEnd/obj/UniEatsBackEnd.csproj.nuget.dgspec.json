@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj": {}
+    "D:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj": {}
   },
   "projects": {
-    "d:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj": {
+    "D:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj",
+        "projectUniqueName": "D:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj",
         "projectName": "UniEatsBackEnd",
-        "projectPath": "d:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj",
+        "projectPath": "D:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\UniEatsBackEnd.csproj",
         "packagesPath": "C:\\Users\\mmsa1\\.nuget\\packages\\",
-        "outputPath": "d:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\obj\\",
+        "outputPath": "D:\\University\\5th Semester\\SDA\\Project\\Uni Eats\\UniEats\\UniEatsBackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
