@@ -1,6 +1,8 @@
+import { LoginByUsername } from './../../../interfaces/login-by-username';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserServiceService } from '../../../services/User/user-service.service';
 
 @Component({
   selector: 'app-login',
@@ -10,20 +12,21 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  loginObj: any = {
-    userName: '',
-    password: '',
-  };
+  loginObj: LoginByUsername = { username: '', password: '' }; // Initialize the object
 
-  constructor(private router: Router) {}
+
+
+
+    constructor(private authService: UserServiceService) {}
+
   onLogin() {
-    if (
-      this.loginObj.userName == 'admin' &&
-      this.loginObj.password == 'admin'
-    ) {
-      this.router.navigateByUrl('/products')
-    } else {
-      alert('Invalid credentials');
-    }
+    this.authService.login(this.loginObj).subscribe(
+      (response) => {
+        console.log('Login successful:', response);
+      },
+      (error) => {
+        console.error('Login failed:', error);
+      }
+    );
   }
 }
