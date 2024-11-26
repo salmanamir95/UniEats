@@ -25,6 +25,63 @@ namespace UniEatsBackEnd.Controllers
             _conn = _configuration.GetConnectionString("DefaultConnection");
         }
 
+        [HttpPost("Available_Seats")]
+        public GenericResponse<List<int>> Available_Table([FromBody] int totalTables)
+        {
+            try
+            {
+                // Query to fetch tables that are reserved within the 15-minute window
+                string query = @"
+            SELECT DISTINCT [table_number]
+            FROM [UniEats].[dbo].[Reservations]
+            WHERE 
+                [status] = 'Confirmed' AND 
+                ABS(DATEDIFF(MINUTE, [reservation_date], GETDATE())) < 15";
+
+                List<int> reservedTables = new List<int>();
+
+                using (SqlConnection connection = new SqlConnection(_conn))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                reservedTables.Add(reader.GetInt32(reader.GetOrdinal("table_number")));
+                            }
+                        }
+                    }
+                }
+
+                // Calculate available tables
+                List<int> availableTables = new List<int>();
+                for (int i = 1; i <= totalTables; i++)
+                {
+                    if (!reservedTables.Contains(i))
+                    {
+                        availableTables.Add(i);
+                    }
+                }
+
+                return new GenericResponse<List<int>>
+                {
+                    Success = true,
+                    data = availableTables
+                };
+            }
+            catch (Exception ex)
+            {
+                return new GenericResponse<List<int>>
+                {
+                    Success = false,
+                    Msg = ex.Message
+                };
+            }
+        }
+
+
         [HttpGet("schedule/{userId}")]
         public GenericResponse<List<Reservation>> GetReservations(int userId)
         {
@@ -134,16 +191,17 @@ namespace UniEatsBackEnd.Controllers
                         command.Parameters.AddWithValue("@created_at", DateTime.Now);
 
                         int new_ID = (int)command.ExecuteScalar();
-                        Reservation reservation1 = new Reservation{
-                            ReservationId= new_ID,
-                            UserId= reservation.UserId,
-                            ReservationDate= reservation.ReservationDate,
-                            NumberOfPeople= reservation.NumberOfPeople,
-                            Status= "Confirmed",
-                            TableNumber= reservation.TableNumber,
-                            CreatedAt= reservation.CreatedAt
+                        Reservation reservation1 = new Reservation
+                        {
+                            ReservationId = new_ID,
+                            UserId = reservation.UserId,
+                            ReservationDate = reservation.ReservationDate,
+                            NumberOfPeople = reservation.NumberOfPeople,
+                            Status = "Confirmed",
+                            TableNumber = reservation.TableNumber,
+                            CreatedAt = reservation.CreatedAt
                         };
-                        return new GenericResponse<Reservation> { Msg = "Reservation made successfully!", Success = true, data= reservation1 };
+                        return new GenericResponse<Reservation> { Msg = "Reservation made successfully!", Success = true, data = reservation1 };
 
                     }
                 }
@@ -175,19 +233,21 @@ namespace UniEatsBackEnd.Controllers
                         command.Parameters.AddWithValue("@table_number", tableNumber);
                         command.Parameters.AddWithValue("@reservation_date", reservationDate);
 
-                        int count = (int) command.ExecuteScalar();
+                        int count = (int)command.ExecuteScalar();
                         if (count > 0)
                         {
-                            return new GenericResponse<bool>{
-                                Success=true,
-                                data= true
+                            return new GenericResponse<bool>
+                            {
+                                Success = true,
+                                data = true
                             };
                         }
                         else
                         {
-                            return new GenericResponse<bool>{
-                                Success= true,
-                                data= false
+                            return new GenericResponse<bool>
+                            {
+                                Success = true,
+                                data = false
                             };
                         }
                     }
@@ -195,16 +255,17 @@ namespace UniEatsBackEnd.Controllers
             }
             catch (Exception ex)
             {
-                return new GenericResponse<bool>{
-                    Success= false,
-                    Msg= ex.Message
+                return new GenericResponse<bool>
+                {
+                    Success = false,
+                    Msg = ex.Message
                 };
             }
         }
 
         // Cancel Reservation
         [HttpPost("cancelreservation/{reservationId}")]
-        public async Task<IActionResult> CancelReservation(int reservationId)
+        public GenericResponse<bool> CancelReservation(int reservationId)
         {
             try
             {
@@ -221,18 +282,30 @@ namespace UniEatsBackEnd.Controllers
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            return Ok(new { message = "Reservation cancelled successfully!" });
+                            return new GenericResponse<bool>
+                            {
+                                Success = true,
+                                data = true
+                            };
                         }
                         else
                         {
-                            return BadRequest("Reservation not found or already cancelled.");
+                            return new GenericResponse<bool>
+                            {
+                                Success = true,
+                                data = false
+                            };
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return new GenericResponse<bool>
+                {
+                    Success = true,
+                    Msg = ex.Message
+                };
             }
         }
 
