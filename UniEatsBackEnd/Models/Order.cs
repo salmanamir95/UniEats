@@ -34,6 +34,6 @@ namespace UniEatsBackEnd.Models
         public string OrderNotes { get; set; }
 
         // Navigation property (User)
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
