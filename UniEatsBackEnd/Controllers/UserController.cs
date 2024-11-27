@@ -37,7 +37,7 @@ namespace UniEatsBackEnd.Controllers
                 using (SqlConnection connect = new SqlConnection(_conn))
                 {
                     connect.Open();
-                    string query = "SELECT * FROM User;";
+                    string query = "SELECT * FROM Users;";
                     using (SqlCommand command = new SqlCommand(query, connect))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -71,7 +71,7 @@ namespace UniEatsBackEnd.Controllers
             }
         }
 
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public GenericResponse<User> Login([FromBody] LoginByUsername loginByUsername)
         {
 
@@ -83,7 +83,7 @@ namespace UniEatsBackEnd.Controllers
                 using (SqlConnection connect = new SqlConnection(_conn))
                 {
                     connect.Open();
-                    string query = "SELECT * FROM User WHERE username = @Username AND password =@pass;";
+                    string query = "SELECT * FROM [Users] WHERE username = @Username AND password =@pass;";
                     using (SqlCommand command = new SqlCommand(query, connect))
                     {
                         command.Parameters.AddWithValue("@Username", loginByUsername.username);
@@ -123,7 +123,7 @@ namespace UniEatsBackEnd.Controllers
 
 
         [HttpPost("Register")]
-        public GenericResponse<User> Register([FromBody] RegisterUser registerUserDto)
+        public GenericResponse<User> Register( RegisterUser registerUserDto)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace UniEatsBackEnd.Controllers
                 {
                     connect.Open();
 
-                    string query = "INSERT INTO User (username, password, first_name, last_name, email, phone_number, role, created_at) " +
+                    string query = "INSERT INTO Users (username, password, first_name, last_name, email, phone_number, role, created_at) " +
                                    "VALUES (@Username, @Password, @FirstName, @LastName, @Email, @PhoneNumber, @Role, @CreatedAt)";
 
                     using (SqlCommand command = new SqlCommand(query, connect))
@@ -159,7 +159,7 @@ namespace UniEatsBackEnd.Controllers
         }
 
         // [HttpPost("ForgotPassword")]
-        // public async Task<GenericResponse> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        // public async Task<GenericResponse> ForgotPassword( ForgotPasswordDto forgotPasswordDto)
         // {
         //     try
         //     {
@@ -199,7 +199,7 @@ namespace UniEatsBackEnd.Controllers
         // after deployment
 
         [HttpPut("EditProfile")]
-        public GenericResponse<bool> EditProfile([FromBody] User editProfileDto)
+        public GenericResponse<bool> EditProfile( User editProfileDto)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace UniEatsBackEnd.Controllers
 
         [HttpPost("OrderHistory")]
 
-        public GenericResponse<List<Order>> OrderList([FromBody] int UID)
+        public GenericResponse<List<Order>> OrderList( int UID)
         {
             try{
                 List<Order> orders = new List<Order>();

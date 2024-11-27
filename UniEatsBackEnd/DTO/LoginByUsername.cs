@@ -7,8 +7,8 @@ namespace UniEatsBackEnd.DTO
 {
     public class LoginByUsername
     {
-        public string username { get; set; }
+        public string? username { get; set; }
 
-        public string password { get; set; }
+        public string? password { get; set; }
     }
 }
