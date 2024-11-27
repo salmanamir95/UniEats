@@ -1,6 +1,5 @@
 import { FoodItem } from "./food-item";
 
-
 export interface Inventory {
   inventoryId: number; // Unique identifier for the inventory record
   itemId: number; // ID of the associated food item
