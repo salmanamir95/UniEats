@@ -20,13 +20,6 @@ export class LoginComponent {
     constructor(private authService: UserServiceService) {}
 
   onLogin() {
-    this.authService.login(this.loginObj).subscribe(
-      (response) => {
-        console.log('Login successful:', response);
-      },
-      (error) => {
-        console.error('Login failed:', error);
-      }
-    );
+
   }
 }
