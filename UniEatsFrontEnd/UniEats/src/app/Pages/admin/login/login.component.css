@@ -1,13 +1,15 @@
-.bg-cover {
-  background-image: url('../../../../MainBgPage.jpg') !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  width: 100vw;
-  height: 100vh;
+.background-container {
+  background-image: url('../../../../assets/images/Loginpage.jpg');
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+  height: 100vh; /* Makes the container the full height of the viewport */
+  width: 100%; /* Full width */
 }
+
 .icon {
   font-size: 1.2rem;
+  color: black;
 }
 
 .social-icon {
@@ -26,8 +28,8 @@ input:focus {
 }
 
 button:hover {
-  background-color: #405d7d !important;
-  border-color: #405d7d;
+  background-color: #000000 !important;
+  color: white !important;
 }
 
 .position-absolute {
