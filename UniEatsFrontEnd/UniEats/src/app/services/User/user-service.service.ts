@@ -2,34 +2,53 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginByUsername } from '../../interfaces/login-by-username';
+import { GenericResponse } from '../../GenericResponse/generic-response';
+import { User } from '../../models/user';
+import { Order } from '../../models/order';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserServiceService {
-
-
-
   private apiUrl = 'http://localhost:5043/api/User'; // Replace with your API base URL
 
   constructor(private http: HttpClient) {}
 
-  // GET: Fetch user by ID
-  // getUser(userId: number): Observable<LoginByUsername> {
-  //   return this.http.get<LoginByUsername>(`${this.apiUrl}/${userId}`);
-  // }
+  // Login method
+  login(username: string, password: string): Observable<GenericResponse<User>> {
+    const loginData = { username, password };
+    return this.http.post<GenericResponse<User>>(
+      `${this.apiUrl}/Login`,
+      loginData
+    );
+  }
 
-  // POST: Add a new user
-  // addUser(user: LoginByUsername): Observable<LoginByUsername> {
-  //   return this.http.post<LoginByUsername>(this.apiUrl, user);
-  // }
+  // Register method
+  register(user: User): Observable<GenericResponse<User>> {
+    return this.http.post<GenericResponse<User>>(
+      `${this.apiUrl}/Register`,
+      user
+    );
+  }
 
-  // PUT: Update an existing user
-  // updateUser(userId: number, user: Partial<LoginByUsername>): Observable<LoginByUsername> {
-  //   return this.http.put<LoginByUsername>(`${this.apiUrl}/${userId}`, user);
-  // }
+  // Get all users (for admin, if needed)
+  getAllUsers(): Observable<GenericResponse<User[]>> {
+    return this.http.get<GenericResponse<User[]>>(`${this.apiUrl}/GetAllUsers`);
+  }
 
-  login(credentials: LoginByUsername): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Login`, credentials);
+  // Edit user profile
+  editProfile(user: User): Observable<GenericResponse<boolean>> {
+    return this.http.put<GenericResponse<boolean>>(
+      `${this.apiUrl}/EditProfile`,
+      user
+    );
+  }
+
+  // Fetch order history for a user
+  getOrderHistory(userId: number): Observable<GenericResponse<Order[]>> {
+    return this.http.post<GenericResponse<Order[]>>(
+      `${this.apiUrl}/OrderHistory`,
+      { UID: userId }
+    );
   }
 }
