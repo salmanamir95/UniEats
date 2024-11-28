@@ -1,0 +1,63 @@
+.footer {
+  background-color: #000; /* Black background */
+  color: white; /* White text */
+  width: 100%; /* Ensures full width */
+  padding: 40px 20px; /* Adds padding for spacing */
+  box-sizing: border-box; /* Includes padding in width/height */
+}
+
+.footer-logo {
+  font-size: 2.5rem; /* Logo size */
+  font-weight: bold;
+  color: #f87c01; /* Custom orange color */
+}
+
+.footer a {
+  color: #ffffff; /* Links are white */
+  transition: color 0.3s ease-in-out;
+}
+
+.footer a:hover {
+  color: #f87c01; /* Links turn orange on hover */
+}
+
+.footer .fab {
+  font-size: 1.5rem; /* Social media icon size */
+}
+
+.footer .gap-3 a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1); /* Light icon background */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.footer .gap-3 a:hover {
+  background-color: #f87c01; /* Orange background on hover */
+  color: black; /* Icon color on hover */
+}
+
+.footer hr {
+  border-color: rgba(255, 255, 255, 0.2); /* Subtle separator */
+}
+
+.footer .text-center small {
+  font-size: 0.9rem; /* Smaller copyright text */
+}
+
+/* Ensure footer sticks to the bottom for pages without enough content */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#layout {
+  flex: 1; /* Pushes the footer to the bottom */
+}
