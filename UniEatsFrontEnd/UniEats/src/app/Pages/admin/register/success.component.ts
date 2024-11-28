@@ -1,11 +1,17 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { SuccessComponent } from './success/success.component';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'success', component: SuccessComponent },
-];
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent {
+  constructor(private router: Router) {}
+
+  onRegister() {
+    // Logic for registration can go here (e.g., API call)
+    this.router.navigate(['/success']);
+  }
+}
+
