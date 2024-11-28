@@ -3,6 +3,7 @@ import { LoginComponent } from './Pages/admin/login/login.component';
 import { ProductComponent } from './Pages/admin/product/product.component';
 import { LayoutsComponent } from './Pages/admin/layouts/layouts.component';
 import { MenuComponent } from './Pages/admin/menu/menu.component';
+import { SuccessComponent } from './Pages/admin/register/success.component';
 
 export const routes: Routes = [
     {
