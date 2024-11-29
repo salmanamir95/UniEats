@@ -1,6 +1,6 @@
 .background-container {
   background-color: #000000; /* Fallback color */
-  background-image: url('../../../../assets/images/Menupage.jpg?v=1');
+  background-image: url('/Menupage.jpg');
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat; 
