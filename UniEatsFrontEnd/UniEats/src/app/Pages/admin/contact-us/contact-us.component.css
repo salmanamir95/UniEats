@@ -1,30 +1,33 @@
 /* Background styling */
-.register-container {
+.contact-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100%;
     background-color: black;
     background-size: cover;
     background-position: center;
   }
   
-  /* Register box styling */
-  .register-box {
+  /* Contact box styling */
+  .contact-box {
     background-color: white;
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    width: 90%;
-    max-width: 400px;
+    min-width: max-content;
+    width: 100%;
   }
   
   .brand-title {
-    font-size: 2rem;
+    text-align: center;
+    font-size: 3rem;
     font-weight: bold;
-    color: #000000; /* Orange color */
-    margin-bottom: 1.5rem;
+    color: #ffffff; /* Orange color */
+    margin-bottom:auto ;
+    padding: 2rem;
   }
   
   /* Input fields */
@@ -61,23 +64,6 @@
     margin-top: 1rem;
   }
   
-  .register-btn:hover {
+  .Submit-btn:hover {
     background-color: #333;
   }
-  
-  .login-btn {
-    background-color: gray;
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-  
-  .login-btn:hover {
-    background-color: #555;
-  }
-  
