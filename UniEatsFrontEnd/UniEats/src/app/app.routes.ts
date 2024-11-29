@@ -4,6 +4,7 @@ import { ProductComponent } from './Pages/admin/product/product.component';
 import { LayoutsComponent } from './Pages/admin/layouts/layouts.component';
 import { MenuComponent } from './Pages/admin/menu/menu.component';
 import { SuccessComponent } from './Pages/admin/success/success.component';
+import { RegisterComponent } from './Pages/admin/register/register.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +15,14 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'register',
+        component: RegisterComponent
+    },
+    {
+        path: 'success',
+        component: SuccessComponent
     },
     {
         path: '',
