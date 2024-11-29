@@ -5,7 +5,7 @@
   align-items: center;
   height: 100vh;
 
-  background-image: url('../../../../assets/images/Loginpage.jpg');
+  background-image: url('/Loginpage.jpg');
   background-size: cover;
   background-position: center;
 }
