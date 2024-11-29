@@ -1,0 +1,83 @@
+/* Background styling */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Register box styling */
+  .register-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .brand-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000; /* Orange color */
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Input fields */
+  .input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    color: #555;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  /* Buttons */
+  .Submit-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .register-btn:hover {
+    background-color: #333;
+  }
+  
+  .login-btn {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .login-btn:hover {
+    background-color: #555;
+  }
+  

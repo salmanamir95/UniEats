@@ -6,6 +6,8 @@ import { MenuComponent } from './Pages/admin/menu/menu.component';
 import { SuccessComponent } from './Pages/admin/success/success.component';
 import { RegisterComponent } from './Pages/admin/register/register.component';
 import { PizzaSliceComponent } from './Pages/website/pizzaslice/pizzaslice.component';
+import { AboutUsComponent } from './Pages/admin/about-us/about-us.component';
+import { ContactUsComponent } from './Pages/admin/contact-us/contact-us.component';
 
 export const routes: Routes = [
     {
@@ -40,6 +42,14 @@ export const routes: Routes = [
             {
                 path: 'pizza',
                 component: PizzaSliceComponent
+            },
+            {
+                path: 'about',
+                component: AboutUsComponent
+            },
+            {
+                path: 'contact',
+                component: ContactUsComponent
             }
         ]
     }
