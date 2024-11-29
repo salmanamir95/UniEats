@@ -5,6 +5,7 @@ import { LayoutsComponent } from './Pages/admin/layouts/layouts.component';
 import { MenuComponent } from './Pages/admin/menu/menu.component';
 import { SuccessComponent } from './Pages/admin/success/success.component';
 import { RegisterComponent } from './Pages/admin/register/register.component';
+import { PizzaSliceComponent } from './Pages/website/pizzaslice/pizzaslice.component';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
             {
                 path: 'menu',
                 component: MenuComponent
+            },
+            {
+                path: 'pizza',
+                component: PizzaSliceComponent
             }
         ]
     }

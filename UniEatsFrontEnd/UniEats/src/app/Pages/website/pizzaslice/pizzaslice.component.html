@@ -1,0 +1,33 @@
+<body>
+  <div class="container">
+    <div class="product-card">
+      <div class="image-section">
+        <div class="image-container">
+          <img
+            src="pizza_slice.jpg"
+            alt="Pizza Slice"
+            class="img-fluid"
+          />
+        </div>
+      </div>
+      <div class="info-section">
+        <h2>Pizza slice</h2>
+        <p class="price">Rs. 200</p>
+        <p class="description">A slice of pizza</p>
+        <div class="quantity-section">
+          <button (click)="decreaseQuantity()" class="quantity-btn">-</button>
+          <span>{{ quantity }}</span>
+          <button (click)="increaseQuantity()" class="quantity-btn">+</button>
+        </div>
+        <div class="action-buttons">
+          <button (click)="addToCart(product, quantity)" class="action-btn">
+            Add to Cart
+          </button>
+          <button (click)="buyNow(product, quantity)" class="action-btn">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
