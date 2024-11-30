@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aloo Samosa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="product-card">
+      <div class="image-section">
+        <div class="image-container">
+          <img src="ChickenSamosa.jpg" alt="Chicken Samosa">
+        </div>
+      </div>
+      <div class="info-section">
+        <h2>Aloo Samosa</h2>
+        <p class="price">Rs. 120</p>
+        <p class="description">A crispy pastry filled with spiced potato mix, onions, green chilies, coriander, and aromatic spices like cumin and garam masala.
+
+</p>
+        <div class="quantity-section">
+          <!-- Angular logic for quantity buttons -->
+          <!-- 
+          <button (click)="decreaseQuantity()" class="quantity-btn">-</button>
+          <span>{{ quantity }}</span>
+          <button (click)="increaseQuantity()" class="quantity-btn">+</button>
+          -->
+
+          <!-- Static JavaScript fallback -->
+          <button class="quantity-btn" id="decrease" onclick="decreaseQuantity()">-</button>
+          <span id="quantity">1</span>
+          <button class="quantity-btn" id="increase" onclick="increaseQuantity()">+</button>
+        </div>
+        <div class="action-buttons">
+          <!-- Angular logic for Add to Cart -->
+          <!-- <button (click)="addToCart(product, quantity)" class="action-btn">Add to Cart</button> -->
+          <button class="action-btn" id="add-to-cart">Add to Cart</button>
+
+          <!-- Angular logic for Buy Now -->
+          <!-- <button (click)="buyNow(product, quantity)" class="action-btn">Buy Now</button> -->
+          <button class="action-btn" id="buy-now">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Static JavaScript for quantity adjustment. is ko baad mein delete kar dena hai after we implement angular logic
+    let quantity = 1;
+    const quantityDisplay = document.getElementById('quantity');
+
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        quantityDisplay.textContent = quantity;
+      }
+    }
+
+    function increaseQuantity() {
+      quantity++;
+      quantityDisplay.textContent = quantity;
+    }
+  </script>
+</body>
+</html>

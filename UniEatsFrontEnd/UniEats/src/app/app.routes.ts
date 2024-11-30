@@ -9,6 +9,9 @@ import { PizzaSliceComponent } from './Pages/website/pizzaslice/pizzaslice.compo
 import { AboutUsComponent } from './Pages/admin/about-us/about-us.component';
 import { ContactUsComponent } from './Pages/admin/contact-us/contact-us.component';
 import { UserprofileComponent } from './Pages/admin/userprofile/userprofile.component';
+import { BiryaniComponent } from './Pages/admin/biryani/biryani.component';
+import { PastaComponent } from './Pages/admin/pasta/pasta.component';
+import { ForgotPasswordComponent } from './Pages/admin/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -45,6 +48,14 @@ export const routes: Routes = [
                 component: PizzaSliceComponent
             },
             {
+                path: 'biryani',
+                component: BiryaniComponent
+            },
+            {
+                path: 'pasta',
+                component: PastaComponent
+            },
+            {
                 path: 'about',
                 component: AboutUsComponent
             },
@@ -55,6 +66,10 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: UserprofileComponent
+            },
+            {
+                path: 'forgot-password',
+                component: ForgotPasswordComponent
             }
         ]
     }

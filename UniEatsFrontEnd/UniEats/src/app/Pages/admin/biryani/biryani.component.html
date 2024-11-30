@@ -1,0 +1,26 @@
+
+<body class="content">
+    <div class="item">
+      <img src="biryani.jpg" alt="Chicken Biryani" class="item-image">
+      <div class="item-details">
+        <h2>Chicken Biryani</h2>
+        <p class="price">Rs. 250</p>
+        <p class="description">
+          A fragrant rice dish cooked with marinated chicken, basmati rice, caramelized onions, saffron, and spices like cardamom, cinnamon, and cloves, layered together for a flavorful, aromatic meal.
+        </p>
+        <div class="quantity-selector">
+            <button (click)="decreaseQuantity()" class="quantity-btn">-</button>
+            <span>{{ quantity }}</span>
+            <button (click)="increaseQuantity()" class="quantity-btn">+</button>
+        </div>
+        <div class="buttons">
+            <button (click)="addToCart(product, quantity)" class="action-btn">
+                Add to Cart
+              </button>
+              <button (click)="buyNow(product, quantity)" class="action-btn">
+                Buy Now
+              </button>
+        </div>
+      </div>
+    </div>
+  </body>
