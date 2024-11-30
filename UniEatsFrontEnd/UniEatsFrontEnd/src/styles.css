@@ -9,7 +9,7 @@
 
 .background4All {
   position: relative; /* Positioning context for the overlay */
-  background-image: url('../public/Loginpage.jpg');
+  /* background-image: url('../public/Loginpage.jpg'); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
