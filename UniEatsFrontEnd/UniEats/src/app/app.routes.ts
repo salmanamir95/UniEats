@@ -11,6 +11,7 @@ import { ContactUsComponent } from './Pages/admin/contact-us/contact-us.componen
 import { UserprofileComponent } from './Pages/admin/userprofile/userprofile.component';
 import { BiryaniComponent } from './Pages/admin/biryani/biryani.component';
 import { PastaComponent } from './Pages/admin/pasta/pasta.component';
+import { ForgotPasswordComponent } from './Pages/admin/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -66,7 +67,10 @@ export const routes: Routes = [
                 path: 'profile',
                 component: UserprofileComponent
             },
-            
+            {
+                path: 'forgot-password',
+                component: ForgotPasswordComponent
+            }
         ]
     }
 ];
