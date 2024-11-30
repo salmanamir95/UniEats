@@ -1,0 +1,696 @@
+.checkout-with-card {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.checkout-with-card .div {
+  background-color: #ffffff;
+  overflow: hidden;
+  width: 1440px;
+  height: 1500px;
+  position: relative;
+}
+
+.checkout-with-card .overlap {
+  position: absolute;
+  width: 749px;
+  height: 327px;
+  top: 208px;
+  left: 88px;
+}
+
+.checkout-with-card .personal-information {
+  position: absolute;
+  width: 749px;
+  height: 327px;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.checkout-with-card .group {
+  width: 753px;
+  height: 327px;
+  box-shadow: var(--11);
+}
+
+.checkout-with-card .overlap-group {
+  position: relative;
+  width: 749px;
+  height: 327px;
+  background-image: url(./img/rectangle-4.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .div-wrapper {
+  position: absolute;
+  width: 726px;
+  height: 79px;
+  top: 81px;
+  left: 10px;
+  background-image: url(./img/rectangle-8.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .text-wrapper {
+  position: absolute;
+  top: 27px;
+  left: 36px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .text-wrapper-2 {
+  position: absolute;
+  top: 15px;
+  left: 22px;
+  -webkit-text-stroke: 1px #000000;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .group-2 {
+  position: absolute;
+  width: 706px;
+  height: 55px;
+  top: 175px;
+  left: 22px;
+}
+
+.checkout-with-card .overlap-2 {
+  position: absolute;
+  width: 361px;
+  height: 79px;
+  top: -12px;
+  left: -12px;
+  background-image: url(./img/rectangle-9-2.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .overlap-group-2 {
+  position: absolute;
+  width: 361px;
+  height: 79px;
+  top: -12px;
+  left: 353px;
+  background-image: url(./img/rectangle-10-3.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .text-wrapper-3 {
+  position: absolute;
+  top: 27px;
+  left: 43px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .vector {
+  position: absolute;
+  width: 700px;
+  height: 1px;
+  top: 66px;
+  left: 24px;
+  object-fit: cover;
+}
+
+.checkout-with-card .rectangle {
+  position: absolute;
+  width: 361px;
+  height: 79px;
+  top: 246px;
+  left: 375px;
+}
+
+.checkout-with-card .text-wrapper-4 {
+  position: absolute;
+  top: 263px;
+  left: 411px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .img {
+  position: absolute;
+  width: 361px;
+  height: 79px;
+  top: 246px;
+  left: 10px;
+}
+
+.checkout-with-card .text-wrapper-5 {
+  position: absolute;
+  top: 264px;
+  left: 46px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .overlap-3 {
+  position: absolute;
+  width: 494px;
+  height: 752px;
+  top: 202px;
+  left: 870px;
+}
+
+.checkout-with-card .item-card {
+  position: absolute;
+  width: 494px;
+  height: 679px;
+  top: 0;
+  left: 0;
+}
+
+.checkout-with-card .note-type-in-seat {
+  position: absolute;
+  width: 441px;
+  height: 79px;
+  top: 673px;
+  left: 25px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+.checkout-with-card .span {
+  text-decoration: underline;
+}
+
+.checkout-with-card .text-wrapper-6 {
+  font-size: 16px;
+  line-height: 16px;
+  text-decoration: underline;
+}
+
+.checkout-with-card .text-wrapper-7 {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.checkout-with-card .arrow-back {
+  position: absolute;
+  width: 66px;
+  height: 48px;
+  top: 132px;
+  left: 77px;
+}
+
+.checkout-with-card .payment-method-card {
+  position: absolute;
+  width: 749px;
+  height: 384px;
+  top: 574px;
+  left: 88px;
+  background-color: #0035661f;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: var(--11);
+}
+
+.checkout-with-card .ellipse {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  top: 91px;
+  left: 46px;
+  background-color: #ffffff;
+  border-radius: 11.5px;
+  border: 1px solid;
+  border-color: #003566;
+}
+
+.checkout-with-card .group-3 {
+  position: absolute;
+  width: 472px;
+  height: 55px;
+  top: 302px;
+  left: 22px;
+}
+
+.checkout-with-card .overlap-group-3 {
+  position: absolute;
+  width: 244px;
+  height: 79px;
+  top: -12px;
+  left: -12px;
+  background-image: url(./img/image.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .text-wrapper-8 {
+  position: absolute;
+  top: 28px;
+  left: 36px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #003566;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .overlap-4 {
+  position: absolute;
+  width: 244px;
+  height: 79px;
+  top: -12px;
+  left: 236px;
+  background-image: url(./img/rectangle-10-2.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .text-wrapper-9 {
+  position: absolute;
+  top: 28px;
+  left: 41px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #003566;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .overlap-5 {
+  position: absolute;
+  width: 731px;
+  height: 79px;
+  top: 126px;
+  left: 10px;
+  background-image: url(./img/rectangle-15.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .text-wrapper-10 {
+  position: absolute;
+  top: 27px;
+  left: 36px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #003566;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .text-wrapper-11 {
+  position: absolute;
+  top: 14px;
+  left: 22px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 30px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .overlap-6 {
+  position: absolute;
+  width: 731px;
+  height: 79px;
+  top: 208px;
+  left: 10px;
+  background-image: url(./img/rectangle-16.svg);
+  background-size: 100% 100%;
+}
+
+.checkout-with-card .overlap-7 {
+  position: absolute;
+  width: 57px;
+  height: 31px;
+  top: 24px;
+  left: 645px;
+}
+
+.checkout-with-card .ellipse-2 {
+  position: absolute;
+  width: 31px;
+  height: 31px;
+  top: 0;
+  left: 0;
+  background-color: #003566;
+  border-radius: 15.5px;
+}
+
+.checkout-with-card .ellipse-3 {
+  position: absolute;
+  width: 31px;
+  height: 31px;
+  top: 0;
+  left: 26px;
+  background-color: #ffd60a;
+  border-radius: 15.5px;
+}
+
+.checkout-with-card .text-wrapper-12 {
+  position: absolute;
+  top: 89px;
+  left: 78px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .ellipse-4 {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  top: 91px;
+  left: 243px;
+  background-color: #ffd60a;
+  border-radius: 11.5px;
+  border: 1px solid;
+  border-color: #003566;
+}
+
+.checkout-with-card .text-wrapper-13 {
+  position: absolute;
+  top: 89px;
+  left: 275px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #001d3d;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .header {
+  position: absolute;
+  width: 1442px;
+  height: 107px;
+  top: -4px;
+  left: 0;
+  background-color: transparent;
+}
+
+.checkout-with-card .overlap-8 {
+  position: relative;
+  width: 1440px;
+  height: 107px;
+}
+
+.checkout-with-card .header-2 {
+  position: absolute;
+  width: 1440px;
+  height: 100px;
+  top: 4px;
+  left: 0;
+  background-color: #000000;
+}
+
+.checkout-with-card .user {
+  position: absolute;
+  width: 39px;
+  height: 44px;
+  top: 43px;
+  left: 1329px;
+}
+
+.checkout-with-card .text-wrapper-14 {
+  position: absolute;
+  width: 259px;
+  height: 107px;
+  top: 0;
+  left: 29px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #f77c01;
+  font-size: 62.3px;
+  text-align: center;
+  letter-spacing: -1.25px;
+  line-height: 74.8px;
+}
+
+.checkout-with-card .footer {
+  position: absolute;
+  width: 1454px;
+  height: 478px;
+  top: 1022px;
+  left: 0;
+  background-color: transparent;
+}
+
+.checkout-with-card .overlap-9 {
+  position: relative;
+  width: 1440px;
+  height: 478px;
+  background-color: #000000;
+  box-shadow: 0px -71px 55px #0035661f;
+}
+
+.checkout-with-card .text-wrapper-15 {
+  width: 453px;
+  height: 129px;
+  top: 182px;
+  left: 43px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #f77c01;
+  font-size: 113px;
+  text-align: center;
+  letter-spacing: -2.26px;
+  line-height: 135.6px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.checkout-with-card .text-wrapper-16 {
+  position: absolute;
+  top: 123px;
+  left: 595px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.checkout-with-card .text-wrapper-17 {
+  position: absolute;
+  top: 118px;
+  left: 953px;
+  font-family: "Lato-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.checkout-with-card .text-wrapper-18 {
+  position: absolute;
+  top: 174px;
+  left: 595px;
+  font-family: "Lato-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .text-wrapper-19 {
+  top: 170px;
+  left: 953px;
+  font-family: "Lato-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.checkout-with-card .p {
+  position: absolute;
+  top: 414px;
+  left: 1214px;
+  font-family: "Lato-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .text-wrapper-20 {
+  position: absolute;
+  top: 213px;
+  left: 595px;
+  font-family: "Lato-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.checkout-with-card .overlap-group-4 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 237px;
+  left: 946px;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+}
+
+.checkout-with-card .rectangle-2 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 0;
+  background-color: #eae8e8;
+  border-radius: 57px;
+  box-shadow:
+    0px 2.77px 2.21px #00000005, 0px 6.65px 5.32px #00000007, 0px 12.52px 10.02px #00000009, 0px 22.34px 17.87px #0000000b, 0px 41.78px 33.42px #0000000d, 0px 100px 80px #00000012;
+}
+
+.checkout-with-card .akar-icons-twitter {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 15px;
+  left: 14px;
+}
+
+.checkout-with-card .overlap-10 {
+  position: absolute;
+  width: 60px;
+  height: 62px;
+  top: 237px;
+  left: 1028px;
+}
+
+.checkout-with-card .ellipse-5 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 0;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+}
+
+.checkout-with-card .rectangle-3 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 2px;
+  left: 0;
+  background-color: #eae8e8;
+  border-radius: 57px;
+  box-shadow:
+    0px 2.77px 2.21px #00000005, 0px 6.65px 5.32px #00000007, 0px 12.52px 10.02px #00000009, 0px 22.34px 17.87px #0000000b, 0px 41.78px 33.42px #0000000d, 0px 100px 80px #00000012;
+}
+
+.checkout-with-card .akar-icons-instagram {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 16px;
+  left: 14px;
+}
+
+.checkout-with-card .overlap-11 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 237px;
+  left: 1110px;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+}
+
+.checkout-with-card .cib-tiktok {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 17px;
+  left: 17px;
+}
+
+.checkout-with-card .overlap-12 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 237px;
+  left: 1190px;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+}
+
+.checkout-with-card .youtube {
+  position: absolute;
+  width: 32px;
+  height: 38px;
+  top: 9px;
+  left: 14px;
+}
+
+.checkout-with-card .overlap-13 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 237px;
+  left: 1272px;
+  background-color: #d9d9d9;
+  border-radius: 30px;
+}
+
+.checkout-with-card .facebook {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 5px;
+  left: 4px;
+}
