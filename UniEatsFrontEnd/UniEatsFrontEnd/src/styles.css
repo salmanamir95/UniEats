@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset margins and padding */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.background4All {
+  position: relative; /* Positioning context for the overlay */
+  background-image: url('../public/Loginpage.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Transparent overlay */
+.background4All::before {
+  content: ''; /* Empty content for the pseudo-element */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Adjust transparency here (0.5 is 50% transparent) */
+  z-index: -1; /* Ensure it stays behind the content */
+}
