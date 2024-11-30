@@ -3,10 +3,75 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9); /*White background with some transparency*/
+  max-width: 400px;
+  width: 100%;
+  margin: 0;
+}
+
+.card-bg{
+  background-color: rgba(255, 255, 255, 1); /*White background with some transparency*/
+
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 100%;
+}
+
+.title-page {
+  gap: 0px;
+  opacity: 1;
+  font-family: Arial, sans-serif;
+  font-size: 4vw;  /* Font size scales based on the viewport width */
+  font-weight: 700;
+  line-height: 1.2;  /* Adjust line height for better spacing */
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #F87C01;
+}
+
+
+/* For mobile devices (screen width <= 600px) */
+@media screen and (max-width: 600px) {
+  .title-page {
+    font-size: 10vw; /* Increase font size for small screens */
+    top: 25vh;  /* Adjust the top position for mobile */
+  }
+}
+
+/* For large screens (screen width >= 1200px) */
+@media screen and (min-width: 1200px) {
+  .title-page {
+    font-size: 5vw; /* Decrease font size for larger screens */
+    top: 10vh;  /* Adjust the top position for larger screens */
+  }
+}
+
+
+
+/* Ensure button background color is set */
+.login-form-container button {
+  background-color: #F87C01 !important; /* Custom button color */
+  color:#ffffff; /* Make the text white */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold; /* Make the text bold */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 1; /* Ensure opacity is fully set */
+}
+
+/* Hover effect */
+.login-form-container button:hover {
+  background-color: #D67400; /* Slightly darker shade on hover */
+}
+
+/* Disabled button */
+.login-form-container button:disabled {
+  background-color: #E8E8E8; /* Light gray background for disabled state */
+  color: #ffffff; /* Text color when disabled */
+  cursor: not-allowed !important; /* Disable pointer cursor */
+
 }
