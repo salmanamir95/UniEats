@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-menu-item',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './menu-item.component.css'
 })
 export class MenuItemComponent {
+  @Input() item: { name: string; price: number; imageClass: string } = {
+    name: '',
+    price: 0,
+    imageClass: '',
+  };
 
 }

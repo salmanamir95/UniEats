@@ -1,1 +1,14 @@
-<p>menu-item works!</p>
+<div class="menu-item">
+  <!-- Image Section -->
+  <div class="image" [class]="item.imageClass"></div>
+
+  <!-- Body Section -->
+  <div class="body">
+    <div class="text">
+      <div class="text-wrapper">{{ item.name }}</div>
+    </div>
+    <div class="text-strong">
+      <div class="price">Rs. {{ item.price }}</div>
+    </div>
+  </div>
+</div>

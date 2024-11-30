@@ -1,1 +1,13 @@
-<p>menu works!</p>
+<div class="section">
+  <div class="menu-item" *ngFor="let item of menuItems">
+    <div [class]="item.imageClass"></div>
+    <div class="body">
+      <div class="text">
+        <div class="text-wrapper">{{ item.name }}</div>
+      </div>
+      <div class="text-strong">
+        <div class="div">Rs. {{ item.price }}</div>
+      </div>
+    </div>
+  </div>
+</div>
