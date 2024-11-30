@@ -2,24 +2,25 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden; /* Prevent scrolling */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Prevent scrolling on the body */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
 }
 
 /* Center the Sign Up Form */
 .signup-form-container {
   width: 100%;
   max-width: 400px;  /* Maximum width of the form */
-  margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh; /* Full viewport height */
+  height: 90vh; /* Use 90% of the viewport height */
+  overflow-y: auto;  /* Allow scrolling within the container */
+  margin: auto; /* Ensure horizontal centering */
 }
 
 /* Card Background */
