@@ -7,11 +7,9 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
-import { Component } from '@angular/core';
 import { CheckoutWithCashComponent } from './checkout-with-cash/checkout-with-cash.component';
 
 export const routes: Routes = [
-
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   // Route for Login Page
@@ -23,17 +21,17 @@ export const routes: Routes = [
   // Route for Product Page
   { path: 'product', component: ProductComponent },
 
-  {path: 'homepage', component: HomepageComponent},
+  { path: 'homepage', component: HomepageComponent },
 
-  {path: 'resetpassword', component: ResetPasswordComponent},
+  { path: 'resetpassword', component: ResetPasswordComponent },
 
-  {path: 'menu', component: MenuComponent},
+  { path: 'menu', component: MenuComponent },
 
-  {path: 'menu-item', component: MenuItemComponent},
+  { path: 'menu-item', component: MenuItemComponent },
 
-  {path: 'checkout-with-card', component: CheckoutWithCashComponent},
+  { path: 'checkout-with-card', component: CheckoutWithCashComponent },
 
-  {path: 'checkout-with-cash', component: CheckoutWithCashComponent},
+  { path: 'checkout-with-cash', component: CheckoutWithCashComponent },
 
   // Wildcard route for a 404 Page (if no route matches)
   { path: '**', component: ErrorLogComponent }

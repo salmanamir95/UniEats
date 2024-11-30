@@ -1,31 +1,60 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
-import { CommonModule } from '@angular/common';  // Import CommonModule to use ngIf
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { UserServiceService } from '../../../services/User/user-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,  // Mark this as a standalone component
-  imports: [ReactiveFormsModule, CommonModule],  // Import both ReactiveFormsModule and CommonModule here
+  standalone: true,  // Standalone component
+  imports: [
+    RouterModule,  // Import RouterModule here
+    ReactiveFormsModule,  // Reactive Forms for form handling
+    CommonModule,  // Angular's CommonModule
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginError: string | null = null;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder) {
-    // Initialize the form with validators
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserServiceService,
+    private router: Router  // Inject Router here
+  ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],  // email field with validation
-      password: ['', Validators.required]                      // password field with validation
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     });
   }
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log('Form Submitted!', this.loginForm.value);
-      // Here, you can send the form data to your backend using a service
+      this.loginError = null;
+      this.isLoading = true;
+      const { email, password } = this.loginForm.value;
+
+      this.userService.login(email, password).subscribe(
+        (response) => {
+          this.isLoading = false;
+          if (response.success) {
+            console.log('Login successful:', response.data);
+            this.router.navigate(['/dashboard']);  // Use router to navigate
+          } else {
+            this.loginError = response.msg || 'Login failed. Please try again.';
+          }
+        },
+        (error) => {
+          this.isLoading = false;
+          this.loginError = 'An error occurred during login. Please try again.';
+          console.error('Login error:', error);
+        }
+      );
     } else {
-      console.log('Form is invalid');
+      this.loginError = 'Please fill in all required fields correctly.';
     }
   }
 }

@@ -1,13 +1,21 @@
 <div class="login-form-container">
+  <!-- Title -->
   <h1 class="text-center title-page text-bold">UniEats</h1>
+
   <div class="card-bg">
+    <!-- General Error Display -->
+    <div *ngIf="loginError" class="alert alert-danger text-center">
+      {{ loginError }}
+    </div>
 
     <!-- Form Start -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Email Field -->
+      <!-- Email Field -->
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter your email" />
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter your email"
+          [attr.aria-invalid]="loginForm.get('email')?.invalid ? 'true' : null" />
         <!-- Error message if the email is invalid -->
         <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-danger">
           <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
@@ -19,7 +27,7 @@
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" formControlName="password"
-          placeholder="Enter your password" />
+          placeholder="Enter your password" [attr.aria-invalid]="loginForm.get('password')?.invalid ? 'true' : null" />
         <!-- Error message if the password is invalid -->
         <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger">
           <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
@@ -27,7 +35,11 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="btn w-100 button" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" class="btn w-100 button" [disabled]="loginForm.invalid || isLoading">
+        <!-- Show spinner while loading -->
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="!isLoading">Login</span>
+      </button>
 
       <!-- Optional links -->
       <div class="d-flex justify-content-between mt-3">
@@ -38,12 +50,10 @@
 
         <!-- Register Now Link -->
         <div class="float-end">
-          <a href="/signup" style="color: black;">Register Now</a>
+          <a routerLink="/signup" style="color: black;">Register Now</a>
         </div>
       </div>
-
     </form>
     <!-- Form End -->
   </div>
-
 </div>
