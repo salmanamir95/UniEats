@@ -1,0 +1,73 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+  }
+ 
+  /* Profile Section */
+  .profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 140px);
+    text-align: center;
+  }
+  
+  .profile-form {
+    background-color: #141414;
+    padding: 20px;
+    border-radius: 10px;
+    width: 450px;
+    box-shadow: 0px 4px 8px rgba(255, 165, 0, 0.5);
+  }
+  
+  .profile-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .profile-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #fff;
+  }
+  
+  .profile-form input::placeholder {
+    color: #000000;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profile-form button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-form button[type="submit"] {
+    background-color: #ffa500;
+    color: #000;
+  }
+  
+  .profile-form button[type="button"] {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .profile-form button:hover {
+    opacity: 0.9;
+  }
