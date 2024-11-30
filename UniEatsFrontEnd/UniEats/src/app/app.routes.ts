@@ -10,6 +10,7 @@ import { AboutUsComponent } from './Pages/admin/about-us/about-us.component';
 import { ContactUsComponent } from './Pages/admin/contact-us/contact-us.component';
 import { UserprofileComponent } from './Pages/admin/userprofile/userprofile.component';
 import { BiryaniComponent } from './Pages/admin/biryani/biryani.component';
+import { PastaComponent } from './Pages/admin/pasta/pasta.component';
 
 export const routes: Routes = [
     {
@@ -48,6 +49,10 @@ export const routes: Routes = [
             {
                 path: 'biryani',
                 component: BiryaniComponent
+            },
+            {
+                path: 'pasta',
+                component: PastaComponent
             },
             {
                 path: 'about',
