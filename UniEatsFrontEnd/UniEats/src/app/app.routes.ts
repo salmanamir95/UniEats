@@ -8,6 +8,7 @@ import { RegisterComponent } from './Pages/admin/register/register.component';
 import { PizzaSliceComponent } from './Pages/website/pizzaslice/pizzaslice.component';
 import { AboutUsComponent } from './Pages/admin/about-us/about-us.component';
 import { ContactUsComponent } from './Pages/admin/contact-us/contact-us.component';
+import { UserprofileComponent } from './Pages/admin/userprofile/userprofile.component';
 
 export const routes: Routes = [
     {
@@ -50,6 +51,10 @@ export const routes: Routes = [
             {
                 path: 'contact',
                 component: ContactUsComponent
+            },
+            {
+                path: 'profile',
+                component: UserprofileComponent
             }
         ]
     }
