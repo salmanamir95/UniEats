@@ -1,7 +1,7 @@
 .footer {
   background: black;
   color: white;
-  padding: 20px 0;
+  padding: 20px 50px;
 }
 
 .footer-container {
@@ -56,7 +56,8 @@
 }
 
 .footer-bottom {
-  text-align: center;
+  text-align: left;
   margin-top: 20px;
   font-size: 0.9rem;
+  color: #666 !important;
 }

@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
 import { CheckoutWithCashComponent } from './checkout-with-cash/checkout-with-cash.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,7 +22,7 @@ export const routes: Routes = [
   // Route for Product Page
   { path: 'product', component: ProductComponent },
 
-  { path: 'homepage', component: HomepageComponent },
+  { path: 'home', component: HomepageComponent },
 
   { path: 'resetpassword', component: ResetPasswordComponent },
 
@@ -32,6 +33,8 @@ export const routes: Routes = [
   { path: 'checkout-with-card', component: CheckoutWithCashComponent },
 
   { path: 'checkout-with-cash', component: CheckoutWithCashComponent },
+
+  {path: 'aboutus', component: AboutUsComponent},
 
   // Wildcard route for a 404 Page (if no route matches)
   { path: '**', component: ErrorLogComponent }

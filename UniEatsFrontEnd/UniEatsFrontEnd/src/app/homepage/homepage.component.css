@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  background: url('https://via.placeholder.com/1920x800') no-repeat center center/cover;
+  background: url('../../../public/homepage.jpg') no-repeat center center/cover;
   height: 80vh;
   display: flex;
   align-items: center;
