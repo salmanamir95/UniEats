@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
                 if (loginResponse.success) {
                   console.log('Login successful:', loginResponse.data);
                   // Optionally, redirect user after login
-                  this.router.navigate(['/home', response.data]);
+                  this.router.navigate(['/home', loginResponse.data]);
                 } else {
                   console.error('Login failed:', loginResponse.msg);
                 }
