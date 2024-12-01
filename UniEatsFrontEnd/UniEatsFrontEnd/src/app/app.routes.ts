@@ -9,6 +9,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
 import { CheckoutWithCashComponent } from './checkout-with-cash/checkout-with-cash.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -35,6 +36,8 @@ export const routes: Routes = [
   { path: 'checkout-with-cash', component: CheckoutWithCashComponent },
 
   {path: 'aboutus', component: AboutUsComponent},
+
+  {path: 'contactus', component: ContactUsComponent},
 
   // Wildcard route for a 404 Page (if no route matches)
   { path: '**', component: ErrorLogComponent }

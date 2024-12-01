@@ -1,0 +1,54 @@
+/* General styles for the contact section */
+.contact-section {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #333333;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the contact section takes at least the full height of the viewport */
+  padding: 20px;
+  text-align: center;
+}
+
+/* The main content section */
+main {
+  flex: 1; /* Ensures the main content area takes up remaining space */
+}
+
+/* Contact section content */
+.contact-section h1,
+.contact-section h2,
+.contact-section p {
+  font-size: 26.76px;
+  line-height: 1.8;
+}
+
+.contact-section form div {
+  margin-bottom: 15px;
+}
+
+.contact-section label {
+  display: block;
+  font-size: 18px;
+}
+
+.contact-section input,
+.contact-section textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ffa500;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #ff7f00;
+}
