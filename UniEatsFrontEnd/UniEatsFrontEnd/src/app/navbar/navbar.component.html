@@ -9,8 +9,16 @@
         <li><a [routerLink]="['/contactus', id]">Contact</a></li>
       </ul>
     </nav>
-    <div class="user-icon">
+    <!-- User Icon with Dropdown -->
+    <div class="user-icon" (click)="toggleDropdown()">
       <i class="fas fa-user"></i>
+      <div class="dropdown-menu" [class.show]="dropdownVisible">
+        <ul>
+          <li><a [routerLink]="['/profile', id]">Profile</a></li>
+          <li><a [routerLink]="['/settings', id]">Settings</a></li>
+          <li><a (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </header>

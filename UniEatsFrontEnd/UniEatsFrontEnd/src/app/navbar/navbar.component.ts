@@ -12,6 +12,8 @@ export class NavbarComponent implements OnInit {
 
   id: any;
 
+  dropdownVisible: boolean = false;
+
   constructor( private route : ActivatedRoute){
 
   }
@@ -21,6 +23,14 @@ export class NavbarComponent implements OnInit {
       this.id = params.get('id'); // Replace 'id' with your route param name
       console.log('Route Parameter ID:', this.id);
     });
+  }
+  toggleDropdown(): void {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
+
+  logout() : void {
+    // Implement your logout logic here
+    console.log('Logging out...');
   }
 
 }
