@@ -346,6 +346,10 @@ namespace UniEatsBackEnd.Controllers
                                     PhoneNumber = Convert.ToString(reader["phone_number"]),
                                     CreatedAt = Convert.ToDateTime(reader["created_at"])
                                 };
+                                if (user == null)
+                                {
+                                    return new GenericResponse<User>{Success = false, Msg = "Not Found"};
+                                }
                                 
                             }
                         }
