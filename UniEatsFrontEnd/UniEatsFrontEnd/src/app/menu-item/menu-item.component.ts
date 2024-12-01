@@ -8,10 +8,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './menu-item.component.css'
 })
 export class MenuItemComponent {
-  @Input() item: { name: string; price: number; imageClass: string } = {
-    name: '',
-    price: 0,
-    imageClass: '',
-  };
+  @Input() name: string = '';
+  @Input() price: number = 0;
+  @Input() imageUrl: string = ''; // The image URL for the food item
 
 }

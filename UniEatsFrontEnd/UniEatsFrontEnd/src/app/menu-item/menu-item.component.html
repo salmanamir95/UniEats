@@ -1,14 +1,5 @@
 <div class="menu-item">
-  <!-- Image Section -->
-  <div class="image" [class]="item.imageClass"></div>
-
-  <!-- Body Section -->
-  <div class="body">
-    <div class="text">
-      <div class="text-wrapper">{{ item.name }}</div>
-    </div>
-    <div class="text-strong">
-      <div class="price">Rs. {{ item.price }}</div>
-    </div>
-  </div>
+  <img [src]="imageUrl" alt="{{ name }}" class="menu-item-image"/>
+  <h3>{{ name }}</h3>
+  <p>Rs. {{ price }}</p>
 </div>
