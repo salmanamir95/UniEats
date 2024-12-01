@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace UniEatsBackEnd.DTO
 {
-    public class LoginByUsername
+    public class LoginByEmail
     {
-        public string? username { get; set; }
+        public string? email { get; set; }
 
         public string? password { get; set; }
     }

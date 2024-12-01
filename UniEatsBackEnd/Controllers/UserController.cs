@@ -72,51 +72,32 @@ namespace UniEatsBackEnd.Controllers
         }
 
         [HttpPost("Login")]
-        public GenericResponse<User> Login([FromBody] LoginByUsername loginByUsername)
+        public GenericResponse<int> Login([FromBody] LoginByEmail loginByUsername)
         {
 
             try
             {
-                User user = new User();
+                int id;
 
                 // Using 'using' to ensure connection is disposed properly.
                 using (SqlConnection connect = new SqlConnection(_conn))
                 {
                     connect.Open();
-                    string query = "SELECT * FROM [Users] WHERE username = @Username AND password =@pass;";
+                    string query = "SELECT user_id FROM [Users] WHERE email = @email AND password =@pass;";
                     using (SqlCommand command = new SqlCommand(query, connect))
                     {
-                        command.Parameters.AddWithValue("@Username", loginByUsername.username);
+                        command.Parameters.AddWithValue("@Username", loginByUsername.email);
                         command.Parameters.AddWithValue("@pass", loginByUsername.password);
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-
-                            while (reader.Read())
-                            {
-                                user = new User
-                                {
-                                    UserId = Convert.ToInt32(reader["user_id"]),
-                                    Username = Convert.ToString(reader["username"]),
-                                    Password = Convert.ToString(reader["password"]),
-                                    FirstName = Convert.ToString(reader["first_name"]),
-                                    LastName = Convert.ToString(reader["last_name"]),
-                                    Email = Convert.ToString(reader["email"]),
-                                    Role = Convert.ToString(reader["role"]),
-                                    PhoneNumber = Convert.ToString(reader["phone_number"]),
-                                    CreatedAt = Convert.ToDateTime(reader["created_at"])
-                                };
-
-                            }
-                        }
+                        id= (int) command.ExecuteScalar();
                     }
                     connect.Close();
                 }
 
-                return new GenericResponse<User> { Success = true, data = user, Msg = "all ok" };
+                return new GenericResponse<int> { Success = true, data = id, Msg = "all ok" };
             }
             catch (Exception error)
             {
-                return new GenericResponse<User> { Success = false, Msg = error.Message };
+                return new GenericResponse<int> { Success = false, Msg = error.Message };
             }
 
         }
