@@ -74,44 +74,87 @@ namespace UniEatsBackEnd.Controllers
         [HttpPost("Login")]
         public GenericResponse<int> Login([FromBody] LoginByEmail loginByUsername)
         {
-
             try
             {
-                int id;
+                if (string.IsNullOrEmpty(loginByUsername.email) || string.IsNullOrEmpty(loginByUsername.password))
+                {
+                    return new GenericResponse<int> { Success = false, Msg = "Email and password cannot be empty." };
+                }
 
-                // Using 'using' to ensure connection is disposed properly.
+                int? id = null;
+
                 using (SqlConnection connect = new SqlConnection(_conn))
                 {
                     connect.Open();
-                    string query = "SELECT user_id FROM [Users] WHERE email = @email AND password =@pass;";
+                    string query = "SELECT user_id FROM [Users] WHERE email = @email AND password = @pass;";
                     using (SqlCommand command = new SqlCommand(query, connect))
                     {
-                        command.Parameters.AddWithValue("@Username", loginByUsername.email);
-                        command.Parameters.AddWithValue("@pass", loginByUsername.password);
-                        id= (int) command.ExecuteScalar();
+                        // Explicitly add parameters with correct types
+                        command.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.NVarChar) { Value = loginByUsername.email });
+                        command.Parameters.Add(new SqlParameter("@pass", System.Data.SqlDbType.NVarChar) { Value = loginByUsername.password });
+
+                        // Use safe conversion to avoid null reference exceptions
+                        var result = command.ExecuteScalar();
+                        if (result != null)
+                        {
+                            id = Convert.ToInt32(result);
+                        }
+                        else
+                        {
+                            return new GenericResponse<int> { Success = false, Msg = "Invalid email or password." };
+
+                        }
                     }
-                    connect.Close();
                 }
 
-                return new GenericResponse<int> { Success = true, data = id, Msg = "all ok" };
+                if (id.HasValue)
+                {
+                    return new GenericResponse<int> { Success = true, data = id.Value, Msg = "Login successful." };
+                }
+                else
+                {
+                    return new GenericResponse<int> { Success = false, Msg = "Invalid email or password." };
+                }
             }
-            catch (Exception error)
+            catch (Exception ex)
             {
-                return new GenericResponse<int> { Success = false, Msg = error.Message };
+                // Avoid exposing internal details in API response
+                return new GenericResponse<int> { Success = false, Msg = "An error occurred while processing your request." };
             }
-
         }
 
-
         [HttpPost("Register")]
-        public GenericResponse<User> Register( RegisterUser registerUserDto)
+        public GenericResponse<bool> Register(RegisterUser registerUserDto)
         {
             try
             {
+                // Check if the username, email, or phone number already exists
                 using (SqlConnection connect = new SqlConnection(_conn))
                 {
                     connect.Open();
 
+                    string checkQuery = "SELECT COUNT(*) FROM Users WHERE username = @Username OR email = @Email OR phone_number = @PhoneNumber";
+
+                    using (SqlCommand checkCommand = new SqlCommand(checkQuery, connect))
+                    {
+                        checkCommand.Parameters.AddWithValue("@Username", registerUserDto.Username);
+                        checkCommand.Parameters.AddWithValue("@Email", registerUserDto.Email);
+                        checkCommand.Parameters.AddWithValue("@PhoneNumber", registerUserDto.PhoneNumber);
+
+                        int existingUserCount = (int)checkCommand.ExecuteScalar();
+
+                        if (existingUserCount > 0)
+                        {
+                            // If any of these exist, return a failure response
+                            return new GenericResponse<bool>
+                            {
+                                Success = false,
+                                Msg = "Username, email, or phone number already exists. Please choose a different one."
+                            };
+                        }
+                    }
+
+                    // Proceed with insertion if no duplicates are found
                     string query = "INSERT INTO Users (username, password, first_name, last_name, email, phone_number, role, created_at) " +
                                    "VALUES (@Username, @Password, @FirstName, @LastName, @Email, @PhoneNumber, @Role, @CreatedAt)";
 
@@ -128,16 +171,18 @@ namespace UniEatsBackEnd.Controllers
 
                         command.ExecuteNonQuery();
                     }
+
                     connect.Close();
                 }
 
-                return new GenericResponse<User> { Success = true, Msg = "User registered successfully" };
+                return new GenericResponse<bool> { Success = true, data = true, Msg = "User registered successfully" };
             }
             catch (Exception error)
             {
-                return new GenericResponse<User> { Success = false, Msg = error.Message };
+                return new GenericResponse<bool> { Success = false, Msg = error.Message };
             }
         }
+
 
         // [HttpPost("ForgotPassword")]
         // public async Task<GenericResponse> ForgotPassword( ForgotPasswordDto forgotPasswordDto)
@@ -180,7 +225,7 @@ namespace UniEatsBackEnd.Controllers
         // after deployment
 
         [HttpPut("EditProfile")]
-        public GenericResponse<bool> EditProfile( User editProfileDto)
+        public GenericResponse<bool> EditProfile(User editProfileDto)
         {
             try
             {
@@ -206,7 +251,7 @@ namespace UniEatsBackEnd.Controllers
                     connect.Close();
                 }
 
-                return new GenericResponse<bool> { Success = true, data=true,Msg = "Profile updated successfully" };
+                return new GenericResponse<bool> { Success = true, data = true, Msg = "Profile updated successfully" };
             }
             catch (Exception error)
             {
@@ -216,9 +261,10 @@ namespace UniEatsBackEnd.Controllers
 
         [HttpPost("OrderHistory")]
 
-        public GenericResponse<List<Order>> OrderList( int UID)
+        public GenericResponse<List<Order>> OrderList(int UID)
         {
-            try{
+            try
+            {
                 List<Order> orders = new List<Order>();
 
                 // Using 'using' to ensure connection is disposed properly.
@@ -233,7 +279,7 @@ namespace UniEatsBackEnd.Controllers
                         {
                             while (reader.Read())
                             {
-                                Order order = new Order    
+                                Order order = new Order
                                 {
                                     UserId = Convert.ToInt32(reader["user_id"]),
                                     OrderId = Convert.ToInt32(reader["order_id"]),
@@ -251,20 +297,70 @@ namespace UniEatsBackEnd.Controllers
                     }
                     connect.Close();
                 }
-                return new GenericResponse<List<Order>>{
-                    Success= true,
-                    data= orders,
+                return new GenericResponse<List<Order>>
+                {
+                    Success = true,
+                    data = orders,
 
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new GenericResponse<List<Order>>{
-                    Success=false,
-                    Msg= ex.Message
+                return new GenericResponse<List<Order>>
+                {
+                    Success = false,
+                    Msg = ex.Message
                 };
             }
         }
+
+
+        [HttpGet("{id}")]
+        public GenericResponse<User> GetUserInfo(int id)
+        {
+            try
+            {
+                var user = new Models.User();
+                // Use the 'id' parameter here to get the user information
+                // For example, you might fetch data from a database or service
+                using (SqlConnection connect = new SqlConnection(_conn))
+                {
+                    connect.Open();
+                    string query = "SELECT * FROM Users WHERE user_id = @id;";
+                    using (SqlCommand command = new SqlCommand(query, connect))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                user = new User
+                                {
+                                    UserId = Convert.ToInt32(reader["user_id"]),
+                                    Username = Convert.ToString(reader["username"]),
+                                    Password = Convert.ToString(reader["password"]),
+                                    FirstName = Convert.ToString(reader["first_name"]),
+                                    LastName = Convert.ToString(reader["last_name"]),
+                                    Email = Convert.ToString(reader["email"]),
+                                    Role = Convert.ToString(reader["role"]),
+                                    PhoneNumber = Convert.ToString(reader["phone_number"]),
+                                    CreatedAt = Convert.ToDateTime(reader["created_at"])
+                                };
+                                
+                            }
+                        }
+                    }
+                    connect.Close();
+                }
+
+                return new GenericResponse<User> { Success = true, data = user, Msg = "all ok" };
+            }
+            catch (Exception error)
+            {
+                return new GenericResponse<User> { Success = false, Msg = error.Message };
+            }
+        }
+
 
     }
 }
