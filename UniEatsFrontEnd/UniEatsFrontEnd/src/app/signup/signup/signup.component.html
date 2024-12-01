@@ -2,6 +2,11 @@
   <h1 class="text-center title-page">Sign Up</h1>
 
   <div class="card-bg">
+    <!-- Error Message -->
+    <div *ngIf="signupError" class="alert alert-danger" role="alert">
+      {{ signupError }}
+    </div>
+
     <!-- Sign Up Form -->
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <!-- First Name Field -->
@@ -16,7 +21,6 @@
         />
         <div *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.invalid" class="text-danger">
           <small *ngIf="signupForm.get('firstName')?.hasError('required')">First name is required.</small>
-          <small *ngIf="signupForm.get('firstName')?.hasError('minlength')">First name should be at least 3 characters long.</small>
         </div>
       </div>
 
@@ -32,7 +36,6 @@
         />
         <div *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.invalid" class="text-danger">
           <small *ngIf="signupForm.get('lastName')?.hasError('required')">Last name is required.</small>
-          <small *ngIf="signupForm.get('lastName')?.hasError('minlength')">Last name should be at least 3 characters long.</small>
         </div>
       </div>
 
@@ -48,7 +51,6 @@
         />
         <div *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.invalid" class="text-danger">
           <small *ngIf="signupForm.get('username')?.hasError('required')">Username is required.</small>
-          <small *ngIf="signupForm.get('username')?.hasError('minlength')">Username should be at least 3 characters long.</small>
         </div>
       </div>
 
@@ -100,11 +102,43 @@
         </div>
       </div>
 
+      <!-- Phone Number Field -->
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          placeholder="Enter your phone number (optional)"
+        />
+        <div *ngIf="signupForm.get('phoneNumber')?.touched && signupForm.get('phoneNumber')?.invalid" class="text-danger">
+          <small *ngIf="signupForm.get('phoneNumber')?.hasError('pattern')">Invalid phone number format.</small>
+        </div>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select
+          class="form-control"
+          id="role"
+          formControlName="role"
+        >
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+        </select>
+        <div *ngIf="signupForm.get('role')?.touched && signupForm.get('role')?.invalid" class="text-danger">
+          <small *ngIf="signupForm.get('role')?.hasError('required')">Role is required.</small>
+        </div>
+      </div>
+
       <!-- Submit Button -->
       <button type="submit" class="btn btn-primary w-100" [disabled]="signupForm.invalid">Sign Up</button>
 
       <!-- Optional links -->
-        <button class="w-100 mt-2"> <a href="/login" style="text-decoration: none; color: white;">Login</a></button>
+      <button class="w-100 mt-2">
+        <a href="/login" style="text-decoration: none; color: white;">Login</a>
+      </button>
     </form>
     <!-- Form End -->
   </div>

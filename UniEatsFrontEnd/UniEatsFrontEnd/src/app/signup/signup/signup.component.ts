@@ -1,33 +1,43 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UserServiceService } from '../../../services/User/user-service.service';
+import { RegisterUser } from '../../../interfaces/register-user';
+import { CommonModule } from '@angular/common';
+import { error } from 'console';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,  // Mark this as a standalone component
-  imports: [ReactiveFormsModule, CommonModule],  // Import both ReactiveFormsModule and CommonModule here
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrls: ['./signup.component.css'],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule]
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
+  signupError: string | null = null;
+  isLoading = false;
+  roles: string[] = ['Owner', 'Worker', 'Customer']; // Example roles
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserServiceService
+  ) {}
 
   ngOnInit(): void {
-    // Initialize the signupForm with the required fields and validation
     this.signupForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-    }, { validator: this.passwordMatcher });
+      firstName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      lastName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.pattern(/^\w+$/)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      role: new FormControl('Customer', [Validators.required]), // Default role as Customer
+      phoneNumber: new FormControl('', [Validators.pattern(/^\d{0,15}$/)]), // Optional field
+    }, { validators: this.passwordMatcher });
   }
 
-  // Custom Validator to match passwords
-  passwordMatcher(group: FormGroup) {
+  // Custom Validator to check if passwords match
+  passwordMatcher(group: FormGroup): { [key: string]: any } | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { mismatch: true };
@@ -35,10 +45,33 @@ export class SignupComponent implements OnInit{
 
   onSubmit(): void {
     if (this.signupForm.valid) {
-      console.log('Form Submitted!', this.signupForm.value);
-      // Handle form submission logic here (e.g., sending the data to a server)
+      this.signupError = null;
+      this.isLoading = true;
+
+      const registerData: RegisterUser = this.signupForm.value;
+
+      this.userService.register(registerData).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          if (response.success) {
+            console.log('Registration successful:', response.data);
+            alert('Registration Successful!'); // Notify the user
+          } else {
+            this.signupError = response.msg || 'Registration failed. Please try again.';
+          }
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.signupError = 'An error occurred during registration. Please try again.';
+          console.error('Signup error:', error);
+        },
+        complete: () => {
+          console.log('Signup request completed');
+        }
+      });
     } else {
-      console.log('Form is invalid');
+      this.signupError = 'Please fill in all required fields correctly.';
     }
   }
+
 }

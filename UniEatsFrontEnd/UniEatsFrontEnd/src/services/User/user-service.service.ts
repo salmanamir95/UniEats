@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { GenericResponse } from '../../GenericResponse/generic-response';
 import { User } from '../../models/user';
 import { Order } from '../../models/order';
+import { RegisterUser } from '../../interfaces/register-user';
 
 
 @Injectable({
@@ -25,8 +26,8 @@ export class UserServiceService {
   }
 
   // Register method
-  register(user: User): Observable<GenericResponse<User>> {
-    return this.http.post<GenericResponse<User>>(
+  register(user: RegisterUser): Observable<GenericResponse<boolean>> {
+    return this.http.post<GenericResponse<boolean>>(
       `${this.apiUrl}/Register`,
       user
     );
