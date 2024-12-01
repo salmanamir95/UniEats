@@ -24,7 +24,7 @@ export const routes: Routes = [
   // Route for Product Page
   { path: 'product', component: ProductComponent },
 
-  { path: 'home', component: HomepageComponent },
+  { path: 'home/:name', component: HomepageComponent },
 
   { path: 'resetpassword', component: ResetPasswordComponent },
 

@@ -42,7 +42,7 @@ export class LoginComponent {
           this.isLoading = false;
           if (response.success) {
             console.log('Login successful:', response.data);
-            this.router.navigate(['/homepage']);
+            this.router.navigate(['/home', response.data]);
           } else {
             this.loginError = response.msg || 'Login failed. Please try again.';
           }

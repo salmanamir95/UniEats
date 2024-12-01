@@ -1,10 +1,11 @@
+import { LoginByEmail } from './../../interfaces/login-by-email';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginByUsername } from '../../interfaces/login-by-username';
 import { GenericResponse } from '../../GenericResponse/generic-response';
 import { User } from '../../models/user';
 import { Order } from '../../models/order';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,9 @@ export class UserServiceService {
   constructor(private http: HttpClient) {}
 
   // Login method
-  login(username: string, password: string): Observable<GenericResponse<User>> {
-    const loginData = { username, password };
-    return this.http.post<GenericResponse<User>>(
+  login(email: string, password: string): Observable<GenericResponse<number>> {
+    const loginData = { email, password };
+    return this.http.post<GenericResponse<number>>(
       `${this.apiUrl}/Login`,
       loginData
     );
