@@ -37,24 +37,28 @@ export class LoginComponent {
       this.isLoading = true;
       const { email, password } = this.loginForm.value;
 
-      this.userService.login(email, password).subscribe(
-        (response) => {
+      this.userService.login(email, password).subscribe({
+        next: (response) => {
           this.isLoading = false;
           if (response.success) {
             console.log('Login successful:', response.data);
-            this.router.navigate(['/dashboard']);  // Use router to navigate
+            this.router.navigate(['/homepage']);
           } else {
             this.loginError = response.msg || 'Login failed. Please try again.';
           }
         },
-        (error) => {
+        error: (error) => {
           this.isLoading = false;
           this.loginError = 'An error occurred during login. Please try again.';
           console.error('Login error:', error);
+        },
+        complete: () => {
+          console.log('Login request completed');
         }
-      );
+      });
     } else {
       this.loginError = 'Please fill in all required fields correctly.';
     }
   }
+
 }
