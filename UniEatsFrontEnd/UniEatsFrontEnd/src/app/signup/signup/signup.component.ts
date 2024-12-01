@@ -1,16 +1,19 @@
+import { LoginByEmail } from './../../../interfaces/login-by-email';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserServiceService } from '../../../services/User/user-service.service';
 import { RegisterUser } from '../../../interfaces/register-user';
 import { CommonModule } from '@angular/common';
 import { error } from 'console';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
@@ -20,7 +23,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserServiceService
+    private userService: UserServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +60,35 @@ export class SignupComponent implements OnInit {
           if (response.success) {
             console.log('Registration successful:', response.data);
             alert('Registration Successful!'); // Notify the user
+            //---------------------------------------------------------------------
+            // After successful registration, attempt login
+            const loginData: LoginByEmail = {
+              email: this.signupForm.get('email')?.value,
+              password: this.signupForm.get('password')?.value
+            };
+
+            // Login call after successful registration
+            this.userService.login( (loginData.email as string), (loginData.password as string)).subscribe({
+              next: (loginResponse) => {
+                if (loginResponse.success) {
+                  console.log('Login successful:', loginResponse.data);
+                  // Optionally, redirect user after login
+                  this.router.navigate(['/home', response.data]);
+                } else {
+                  console.error('Login failed:', loginResponse.msg);
+                }
+              },
+              error: (loginError) => {
+                console.error('Login error:', loginError);
+              }
+            });
+
+
+
+
+
+
+            // ------------------------------------------------------------------
           } else {
             this.signupError = response.msg || 'Registration failed. Please try again.';
           }

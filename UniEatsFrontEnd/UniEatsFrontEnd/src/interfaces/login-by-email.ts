@@ -1,5 +1,5 @@
 export interface LoginByEmail {
-    username?: string; // Optional field
+    email?: string; // Optional field
     password?: string; // Optional field
 
 }
