@@ -1,66 +1,82 @@
-<!-- reservation.component.html -->
-<div class="reservation" data-color-mode="SDS-light">
-  <div class="section">
-    <img class="rectangle" src="img/rectangle-1.svg" />
-    <img class="rectangle-2" src="img/rectangle-20.svg" />
+import { Component } from '@angular/core';
+import { TableComponent } from '../table/table.component';
 
-    <div class="overlap-group-wrapper">
-      <div class="overlap-group">
-        <div class="text-wrapper-2">1</div>
-      </div>
-    </div>
+@Component({
+  selector: 'app-reservation',
+  standalone: true,
+  imports: [TableComponent],
+  templateUrl: './reservation.component.html',
+  styleUrls: ['./reservation.component.css']
+})
+export class ReservationComponent {
+  tables: { number: number; status: 'selected' | 'available' | 'occupied' }[] = [
+    { number: 1, status: 'available' },
+    { number: 2, status: 'available' },
+    { number: 3, status: 'available' },
+    { number: 4, status: 'available' },
+    { number: 5, status: 'available' },
+    { number: 6, status: 'available' },
+    { number: 7, status: 'available' },
+    { number: 8, status: 'available' },
+    { number: 9, status: 'available' },
+    { number: 10, status: 'available' },
+    { number: 11, status: 'available' },
+    { number: 12, status: 'available' },
+    { number: 13, status: 'available' },
+    { number: 14, status: 'available' },
+    { number: 15, status: 'available' },
+    { number: 16, status: 'available' },
+    { number: 17, status: 'available' },
+    { number: 18, status: 'available' },
+    { number: 19, status: 'available' },
+    { number: 20, status: 'available' },
+    { number: 21, status: 'available' },
+    { number: 22, status: 'available' },
+    { number: 23, status: 'available' },
+    { number: 24, status: 'available' },
+    { number: 25, status: 'available' },
+    { number: 26, status: 'available' },
+    { number: 27, status: 'available' },
+    { number: 28, status: 'available' },
+    { number: 29, status: 'available' },
+    { number: 30, status: 'available' },
+  ];
 
-    <div class="overlap-wrapper">
-      <div class="overlap">
-        <div class="text-wrapper-3">Cafetaria</div>
-      </div>
-    </div>
+  selectedTables: number[] = []; // To store selected table numbers
 
-    <!-- Remaining tables -->
-    <div class="div-wrapper">
-      <div class="overlap-2">
-        <div class="text-wrapper-2">2</div>
-      </div>
-    </div>
-    <div class="frame-2">
-      <div class="overlap-3">
-        <div class="text-wrapper-2">3</div>
-      </div>
-    </div>
-    <!-- Add similar blocks for other tables -->
+  // This method is called when a table is clicked
+  onTableSelected(tableNumber: number) {
+    const index = this.selectedTables.indexOf(tableNumber);
+    if (index === -1) {
+      this.selectedTables.push(tableNumber);
+      this.updateTableStatus(tableNumber, 'selected');
+    } else {
+      this.selectedTables.splice(index, 1);
+      this.updateTableStatus(tableNumber, 'available');
+    }
+  }
 
-    <div class="frame-29">
-      <div class="overlap-4">
-        <div class="rectangle-3"></div>
-        <div class="text-wrapper-2">30</div>
-      </div>
-    </div>
+  // This method updates the table status
+  updateTableStatus(tableNumber: number, status: 'selected' | 'available' | 'occupied') {
+    const table = this.tables.find((t) => t.number === tableNumber);
+    if (table) {
+      table.status = status;
+    }
+  }
 
-    <div class="rectangle-wrapper">
-      <div class="rectangle-4"></div>
-    </div>
+  // This method will handle the reservation logic
+  reserve() {
+    if (this.selectedTables.length === 0) {
+      alert('Please select at least one table!');
+      return;
+    }
 
-    <div class="frame-30">
-      <div class="overlap-3">
-        <div class="text-wrapper-2">31</div>
-      </div>
-    </div>
+    // Log the selected tables for now (can be replaced with API call)
+    console.log('Tables reserved:', this.selectedTables);
+    alert(`Tables ${this.selectedTables.join(', ')} have been reserved!`);
 
-    <!-- Reservation Summary -->
-    <div class="text-wrapper-4">Available</div>
-    <div class="text-wrapper-5">Occupied</div>
-    <div class="text-wrapper-6">Reservation</div>
-
-    <img class="arrow-back" src="img/arrow-back.svg" />
-
-    <button class="button">
-      <div class="text-wrapper-7">Reserve</div>
-    </button>
-
-    <p class="tables-selected">
-      <span class="span">Tables Selected<br /><br /></span>
-      <span class="text-wrapper-8">Table 30</span>
-    </p>
-    <div class="text-wrapper-9">Selected</div>
-  </div>
-</div>
+    // Optionally, reset the selection
+    this.selectedTables = [];
+    this.tables.forEach(table => table.status = 'available');
+  }
+}
