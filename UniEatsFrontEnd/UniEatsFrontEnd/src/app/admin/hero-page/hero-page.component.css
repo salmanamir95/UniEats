@@ -1,0 +1,22 @@
+/* hero-page.component.css */
+.container-fluid {
+  margin-top: 20px;
+}
+
+.card {
+  margin: 10px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.chart-container {
+  position: relative;
+  height: 400px;
+}

@@ -1,1 +1,50 @@
-<app-navbar-admin></app-navbar-admin>
+<div class="container-fluid">
+  <!-- Navbar -->
+  <app-navbar-admin></app-navbar-admin>
+
+  <!-- Hero Section with Key Metrics -->
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-center">Total Users</h5>
+          <p class="display-4 text-center">{{ totalUsers }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-center">Total Sales</h5>
+          <p class="display-4 text-center">{{ totalSales | currency }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-center">Pending Orders</h5>
+          <p class="display-4 text-center">{{ pendingOrders }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart Section: Sales Overview -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <h3 class="text-center">Sales Overview</h3>
+      <div class="chart-container">
+        <canvas baseChart
+          [datasets]="salesChartData.datasets"
+          [labels]="salesChartLabels"
+          [options]="salesChartOptions"
+          >
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- [chartType]="salesChartType" -->

@@ -4,6 +4,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http'; // HTTP cli
 import { provideClientHydration } from '@angular/platform-browser';
 
 import { routes } from './app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideZoneChangeDetection({ eventCoalescing: true }), // Optimized change detection
     provideClientHydration(), // Hydrates the client application
-    provideHttpClient(withFetch()), // Configures HttpClient with the fetch API
+    provideHttpClient(withFetch()), provideAnimationsAsync(), // Configures HttpClient with the fetch API
     // Add any additional providers you might need here
   ]
 };
