@@ -1,18 +1,15 @@
-import { LoginByEmail } from './../../../interfaces/login-by-email';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserServiceService } from '../../../services/User/user-service.service';
-import { RegisterUser } from '../../../interfaces/register-user';
 import { CommonModule } from '@angular/common';
-import { error } from 'console';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.css'],
-    imports: [ReactiveFormsModule, CommonModule, RouterModule]
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
@@ -46,48 +43,31 @@ export class SignupComponent implements OnInit {
     return password === confirmPassword ? null : { mismatch: true };
   }
 
+  // Method to handle user registration
   onSubmit(): void {
     if (this.signupForm.valid) {
       this.signupError = null;
       this.isLoading = true;
+      const { firstName, lastName, username, email, password, role, phoneNumber } = this.signupForm.value;
 
-      const registerData: RegisterUser = this.signupForm.value;
+      // Prepare data for user registration
+      const registerData = {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        role,
+        phoneNumber
+      };
 
       this.userService.register(registerData).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.success) {
             console.log('Registration successful:', response.data);
-            alert('Registration Successful!'); // Notify the user
-            //---------------------------------------------------------------------
-            // After successful registration, attempt login
-            const loginData: LoginByEmail = {
-              email: this.signupForm.get('email')?.value,
-              password: this.signupForm.get('password')?.value
-            };
-
-            // Login call after successful registration
-            this.userService.login( (loginData.email as string), (loginData.password as string)).subscribe({
-              next: (loginResponse) => {
-                if (loginResponse.success) {
-                  console.log('Login successful:', loginResponse.data);
-                  // Optionally, redirect user after login
-                  this.router.navigate(['/home', loginResponse.data]);
-                } else {
-                  console.error('Login failed:', loginResponse.msg);
-                }
-              },
-              error: (loginError) => {
-                console.error('Login error:', loginError);
-              }
-            });
-
-
-
-
-
-
-            // ------------------------------------------------------------------
+            // Redirect user after successful registration
+            this.router.navigate(['/login']);
           } else {
             this.signupError = response.msg || 'Registration failed. Please try again.';
           }
@@ -95,15 +75,14 @@ export class SignupComponent implements OnInit {
         error: (error) => {
           this.isLoading = false;
           this.signupError = 'An error occurred during registration. Please try again.';
-          console.error('Signup error:', error);
+          console.error('Registration error:', error);
         },
         complete: () => {
-          console.log('Signup request completed');
+          console.log('Registration request completed');
         }
       });
     } else {
       this.signupError = 'Please fill in all required fields correctly.';
     }
   }
-
 }

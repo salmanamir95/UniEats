@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router'; // Import RouterModule for routing
-import { UserServiceService } from '../../../services/User/user-service.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { UserServiceService } from '../../../services/User/user-service.service';
 
 @Component({
-    selector: 'app-login', // Standalone component
-    imports: [
-        RouterModule, // Import RouterModule here
-        ReactiveFormsModule, // Reactive Forms for form handling
-        CommonModule, // Angular's CommonModule
-    ],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+  selector: 'app-login', // Standalone component
+  imports: [RouterModule, ReactiveFormsModule, CommonModule],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -22,7 +23,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserServiceService,
-    private router: Router  // Inject Router here
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,12 +37,42 @@ export class LoginComponent {
       this.isLoading = true;
       const { email, password } = this.loginForm.value;
 
+      // Call the login service
       this.userService.login(email, password).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.success) {
             console.log('Login successful:', response.data);
-            this.router.navigate(['/home', response.data]);
+
+            const userId = response.data; // userId returned from the login response
+            if (userId !== null) {
+              // Fetch user info based on the userId returned from the login response
+              this.userService.getUserInfo(userId).subscribe({
+                next: (userInfoResponse) => {
+                  if (
+                    userInfoResponse.success &&
+                    userInfoResponse.data !== null
+                  ) {
+                    const userInfo = userInfoResponse.data;
+                    // Check if the user's role is 'Owner'
+                    if (userInfo.role === 'Owner') {
+                      this.router.navigate(['/admin']); // Navigate to admin dashboard if role is 'Owner'
+                    } else {
+                      this.router.navigate(['/home', response.data]); // Navigate to home if role is not 'Owner'
+                    }
+                  } else {
+                    this.loginError = 'Failed to fetch user information.';
+                  }
+                },
+                error: (error) => {
+                  this.loginError =
+                    'An error occurred while fetching user information.';
+                  console.error('User Info error:', error);
+                },
+              });
+            } else {
+              this.loginError = 'Invalid user ID returned from login.';
+            }
           } else {
             this.loginError = response.msg || 'Login failed. Please try again.';
           }
@@ -53,11 +84,10 @@ export class LoginComponent {
         },
         complete: () => {
           console.log('Login request completed');
-        }
+        },
       });
     } else {
       this.loginError = 'Please fill in all required fields correctly.';
     }
   }
-
 }
