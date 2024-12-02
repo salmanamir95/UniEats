@@ -30,13 +30,18 @@
     </div>
   </div>
 
-  <!-- Chart Section: Sales Overview -->
+  <!-- Chart Section: Sales Overview (Simple Bar Chart) -->
   <div class="row mt-4">
     <div class="col-12">
       <h3 class="text-center">Sales Overview</h3>
       <div class="chart-container">
-        <canvas baseChart [data]="salesChartData" [options]="salesChartOptions" [type]="salesChartType">
-        </canvas>
+        <!-- Simple Bar Chart -->
+        <div class="bar-chart">
+          <div *ngFor="let data of salesData" class="bar" [style.height.%]="data.sales / 200">
+            <div class="bar-label">{{ data.month }}</div>
+            <div class="bar-value">{{ data.sales | currency }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

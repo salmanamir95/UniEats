@@ -1,22 +1,50 @@
-/* hero-page.component.css */
+/* Styles for Hero Page */
 .container-fluid {
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .card {
-  margin: 10px;
+  margin-bottom: 20px;
 }
 
 .card-body {
   padding: 20px;
 }
 
-.display-4 {
-  font-size: 2.5rem;
-  font-weight: bold;
+.chart-container {
+  margin-top: 30px;
 }
 
-.chart-container {
+/* Simple Bar Chart Styles */
+.bar-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 300px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.bar {
+  width: 18%;
+  background-color: #ff5733;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   position: relative;
-  height: 400px;
+  transition: all 0.3s ease;
+}
+
+.bar-label {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.bar-value {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
 }

@@ -1,51 +1,34 @@
-
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { NavbarAdminComponent } from '../navbar-admin/navbar-admin.component';
-import { ChartData, ChartOptions, ChartType } from 'chart.js';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";
 
 @Component({
   selector: 'app-hero-page',
-  standalone: true,
-  imports: [CommonModule, NavbarAdminComponent, ChartsModule], // Include ChartsModule here
   templateUrl: './hero-page.component.html',
   styleUrls: ['./hero-page.component.css'],
+  providers: [CurrencyPipe],
+  imports: [NavbarAdminComponent, CommonModule],
 })
-export class HeroPageComponent {
-  totalUsers = 1500;
-  totalSales = 75000;
-  pendingOrders = 5;
+export class HeroPageComponent implements OnInit {
+  totalUsers: number = 500;  // Example data
+  totalSales: number = 150000;  // Example data
+  pendingOrders: number = 100;  // Example data
 
-  public salesChartOptions: ChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
-    },
-  };
-
-  public salesChartLabels: string[] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
+  // Swimlane data (using a simple array for months and sales)
+  salesData = [
+    { month: 'January', sales: 10000 },
+    { month: 'February', sales: 15000 },
+    { month: 'March', sales: 12000 },
+    { month: 'April', sales: 18000 },
+    { month: 'May', sales: 20000 },
   ];
-  public salesChartData: ChartData<'line'> = {
-    labels: this.salesChartLabels,
-    datasets: [
-      {
-        data: [10000, 15000, 12000, 18000, 20000],
-        label: 'Sales Overview',
-        fill: true,
-        borderColor: '#ff5733',
-        backgroundColor: 'rgba(255, 87, 51, 0.2)',
-      },
-    ],
-  };
 
-  public salesChartType: ChartType = 'line';
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  // Resize logic for responsiveness
+  onResize(event: UIEvent): void {
+    // You can handle resizing here if needed
+  }
 }
