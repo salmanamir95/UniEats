@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-admin',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './navbar-admin.component.html',
   styleUrl: './navbar-admin.component.css'
 })
@@ -15,7 +18,7 @@ export class NavbarAdminComponent {
     { label: 'Analytics/Reports', route: '/analytics', icon: 'analytics' },
     { label: 'Settings', route: '/settings', icon: 'settings' },
   ];
-  
+
   // Notification badge counts
   notifications = {
     approvals: 3,

@@ -12,6 +12,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HeroPageComponent } from './admin/hero-page/hero-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -44,6 +45,8 @@ export const routes: Routes = [
   {path: 'reservation/:id', component: ReservationComponent},
 
   {path: 'profile/:id', component: ProfileComponent},
+
+  {path: 'admin', component: HeroPageComponent},
 
   // Wildcard route for a 404 Page (if no route matches)
   { path: '**', component: ErrorLogComponent }
