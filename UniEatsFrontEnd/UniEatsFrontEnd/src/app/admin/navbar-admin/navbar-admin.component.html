@@ -1,0 +1,38 @@
+<nav class="navbar">
+  <div class="navbar-brand">Admin Panel</div>
+  
+  <!-- Navigation Links -->
+  <ul class="navbar-menu">
+    <li *ngFor="let item of menuItems" class="navbar-item">
+      <a [routerLink]="item.route" class="nav-link">
+        <i class="material-icons">{{ item.icon }}</i> {{ item.label }}
+        <span *ngIf="item.label === 'User Management' && notifications.approvals > 0" class="badge">
+          {{ notifications.approvals }}
+        </span>
+      </a>
+    </li>
+  </ul>
+  
+  <!-- Quick Search -->
+  <div class="navbar-search">
+    <input 
+      type="text" 
+      placeholder="Quick Search..." 
+      [(ngModel)]="searchQuery" 
+      (keyup.enter)="search()" 
+    />
+    <button (click)="search()">Search</button>
+  </div>
+  
+  <!-- Admin Actions Dropdown -->
+  <div class="navbar-profile">
+    <button class="dropdown-toggle">
+      Admin Actions <i class="material-icons">arrow_drop_down</i>
+    </button>
+    <ul class="dropdown-menu">
+      <li *ngFor="let action of adminActions">
+        <a [routerLink]="action.route">{{ action.label }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
