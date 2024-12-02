@@ -1,6 +1,6 @@
 <nav class="navbar">
   <div class="navbar-brand">Admin Panel</div>
-  
+
   <!-- Navigation Links -->
   <ul class="navbar-menu">
     <li *ngFor="let item of menuItems" class="navbar-item">
@@ -12,18 +12,18 @@
       </a>
     </li>
   </ul>
-  
+
   <!-- Quick Search -->
   <div class="navbar-search">
-    <input 
-      type="text" 
-      placeholder="Quick Search..." 
-      [(ngModel)]="searchQuery" 
-      (keyup.enter)="search()" 
+    <input
+      type="text"
+      placeholder="Quick Search..."
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="search()"
     />
     <button (click)="search()">Search</button>
   </div>
-  
+
   <!-- Admin Actions Dropdown -->
   <div class="navbar-profile">
     <button class="dropdown-toggle">
