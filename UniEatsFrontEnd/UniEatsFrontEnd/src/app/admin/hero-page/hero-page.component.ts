@@ -1,4 +1,6 @@
+import { ChartData, ChartOptions, ChartType } from './../../../../node_modules/chart.js/types/index.esm.d';
 import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-hero-page',
