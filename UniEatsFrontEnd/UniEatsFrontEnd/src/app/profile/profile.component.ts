@@ -9,11 +9,10 @@ import { ReservationService } from '../../services/Reservations/reservation.serv
 import { Reservation } from '../../models/reservation';
 
 @Component({
-  selector: 'app-profile',
-  standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, RouterModule],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+    selector: 'app-profile',
+    imports: [CommonModule, NavbarComponent, FooterComponent, RouterModule],
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
   user: User | undefined;

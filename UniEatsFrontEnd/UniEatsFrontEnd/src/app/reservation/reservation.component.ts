@@ -3,11 +3,10 @@ import { TableComponent } from '../table/table.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-reservation',
-  standalone: true,
-  imports: [TableComponent, CommonModule],
-  templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+    selector: 'app-reservation',
+    imports: [TableComponent, CommonModule],
+    templateUrl: './reservation.component.html',
+    styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent {
   tables: { number: number; status: 'selected' | 'available' | 'occupied' }[] = [

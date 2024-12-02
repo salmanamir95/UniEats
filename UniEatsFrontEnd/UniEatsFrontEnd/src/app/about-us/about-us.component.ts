@@ -3,11 +3,10 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 
 @Component({
-  selector: 'app-about-us',
-  standalone: true,
-  imports: [NavbarComponent, FooterComponent],
-  templateUrl: './about-us.component.html',
-  styleUrl: './about-us.component.css'
+    selector: 'app-about-us',
+    imports: [NavbarComponent, FooterComponent],
+    templateUrl: './about-us.component.html',
+    styleUrl: './about-us.component.css'
 })
 export class AboutUsComponent {
 

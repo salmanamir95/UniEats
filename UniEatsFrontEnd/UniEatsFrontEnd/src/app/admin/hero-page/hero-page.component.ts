@@ -5,11 +5,10 @@ import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 
 @Component({
-  selector: 'app-hero-page',
-  standalone: true,
-  imports: [CommonModule, NavbarAdminComponent, ChartsModule], // Include ChartsModule here
-  templateUrl: './hero-page.component.html',
-  styleUrls: ['./hero-page.component.css']
+    selector: 'app-hero-page',
+    imports: [CommonModule, NavbarAdminComponent, ChartsModule], // Include ChartsModule here
+    templateUrl: './hero-page.component.html',
+    styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
   totalUsers = 1500;

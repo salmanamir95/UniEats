@@ -5,15 +5,14 @@ import { UserServiceService } from '../../../services/User/user-service.service'
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,  // Standalone component
-  imports: [
-    RouterModule,  // Import RouterModule here
-    ReactiveFormsModule,  // Reactive Forms for form handling
-    CommonModule,  // Angular's CommonModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login', // Standalone component
+    imports: [
+        RouterModule, // Import RouterModule here
+        ReactiveFormsModule, // Reactive Forms for form handling
+        CommonModule, // Angular's CommonModule
+    ],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   loginForm: FormGroup;

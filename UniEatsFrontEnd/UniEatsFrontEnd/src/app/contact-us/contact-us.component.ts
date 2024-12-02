@@ -4,11 +4,10 @@ import { FooterComponent } from "../footer/footer.component";
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-contact-us',
-  standalone: true,
-  imports: [NavbarComponent, FooterComponent, RouterModule],
-  templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.css'
+    selector: 'app-contact-us',
+    imports: [NavbarComponent, FooterComponent, RouterModule],
+    templateUrl: './contact-us.component.html',
+    styleUrl: './contact-us.component.css'
 })
 export class ContactUsComponent implements OnInit {
 

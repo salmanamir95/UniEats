@@ -5,11 +5,10 @@ import { Router } from 'express';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-homepage',
-  standalone: true,
-  imports: [NavbarComponent, FooterComponent, RouterModule],
-  templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+    selector: 'app-homepage',
+    imports: [NavbarComponent, FooterComponent, RouterModule],
+    templateUrl: './homepage.component.html',
+    styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
 

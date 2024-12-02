@@ -3,11 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router'; // Correct import for Angular's Router
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [RouterModule, CommonModule], // Add RouterModule here
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'] // Corrected property name
+    selector: 'app-navbar',
+    imports: [RouterModule, CommonModule], // Add RouterModule here
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.css'] // Corrected property name
 })
 export class NavbarComponent implements OnInit {
 
