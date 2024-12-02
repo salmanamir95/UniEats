@@ -1,25 +1,31 @@
-import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";  // Ensure this import is correct
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Chart, ChartData, ChartOptions, ChartType, registerables } from 'chart.js';
-import { NgChartsModule } from 'ng2-charts';
-Chart.register(...registerables)
+import { CommonModule } from '@angular/common';
+import { ChartsModule } from 'ng2-charts'; // Correctly import ChartsModule
+import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
+
 @Component({
   selector: 'app-hero-page',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, NavbarAdminComponent],  // Add NavbarAdminComponent here
+  imports: [CommonModule, NavbarAdminComponent, ChartsModule], // Include ChartsModule here
   templateUrl: './hero-page.component.html',
   styleUrls: ['./hero-page.component.css']
 })
 export class HeroPageComponent {
-  // Key Metrics
   totalUsers = 1500;
   totalSales = 75000;
   pendingOrders = 5;
 
   public salesChartOptions: ChartOptions = {
     responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+    },
   };
+
   public salesChartLabels: string[] = ['January', 'February', 'March', 'April', 'May'];
   public salesChartData: ChartData<'line'> = {
     labels: this.salesChartLabels,
@@ -33,5 +39,6 @@ export class HeroPageComponent {
       },
     ],
   };
+
   public salesChartType: ChartType = 'line';
 }
