@@ -56,7 +56,7 @@ export class UserServiceService {
 
     // Get user information by ID
     getUserInfo(userId: number): Observable<GenericResponse<User>> {
-      return this.http.get<GenericResponse<User>>(`${this.apiUrl}/GetUserInfo/${userId}`);
+      return this.http.get<GenericResponse<User>>(`${this.apiUrl}/${userId}`);
     }
 
 }

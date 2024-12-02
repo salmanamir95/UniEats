@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="user-profile-container">
   <h2>User Profile</h2>
   <div class="profile-card">
@@ -34,4 +36,33 @@
       <span>{{ user?.createdAt | date:'longDate' }}</span>
     </div>
   </div>
+
+  <!-- Cards Section -->
+  <div class="cards-container">
+    <!-- Completed Orders -->
+    <!-- <div class="card">
+      <h3>Completed Orders</h3>
+      <p>Total: {{ completedOrders }}</p>
+    </div> -->
+
+    <!-- Pending Orders -->
+    <!-- <div class="card">
+      <h3>Pending Orders</h3>
+      <p>Total: {{ pendingOrders }}</p>
+    </div> -->
+
+    <!-- Closest Reservation -->
+    <div class="card">
+      <h3>Closest Reservation</h3>
+      <p *ngIf="closestReservation">
+        Date: {{ closestReservation.reservationDate | date: 'longDate' }}<br>
+        Time: {{ closestReservation.reservationDate | date: 'shortTime' }}<br>
+        Table: {{ closestReservation.tableNumber }}<br>
+        Status: {{ closestReservation.status }}
+      </p>
+      <p *ngIf="!closestReservation">No upcoming reservation</p>
+    </div>
+  </div>
 </div>
+
+<app-footer></app-footer>

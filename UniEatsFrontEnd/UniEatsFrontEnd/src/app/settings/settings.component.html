@@ -1,0 +1,14 @@
+<div class="settings-container">
+  <aside class="settings-sidebar">
+    <ul>
+      <li><a [routerLink]="['/profile', id]">Profile</a></li>
+      <!-- <li><a [routerLink]="/preferences" routerLinkActive="active">Preferences</a></li>
+      <li><a [routerLink="/notifications" routerLinkActive="active">Notifications</a></li> -->
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="settings-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
