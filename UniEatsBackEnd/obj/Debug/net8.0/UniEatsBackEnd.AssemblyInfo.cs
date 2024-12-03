@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UniEatsBackEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4758e4957fc9828ebbf7063fa703967b68916cf6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96751fedac200b1e7c02439f5aa3ec25c1e08dd2")]
 [assembly: System.Reflection.AssemblyProductAttribute("UniEatsBackEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UniEatsBackEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
