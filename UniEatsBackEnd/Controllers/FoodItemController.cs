@@ -82,7 +82,7 @@ namespace UniEatsBackEnd.Controllers
         }
 
         //UC-09: Search by Category
-        
+
         [HttpGet("search/category")]
         public async Task<GenericResponse<List<RealFoodItemDTO>>> SearchByCategory([FromQuery] string category)
         {
@@ -143,5 +143,54 @@ namespace UniEatsBackEnd.Controllers
                 return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = ex.Message };
             }
         }
+
+        [HttpPost("add")]
+        public GenericResponse<RealFoodItemDTO> AddFoodItem([FromBody] RealFoodItemDTO newFoodItem)
+        {
+            try
+            {
+                if (newFoodItem == null)
+                {
+                    return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = "Invalid food item data." };
+                }
+
+                string query = @"
+            INSERT INTO [UniEats].[dbo].[FoodItems] 
+            ([name], [category], [price], [description], [image_url], [availability], [stock_quantity], [discount])
+            VALUES (@name, @category, @price, @description, @image_url, @availability, @stock_quantity, @discount);
+            SELECT CAST(SCOPE_IDENTITY() as int);"; // Retrieve the ID of the inserted item
+
+                int newItemId;
+
+                using (SqlConnection connection = new SqlConnection(_conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Use parameters to prevent SQL injection
+                        command.Parameters.AddWithValue("@name", newFoodItem.Name ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@category", newFoodItem.Category ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@price", newFoodItem.Price);
+                        command.Parameters.AddWithValue("@description", newFoodItem.Description ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@image_url", newFoodItem.ImageUrl ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@availability", newFoodItem.Availability);
+                        command.Parameters.AddWithValue("@stock_quantity", newFoodItem.StockQuantity);
+                        command.Parameters.AddWithValue("@discount", newFoodItem.Discount);
+
+                        newItemId = (int)command.ExecuteScalar(); // Get the ID of the new item
+                    }
+                }
+
+                // Return the created item with its ID
+                newFoodItem.ItemId = newItemId;
+                return new GenericResponse<RealFoodItemDTO> { Success = true, data = newFoodItem };
+            }
+            catch (Exception ex)
+            {
+                return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = ex.Message };
+            }
+        }
+
     }
 }
