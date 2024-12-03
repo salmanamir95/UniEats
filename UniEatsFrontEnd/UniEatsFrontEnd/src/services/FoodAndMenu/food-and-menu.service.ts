@@ -40,4 +40,14 @@ export class FoodAndMenuService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<GenericResponse<string>>(`${this.apiBaseUrl}/updateMenu`, updatedFoodItems, { headers });
   }
+
+  /**
+   * Get the full menu of all food items.
+   * @returns Observable of GenericResponse containing a list of all food items.
+   */
+  getMenu(): Observable<GenericResponse<RealFoodItemDTO[]>> {
+    return this.http.get<GenericResponse<RealFoodItemDTO[]>>(`${this.apiBaseUrl}/menu`);
+  }
+
+
 }

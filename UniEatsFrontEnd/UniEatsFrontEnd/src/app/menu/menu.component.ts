@@ -1,23 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItemComponent } from '../menu-item/menu-item.component';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { FooterComponent } from "../footer/footer.component";
+import { RealFoodItemDTO } from '../../interfaces/real-food-item-dto';
+import { FoodAndMenuService } from '../../services/FoodAndMenu/food-and-menu.service';
+import { GenericResponse } from '../../GenericResponse/generic-response';
 
 @Component({
     selector: 'app-menu',
-    imports: [CommonModule, MenuItemComponent],
+    imports: [CommonModule, MenuItemComponent, NavbarComponent, FooterComponent],
     templateUrl: './menu.component.html',
     styleUrl: './menu.component.css'
 })
-export class MenuComponent {
-  menuItems = [
-    { name: 'Zinger Burger', price: 350, imageUrl: 'assets/images/zinger-burger.jpg' },
-    { name: 'Aloo Samosa', price: 25, imageUrl: 'assets/images/aloosamosa.jpg' },
-    { name: 'Chicken Samosa', price: 50, imageUrl: 'assets/images/chickensamosa.jpg' },
-    { name: 'Pizza Slice', price: 200, imageUrl: 'assets/images/pizzaslice.jpg' },
-    { name: 'Pizza (8 Slices)', price: 1200, imageUrl: 'assets/images/pizza8slices.jpg' },
-    { name: 'Pasta', price: 150, imageUrl: 'assets/images/pasta.jpg' },
-    { name: 'Chicken Salad', price: 200, imageUrl: 'assets/images/chickensalad.jpg' },
-    { name: 'Chicken Biryani', price: 250, imageUrl: 'assets/images/chickenbiryani.jpg' },
-  ];
+export class MenuComponent implements OnInit {
 
+    menuItems: RealFoodItemDTO[] | null= null; // Declare menuItems array
+
+    constructor(private foodAndMenuService: FoodAndMenuService) {}
+
+    ngOnInit(): void {
+      // Fetch the menu items from the service
+      this.foodAndMenuService.getMenu().subscribe(
+        (response: GenericResponse<RealFoodItemDTO[]>) => {
+          if (response.success) {
+            this.menuItems = response.data; // Set the menu items
+          } else {
+            console.error('Error fetching menu:', response.msg);
+          }
+        },
+        (error) => {
+          console.error('Error fetching menu:', error);
+        }
+      );
+    }
 }
