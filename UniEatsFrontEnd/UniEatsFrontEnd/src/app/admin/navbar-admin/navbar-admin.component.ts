@@ -14,7 +14,6 @@ export class NavbarAdminComponent {
     { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
     { label: 'User Management', route: '/user-management', icon: 'people' },
     { label: 'Orders/Transactions', route: '/orders', icon: 'shopping_cart' },
-    { label: 'Analytics/Reports', route: '/analytics', icon: 'analytics' },
     { label: 'Settings', route: '/settings', icon: 'settings' },
   ];
 
