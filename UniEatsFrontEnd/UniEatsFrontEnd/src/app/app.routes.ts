@@ -14,6 +14,7 @@ import { ReservationComponent } from './reservation/reservation.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HeroPageComponent } from './admin/hero-page/hero-page.component';
 import { AdminFoodComponent } from './admin/admin-food/admin-food.component';
+import { AdminSettingsComponent } from './admin/admin-settings/admin-settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -50,6 +51,8 @@ export const routes: Routes = [
   {path: 'admin', component: HeroPageComponent},
 
   {path: 'admin-FOOD', component: AdminFoodComponent},
+
+  {path: 'admin-settings', component: AdminSettingsComponent},
 
   // Wildcard route for a 404 Page (if no route matches)
   { path: '**', component: ErrorLogComponent }

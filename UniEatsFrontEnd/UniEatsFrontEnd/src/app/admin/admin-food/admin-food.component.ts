@@ -4,7 +4,8 @@ import { RealFoodItemDTO } from '../../../interfaces/real-food-item-dto';
 import { FoodItemService } from '../../../services/FoodItem/food-item.service';
 import { GenericResponse } from '../../../GenericResponse/generic-response';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule } from '@angular/forms';
+import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component"; // Import FormsModule
 
 @Component({
   selector: 'app-admin-food',
@@ -13,9 +14,11 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
   styleUrls: ['./admin-food.component.css'],
   imports: [
     ReactiveFormsModule, // Import ReactiveFormsModule
-    FormsModule,         // Import FormsModule
-    CommonModule         // Import CommonModule (for *ngFor and *ngIf)
-  ]
+    FormsModule, // Import FormsModule
+    CommonModule // Import CommonModule (for *ngFor and *ngIf)
+    ,
+    NavbarAdminComponent
+]
 })
 export class AdminFoodComponent implements OnInit {
   foodItemForm: FormGroup= new FormGroup({});

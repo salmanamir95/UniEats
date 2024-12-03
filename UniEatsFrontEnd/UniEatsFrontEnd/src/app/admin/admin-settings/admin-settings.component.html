@@ -1,1 +1,29 @@
-<p>admin-settings works!</p>
+<div class="disable">
+  <app-navbar-admin></app-navbar-admin>
+  <div class="settings-container">
+    <h1>Admin Settings</h1>
+
+    <!-- Settings Form -->
+    <div class="settings-form">
+      <label for="appTitle">Application Title:</label>
+      <input id="appTitle" [(ngModel)]="appTitle" placeholder="Enter App Title" />
+
+      <label for="theme">Theme:</label>
+      <select id="theme" [(ngModel)]="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="notificationsEnabled" />
+        Enable Notifications
+      </label>
+
+      <div class="buttons">
+        <button (click)="saveSettings()">Save Settings</button>
+        <button (click)="resetSettings()">Reset Settings</button>
+      </div>
+    </div>
+  </div>
+
+</div>
