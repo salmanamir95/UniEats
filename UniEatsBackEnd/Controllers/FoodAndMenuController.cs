@@ -145,7 +145,7 @@ namespace UniEatsBackEnd.Controllers
                     UPDATE [UniEats].[dbo].[FoodItems]
                     SET [name] = @name, [category] = @category, [price] = @price, [description] = @description, 
                         [image_url] = @image_url, [availability] = @availability, [stock_quantity] = @stock_quantity, 
-                        [discount] = @discount, [allergens] = @allergens, [dietary_tags] = @dietary_tags
+                        [discount] = @discount,
                     WHERE [item_id] = @item_id;";
 
                 using (SqlConnection connection = new SqlConnection(_conn))
@@ -180,6 +180,57 @@ namespace UniEatsBackEnd.Controllers
                 return new GenericResponse<string> { Success = false, Msg = ex.Message };
             }
         }
+
+        // UC-04: Get All Food Items (Menu)
+        [HttpGet("menu")]
+        public async Task<GenericResponse<List<RealFoodItemDTO>>> GetMenu()
+        {
+            try
+            {
+                List<RealFoodItemDTO> foodItems = new List<RealFoodItemDTO>();
+
+                string query = @"
+            SELECT [item_id], [name], [category], [price], [description], [image_url], [availability], [stock_quantity], 
+                   [discount]
+            FROM [UniEats].[dbo].[FoodItems];";  // Query to fetch all food items
+
+                using (SqlConnection connection = new SqlConnection(_conn))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (reader.Read())
+                            {
+                                var foodItem = new RealFoodItemDTO
+                                {
+                                    ItemId = reader.GetInt32(reader.GetOrdinal("item_id")),
+                                    Name = reader.GetString(reader.GetOrdinal("name")),
+                                    Category = reader.GetString(reader.GetOrdinal("category")),
+                                    Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                                    Description = reader.GetString(reader.GetOrdinal("description")),
+                                    ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
+                                    Availability = reader.GetBoolean(reader.GetOrdinal("availability")),
+                                    StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
+                                    Discount = reader.GetDecimal(reader.GetOrdinal("discount")),
+                                    // Allergens = reader.GetString(reader.GetOrdinal("allergens")),
+                                    // DietaryTags = reader.GetString(reader.GetOrdinal("dietary_tags")).Split(',').ToList()
+                                };
+                                foodItems.Add(foodItem);
+                            }
+                        }
+                    }
+                }
+
+                return new GenericResponse<List<RealFoodItemDTO>> { Success = true, data = foodItems };
+            }
+            catch (Exception ex)
+            {
+                return new GenericResponse<List<RealFoodItemDTO>> { Success = false, Msg = ex.Message };
+            }
+        }
+
     }
 }
-    
