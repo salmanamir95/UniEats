@@ -11,10 +11,10 @@ import { RouterModule } from '@angular/router';
 })
 export class NavbarAdminComponent {
   menuItems = [
-    { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
-    { label: 'User Management', route: '/user-management', icon: 'people' },
-    { label: 'Orders/Transactions', route: '/orders', icon: 'shopping_cart' },
-    { label: 'Settings', route: '/settings', icon: 'settings' },
+    { label: 'Dashboard', route: '/admin-dashboard', icon: 'dashboard' },
+    { label: 'User Management', route: '/admin-user-management', icon: 'people' },
+    { label: 'Food', route: '/admin-food', icon: 'shopping_cart' }, //order, food ,transactions
+    { label: 'Settings', route: '/admin-settings', icon: 'settings' },
   ];
 
   // Notification badge counts
