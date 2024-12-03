@@ -30,19 +30,53 @@
     </div>
   </div>
 
-  <!-- Chart Section: Sales Overview (Simple Bar Chart) -->
+  <!-- Chart Section: Sales Overview -->
   <div class="row mt-4">
     <div class="col-12">
       <h3 class="text-center">Sales Overview</h3>
       <div class="chart-container">
-        <!-- Simple Bar Chart -->
         <div class="bar-chart">
-          <div *ngFor="let data of salesData" class="bar" [style.height.%]="data.sales / 200">
+          <div *ngFor="let data of salesData" class="bar-wrapper">
+            <div
+              class="bar"
+              [style.height.%]="calculateBarHeight(data.sales)"
+            ></div>
             <div class="bar-label">{{ data.month }}</div>
             <div class="bar-value">{{ data.sales | currency }}</div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Reports Table -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <h3 class="text-center">Sales Reports</h3>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Sales</th>
+            <th>Number of Orders</th>
+            <th>Report Type</th>
+            <th>Generated At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of reports; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ report.startDate | date }}</td>
+            <td>{{ report.endDate | date }}</td>
+            <td>{{ report.totalSales | currency }}</td>
+            <td>{{ report.numberOfOrders }}</td>
+            <td>{{ report.reportType }}</td>
+            <td>{{ report.generatedAt | date:'medium' }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

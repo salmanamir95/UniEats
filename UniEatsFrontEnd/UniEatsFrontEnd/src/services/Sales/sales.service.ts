@@ -30,5 +30,9 @@ private readonly baseUrl= 'http://localhost:5043/api/Sales'
     const params = new HttpParams().set('reportType', reportType);
     return this.http.get<GenericResponse<SalesReport>>(`${this.baseUrl}/GenerateSalesReport`, { params });
   }
+
+  getAllReports(): Observable<GenericResponse<SalesReport[]>> {
+    return this.http.get<GenericResponse<SalesReport[]>>(`${this.baseUrl}/GetAllReports`);
+  }
 }
 
