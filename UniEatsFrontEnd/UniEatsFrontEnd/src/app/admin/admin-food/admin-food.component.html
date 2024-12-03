@@ -1,1 +1,57 @@
-<p>admin-food works!</p>
+<div class="disable">
+  <div class="container">
+    <h1>Admin Food Item Management</h1>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <input type="text" [(ngModel)]="searchName" placeholder="Search by Name" />
+      <input type="text" [(ngModel)]="searchCategory" placeholder="Search by Category" />
+      <button (click)="searchFood()">Search</button>
+    </div>
+
+    <!-- Food Items List -->
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Availability</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let foodItem of foodItems" (click)="onSelectFoodItem(foodItem)">
+          <td>{{ foodItem.name }}</td>
+          <td>{{ foodItem.category }}</td>
+          <td>{{ foodItem.price }}</td>
+          <td>{{ foodItem.availability ? 'Available' : 'Unavailable' }}</td>
+          <td>
+            <button (click)="onDeleteFoodItem(foodItem.itemId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Add / Update Food Item Form -->
+    <div *ngIf="selectedFoodItem || foodItemForm">
+      <h2>{{ selectedFoodItem ? 'Update Food Item' : 'Add New Food Item' }}</h2>
+      <form [formGroup]="foodItemForm" (ngSubmit)="onAddOrUpdateFoodItem()">
+        <input formControlName="name" placeholder="Food Item Name" />
+        <input formControlName="category" placeholder="Category" />
+        <input formControlName="price" type="number" placeholder="Price" />
+        <textarea formControlName="description" placeholder="Description"></textarea>
+        <input formControlName="imageUrl" placeholder="Image URL" />
+        <input formControlName="stockQuantity" type="number" placeholder="Stock Quantity" />
+        <input formControlName="discount" type="number" placeholder="Discount" step="0.01" max="1" />
+        <label>
+          <input formControlName="availability" type="checkbox" />
+          Available
+        </label>
+        <button type="submit">{{ selectedFoodItem ? 'Update' : 'Add' }} Food Item</button>
+        <button type="button" (click)="onResetForm()">Reset</button>
+      </form>
+    </div>
+  </div>
+
+</div>

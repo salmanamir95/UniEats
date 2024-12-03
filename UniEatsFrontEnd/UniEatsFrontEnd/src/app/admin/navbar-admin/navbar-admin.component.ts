@@ -13,7 +13,7 @@ export class NavbarAdminComponent {
   menuItems = [
     { label: 'Dashboard', route: '/admin-dashboard', icon: 'dashboard' },
     { label: 'User Management', route: '/admin-user-management', icon: 'people' },
-    { label: 'Food', route: '/admin-food', icon: 'shopping_cart' }, //order, food ,transactions
+    { label: 'Food', route: '/admin-FOOD', icon: 'shopping_cart' }, //order, food ,transactions
     { label: 'Settings', route: '/admin-settings', icon: 'settings' },
   ];
 
