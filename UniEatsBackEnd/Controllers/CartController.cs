@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -17,9 +16,8 @@ namespace UniEatsBackEnd.Controllers
         private readonly ILogger<CartController> _logger;
         private readonly string? _conn;
 
-        // For simplicity, this example will use an in-memory list to store the cart.
-        // In a real-world scenario, you'd use a database or session storage.
-        private static List<CartItemDTO> _cart = new List<CartItemDTO>();
+        // For simplicity, this example will use an in-memory dictionary to store carts by userId.
+        private static Dictionary<int, List<CartItemDTO>> _carts = new Dictionary<int, List<CartItemDTO>>();
 
         public CartController(IConfiguration configuration, ILogger<CartController> logger)
         {
@@ -27,9 +25,9 @@ namespace UniEatsBackEnd.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger)); // Ensure logger is not null
         }
 
-        // UC-01: Add an item to the cart
-        [HttpPost("add")]
-        public GenericResponse<string> AddToCart([FromBody] CartItemDTO cartItem)
+        // UC-01: Add an item to the cart for a specific user
+        [HttpPost("add/{userId}")]
+        public GenericResponse<string> AddToCart(int userId, [FromBody] CartItemDTO cartItem)
         {
             try
             {
@@ -38,16 +36,22 @@ namespace UniEatsBackEnd.Controllers
                     return new GenericResponse<string> { Success = false, Msg = "Invalid item data." };
                 }
 
-                // Check if the item already exists in the cart, if so update the quantity.
-                var existingItem = _cart.FirstOrDefault(x => x.ItemId == cartItem.ItemId);
+                // If the user's cart doesn't exist, create one
+                if (!_carts.ContainsKey(userId))
+                {
+                    _carts[userId] = new List<CartItemDTO>();
+                }
+
+                // Check if the item already exists in the user's cart, if so update the quantity.
+                var existingItem = _carts[userId].FirstOrDefault(x => x.ItemId == cartItem.ItemId);
                 if (existingItem != null)
                 {
                     existingItem.Quantity += cartItem.Quantity;
                 }
                 else
                 {
-                    // Add the item to the cart
-                    _cart.Add(cartItem);
+                    // Add the item to the user's cart
+                    _carts[userId].Add(cartItem);
                 }
 
                 return new GenericResponse<string> { Success = true, Msg = "Item added to cart successfully." };
@@ -59,13 +63,19 @@ namespace UniEatsBackEnd.Controllers
             }
         }
 
-        // UC-02: Get all items in the cart
-        [HttpGet]
-        public GenericResponse<List<CartItemDTO>> GetCart()
+        // UC-02: Get all items in the cart for a specific user
+        [HttpGet("{userId}")]
+        public GenericResponse<List<CartItemDTO>> GetCart(int userId)
         {
             try
             {
-                return new GenericResponse<List<CartItemDTO>> { Success = true, data = _cart };
+                // Check if the user has a cart
+                if (!_carts.ContainsKey(userId))
+                {
+                    return new GenericResponse<List<CartItemDTO>> { Success = false, Msg = "User's cart is empty." };
+                }
+
+                return new GenericResponse<List<CartItemDTO>> { Success = true, data = _carts[userId] };
             }
             catch (Exception ex)
             {
@@ -74,13 +84,20 @@ namespace UniEatsBackEnd.Controllers
             }
         }
 
-        // UC-03: Update the quantity of an item in the cart
-        [HttpPut("update/{itemId}")]
-        public GenericResponse<string> UpdateCartItemQuantity(int itemId, [FromBody] int quantity)
+        // UC-03: Update the quantity of an item in the cart for a specific user
+        [HttpPut("update/{userId}/{itemId}")]
+        public GenericResponse<string> UpdateCartItemQuantity(int userId, int itemId, [FromBody] int quantity)
         {
             try
             {
-                var existingItem = _cart.FirstOrDefault(x => x.ItemId == itemId);
+                // Check if the user has a cart
+                if (!_carts.ContainsKey(userId))
+                {
+                    return new GenericResponse<string> { Success = false, Msg = "User's cart is empty." };
+                }
+
+                // Find the item in the user's cart
+                var existingItem = _carts[userId].FirstOrDefault(x => x.ItemId == itemId);
                 if (existingItem == null)
                 {
                     return new GenericResponse<string> { Success = false, Msg = "Item not found in the cart." };
@@ -97,19 +114,26 @@ namespace UniEatsBackEnd.Controllers
             }
         }
 
-        // UC-04: Remove an item from the cart
-        [HttpDelete("remove/{itemId}")]
-        public GenericResponse<string> RemoveFromCart(int itemId)
+        // UC-04: Remove an item from the cart for a specific user
+        [HttpDelete("remove/{userId}/{itemId}")]
+        public GenericResponse<string> RemoveFromCart(int userId, int itemId)
         {
             try
             {
-                var itemToRemove = _cart.FirstOrDefault(x => x.ItemId == itemId);
+                // Check if the user has a cart
+                if (!_carts.ContainsKey(userId))
+                {
+                    return new GenericResponse<string> { Success = false, Msg = "User's cart is empty." };
+                }
+
+                // Find the item in the user's cart
+                var itemToRemove = _carts[userId].FirstOrDefault(x => x.ItemId == itemId);
                 if (itemToRemove == null)
                 {
                     return new GenericResponse<string> { Success = false, Msg = "Item not found in the cart." };
                 }
 
-                _cart.Remove(itemToRemove);
+                _carts[userId].Remove(itemToRemove);
 
                 return new GenericResponse<string> { Success = true, Msg = "Item removed from cart." };
             }

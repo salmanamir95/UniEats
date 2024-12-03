@@ -272,56 +272,56 @@ namespace UniEatsBackEnd.Controllers
         }
 
         [HttpGet("GetAllReports")]
-public GenericResponse<List<SalesReport>> GetAllReports()
-{
-    try
-    {
-        List<SalesReport> reports = new List<SalesReport>();
-
-        using (SqlConnection connect = new SqlConnection(_conn))
+        public GenericResponse<List<SalesReport>> GetAllReports()
         {
-            connect.Open();
-
-            // Query to get all reports from SalesReports table
-            string query = "SELECT * FROM SalesReports ORDER BY GeneratedAt DESC"; // Order by latest generated reports
-            using (SqlCommand cmd = new SqlCommand(query, connect))
+            try
             {
-                SqlDataReader reader = cmd.ExecuteReader();
+                List<SalesReport> reports = new List<SalesReport>();
 
-                while (reader.Read())
+                using (SqlConnection connect = new SqlConnection(_conn))
                 {
-                    SalesReport report = new SalesReport
+                    connect.Open();
+
+                    // Query to get all reports from SalesReports table
+                    string query = "SELECT * FROM SalesReports ORDER BY GeneratedAt DESC"; // Order by latest generated reports
+                    using (SqlCommand cmd = new SqlCommand(query, connect))
                     {
-                        ReportId = Convert.ToInt32(reader["ReportId"]),
-                        StartDate = Convert.ToDateTime(reader["StartDate"]),
-                        EndDate = Convert.ToDateTime(reader["EndDate"]),
-                        TotalSales = Convert.ToInt32(reader["TotalSales"]),
-                        NumberOfOrders = Convert.ToInt32(reader["NumberOfOrders"]),
-                        ReportType = reader["ReportType"].ToString(),
-                        GeneratedAt = Convert.ToDateTime(reader["GeneratedAt"])
-                    };
-                    reports.Add(report);
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            SalesReport report = new SalesReport
+                            {
+                                ReportId = Convert.ToInt32(reader["ReportId"]),
+                                StartDate = Convert.ToDateTime(reader["StartDate"]),
+                                EndDate = Convert.ToDateTime(reader["EndDate"]),
+                                TotalSales = Convert.ToInt32(reader["TotalSales"]),
+                                NumberOfOrders = Convert.ToInt32(reader["NumberOfOrders"]),
+                                ReportType = reader["ReportType"].ToString(),
+                                GeneratedAt = Convert.ToDateTime(reader["GeneratedAt"])
+                            };
+                            reports.Add(report);
+                        }
+                    }
+
+                    connect.Close();
                 }
+
+                return new GenericResponse<List<SalesReport>>
+                {
+                    Success = true,
+                    data = reports
+                };
             }
-
-            connect.Close();
+            catch (Exception ex)
+            {
+                return new GenericResponse<List<SalesReport>>
+                {
+                    Success = false,
+                    Msg = ex.Message
+                };
+            }
         }
-
-        return new GenericResponse<List<SalesReport>>
-        {
-            Success = true,
-            data = reports
-        };
-    }
-    catch (Exception ex)
-    {
-        return new GenericResponse<List<SalesReport>>
-        {
-            Success = false,
-            Msg = ex.Message
-        };
-    }
-}
 
     }
 }
