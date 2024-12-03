@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { Router } from 'express';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-homepage',
@@ -12,4 +12,12 @@ import { RouterModule } from '@angular/router';
 })
 export class HomepageComponent {
 
+  id: string | null = null;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Capture the 'id' from the URL parameters
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 }
