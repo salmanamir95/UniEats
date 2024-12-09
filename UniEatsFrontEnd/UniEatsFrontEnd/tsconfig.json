@@ -1,12 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"],
-      "@services/*": ["app/services/*"],
-      "@interfaces/*": ["app/interfaces/*"],
-      "@shared/*": ["app/shared/*"]
+      "@services/*": ["src/app/services/*"],
+      "@interfaces/*": ["src/app/interfaces/*"],
+      "@models/*": ["src/app/models/*"],
+      "@external/*": ["../other-modules/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,
@@ -24,10 +24,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

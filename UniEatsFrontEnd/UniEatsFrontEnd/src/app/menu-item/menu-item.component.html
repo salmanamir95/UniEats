@@ -3,17 +3,31 @@
   <h3>{{ name }}</h3>
   <p>Rs. {{ price }}</p>
 
-  <!-- Quantity selection -->
-  <label for="quantity">Quantity: </label>
-  <input
-    type="number"
-    [(ngModel)]="quantity"
-    id="quantity"
-    name="quantity"
-    min="1"
-    step="1"
-  />
+  <!-- Review Section -->
+  <div class="review-section">
+    <h4>Submit Your Review:</h4>
+    <label for="rating">Rating:</label>
+    <select [(ngModel)]="rating" id="rating" name="rating">
+      <option *ngFor="let r of [1,2,3,4,5]" [value]="r">{{ r }}</option>
+    </select>
 
-  <!-- Add to Cart button -->
-  <button (click)="addToCart()">Add to Cart</button>
+    <br /><br />
+
+    <label for="reviewText">Your Feedback:</label>
+    <textarea
+      [(ngModel)]="reviewText"
+      id="reviewText"
+      name="reviewText"
+      placeholder="Write your review here..."
+    ></textarea>
+
+    <br />
+
+    <button
+      (click)="submitReview()"
+      [disabled]="isReviewSubmitted"
+    >
+      Submit Review
+    </button>
+  </div>
 </div>

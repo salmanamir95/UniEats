@@ -1,49 +1,53 @@
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
-import { Component, Input, NgModule } from '@angular/core';
-import { CartItemDTO } from '../../interfaces/cart-item-dto';
-import { CartService } from '../../services/cart/cart.service';
+import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-menu-item',
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.css'],
-  imports: [CommonModule, RouterModule, FormsModule]
+  imports: [FormsModule, CommonModule]
 })
 export class MenuItemComponent {
   @Input() name: string = '';
   @Input() price: number = 0;
   @Input() imageUrl: string = '';
   @Input() userId: number = 0; // Dynamically passed userId
+  @Input() itemId: number = 0; // Dynamically passed itemId for review linkage
 
-  quantity: number = 1; // Default quantity is 1
+  reviewText: string = '';
+  rating: number = 1; // Default value for the rating
+  isReviewSubmitted: boolean = false;
 
-  constructor(private cartService: CartService) {}
+  constructor(private reviewService: ReviewService) {}
 
-  addToCart() {
-    if (this.quantity < 1 || isNaN(this.quantity)) {
-      alert('Please select a valid quantity!');
-      return;
-    }
-
-    const cartItem: CartItemDTO = {
-      name: this.name,
-      price: this.price,
-      quantity: this.quantity
+  /**
+   * Handles review submission
+   */
+  submitReview() {
+    const review: Review = {
+      reviewId: 0, // Backend will auto-assign this ID
+      userId: this.userId,
+      itemId: this.itemId,
+      rating: this.rating,
+      reviewText: this.reviewText,
+      reviewTitle: `${this.name} Review`,
+      createdAt: new Date(),
     };
 
-    this.cartService.addToCart(this.userId, cartItem).subscribe({
+    this.reviewService.giveReview(review).subscribe({
       next: (response) => {
         if (response.success) {
-          alert('Added to cart successfully!');
+          alert('Review submitted successfully!');
+          this.isReviewSubmitted = true;
         } else {
-          alert('Could not add to cart: ' + response.msg);
+          alert('Could not submit review: ' + response.msg);
         }
       },
       error: (error) => {
-        console.error('Error adding to cart:', error);
-        alert('Error adding to cart. Please try again.');
+        console.error('Error submitting review:', error);
+        alert('Error submitting review. Please try again later.');
       }
     });
   }
