@@ -1,77 +1,66 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItemComponent } from '../menu-item/menu-item.component';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { FooterComponent } from '../footer/footer.component';
-import { RealFoodItemDTO } from '../../interfaces/real-food-item-dto';
 import { FoodAndMenuService } from '../../services/FoodAndMenu/food-and-menu.service';
-import { GenericResponse } from '../../GenericResponse/generic-response';
-import { CartService } from '../../services/cart/cart.service';
 import { CartItemDTO } from '../../interfaces/cart-item-dto';
+import { RealFoodItemDTO } from '../../interfaces/real-food-item-dto';
+import { FooterComponent } from '../footer/footer.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { MenuItemComponent } from '../menu-item/menu-item.component';
 
 @Component({
   selector: 'app-menu',
+  standalone: true, // Enables standalone components
   imports: [CommonModule, MenuItemComponent, NavbarComponent, FooterComponent],
+
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  menuItems: RealFoodItemDTO[] | null = []; // Declare menuItems array
-  userId: number = 0; // Will store the userId extracted from URL
+  menuItems: RealFoodItemDTO[] = [];
+  cartItems: CartItemDTO[] = [];
 
   constructor(
     private foodAndMenuService: FoodAndMenuService,
-    private cartService: CartService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
+  ngOnInit() {
+    this.fetchMenu();
+  }
 
-
-  ngOnInit(): void {
-    // Extract userId from URL
-    this.route.params.subscribe(params => {
-      this.userId = +params['id']; // Extract userId as a number
-      console.log('Extracted userId:', this.userId);
-    });
-
-    // Fetch menu items
+  fetchMenu() {
     this.foodAndMenuService.getMenu().subscribe({
-      next: (response: GenericResponse<RealFoodItemDTO[]>) => {
-        if (response.success) {
-          this.menuItems = response.data;
-        } else {
-          console.error('Error fetching menu:', response.msg);
-        }
+      next: (response) => {
+        this.menuItems = response?.data || [];
       },
-      error: (error) => console.error('Error fetching menu:', error),
+      error: (error) => console.error(error),
     });
   }
 
   addToCart(item: RealFoodItemDTO) {
-    if (!this.userId) {
-      alert('User ID is not available!');
-      return;
+    const existingItem = this.cartItems.find((ci) => ci.name === item.name);
+    if (existingItem) {
+      existingItem.quantity++;
+    } else {
+      this.cartItems.push({
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+      });
     }
+  }
 
-    const cartItem: CartItemDTO = {
-      name: item.name,
-      quantity: 1, // Default quantity as 1
-      price: item.price,
-    };
+  changeQuantity(index: number, quantity: number) {
+    if (quantity <= 0) {
+      this.cartItems.splice(index, 1);
+    } else {
+      this.cartItems[index].quantity = quantity;
+    }
+  }
 
-    this.cartService.addToCart(this.userId, cartItem).subscribe({
-      next: (response) => {
-        if (response.success) {
-          alert('Item added to cart successfully!');
-        } else {
-          alert('Failed to add to cart: ' + response.msg);
-        }
-      },
-      error: (error) => {
-        console.error('Error adding item to cart:', error);
-        alert('An error occurred while adding the item to the cart.');
-      }
-    });
+  clearCart() {
+    this.cartItems = [];
+    alert('Cart cleared');
   }
 }
