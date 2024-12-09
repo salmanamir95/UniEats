@@ -144,20 +144,39 @@ namespace UniEatsBackEnd.Controllers
 
         // UC-11: Add a new Food Item
         [HttpPost("add")]
-        public async Task<GenericResponse<RealFoodItemDTO>> AddFoodItem([FromBody] RealFoodItemDTO newFoodItem)
+        public async Task<GenericResponse<RealFoodItemDTO>> AddFoodItem([FromForm] AddImageFoodDTO newFoodItem)
         {
             try
             {
-                if (newFoodItem == null)
+                if (newFoodItem?.ImageUrl == null || newFoodItem.ImageUrl.Length == 0)
                 {
-                    return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = "Invalid food item data." };
+                    return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = "Please provide an image." };
                 }
 
+                // Generate a unique file name
+                var uniqueFileName = $"{Guid.NewGuid()}_{newFoodItem.ImageUrl.FileName}";
+                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages", uniqueFileName);
+
+                // Ensure the "UploadedImages" directory exists
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "UploadedImages"));
+                }
+
+                // Save the uploaded file to server
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await newFoodItem.ImageUrl.CopyToAsync(stream);
+                }
+
+                // Convert saved file path to relative URL
+                var savedImageUrl = $"/UploadedImages/{uniqueFileName}";
+
                 string query = @"
-                    INSERT INTO [UniEats].[dbo].[FoodItems] 
-                    ([name], [category], [price], [description], [image_url], [availability], [stock_quantity], [discount])
-                    VALUES (@name, @category, @price, @description, @image_url, @availability, @stock_quantity, @discount);
-                    SELECT CAST(SCOPE_IDENTITY() as int);"; // Retrieve the ID of the inserted item
+            INSERT INTO [UniEats].[dbo].[FoodItems] 
+            ([name], [category], [price], [description], [image_url], [availability], [stock_quantity], [discount])
+            VALUES (@name, @category, @price, @description, @image_url, @availability, @stock_quantity, @discount);
+            SELECT CAST(SCOPE_IDENTITY() as int);";
 
                 int newItemId;
 
@@ -171,16 +190,18 @@ namespace UniEatsBackEnd.Controllers
                         command.Parameters.AddWithValue("@category", newFoodItem.Category ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@price", newFoodItem.Price);
                         command.Parameters.AddWithValue("@description", newFoodItem.Description ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@image_url", newFoodItem.ImageUrl ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@image_url", savedImageUrl);
                         command.Parameters.AddWithValue("@availability", newFoodItem.Availability);
                         command.Parameters.AddWithValue("@stock_quantity", newFoodItem.StockQuantity);
                         command.Parameters.AddWithValue("@discount", newFoodItem.Discount);
 
-                        newItemId = (int)await command.ExecuteScalarAsync(); // Get the ID of the new item
+                        newItemId = (int)await command.ExecuteScalarAsync();
                     }
                 }
 
                 newFoodItem.ItemId = newItemId;
+                newFoodItem.ImageUrl = null; // Nullify the IFormFile after saving to database.
+
                 return new GenericResponse<RealFoodItemDTO> { Success = true, data = newFoodItem };
             }
             catch (Exception ex)
@@ -188,6 +209,7 @@ namespace UniEatsBackEnd.Controllers
                 return new GenericResponse<RealFoodItemDTO> { Success = false, Msg = ex.Message };
             }
         }
+
 
         // UC-12: Update an existing Food Item
         [HttpPut("update/{id}")]
