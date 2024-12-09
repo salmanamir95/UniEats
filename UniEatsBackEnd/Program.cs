@@ -1,32 +1,42 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers(); // <-- Add support for controllers
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 
-builder.Services.AddControllers();  // <-- Add this line
-
+// Build the application
 var app = builder.Build();
-// CORS configuration in ASP.NET Core
-app.UseCors(builder =>
-    builder.WithOrigins("http://localhost:4200")
-           .AllowAnyMethod()
-           .AllowAnyHeader());
 
+// Enable CORS
+app.UseCors("AllowAngularApp");
 
-// Configure the HTTP request pipeline.
+// Enable Swagger for development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Enable static file serving (for uploaded images)
+app.UseStaticFiles();
+
+// Redirect HTTP requests to HTTPS
 app.UseHttpsRedirection();
 
-// Map controllers
-app.MapControllers(); // <-- Add this line to map the controllers
+// Map Controllers
+app.MapControllers();
 
 app.Run();
-
