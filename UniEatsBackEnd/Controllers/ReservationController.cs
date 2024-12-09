@@ -30,13 +30,10 @@ namespace UniEatsBackEnd.Controllers
         {
             try
             {
-                // Query to fetch tables that are reserved within the 15-minute window
                 string query = @"
             SELECT DISTINCT [table_number]
             FROM [UniEats].[dbo].[Reservations]
-            WHERE 
-                [status] = 'Confirmed' AND 
-                ABS(DATEDIFF(MINUTE, [reservation_date], GETDATE())) < 15";
+            WHERE [status] = 'Confirmed'";
 
                 List<int> reservedTables = new List<int>();
 
@@ -55,15 +52,9 @@ namespace UniEatsBackEnd.Controllers
                     }
                 }
 
-                // Calculate available tables
-                List<int> availableTables = new List<int>();
-                for (int i = 1; i <= totalTables; i++)
-                {
-                    if (!reservedTables.Contains(i))
-                    {
-                        availableTables.Add(i);
-                    }
-                }
+                List<int> availableTables = Enumerable.Range(1, totalTables)
+                                                     .Where(table => !reservedTables.Contains(table))
+                                                     .ToList();
 
                 return new GenericResponse<List<int>>
                 {
@@ -80,6 +71,7 @@ namespace UniEatsBackEnd.Controllers
                 };
             }
         }
+
 
 
         [HttpGet("schedule/{userId}")]
@@ -143,13 +135,13 @@ namespace UniEatsBackEnd.Controllers
         {
             try
             {
-                // Check if the table is available at the given time (also ensure a 15-minute gap between reservations)
+                // Check if the table is available at the given time (ensure a 15-minute gap between reservations)
                 string checkAvailabilityQuery = @"
             SELECT COUNT(*)
             FROM [UniEats].[dbo].[Reservations]
             WHERE [table_number] = @table_number
             AND ABS(DATEDIFF(MINUTE, [reservation_date], @reservation_date)) < 15
-            AND [status] = 'Confirmed'";  // Assuming 'Pending' status indicates an active reservation
+            AND [status] = 'Confirmed'";
 
                 using (SqlConnection connection = new SqlConnection(_conn))
                 {
@@ -157,41 +149,38 @@ namespace UniEatsBackEnd.Controllers
 
                     using (SqlCommand checkCommand = new SqlCommand(checkAvailabilityQuery, connection))
                     {
-                        // Pass the parameters for table_number and reservation_date
                         checkCommand.Parameters.AddWithValue("@table_number", reservation.TableNumber);
                         checkCommand.Parameters.AddWithValue("@reservation_date", reservation.ReservationDate);
 
-                        // Check if the table is already reserved within the 15-minute window
                         int existingReservations = (int)checkCommand.ExecuteScalar();
 
                         if (existingReservations > 0)
                         {
                             return new GenericResponse<Reservation>
                             {
-                                Msg = "Already Reserved.",
+                                Msg = "Table already reserved.",
                                 Success = false
                             };
                         }
                     }
 
-                    // Proceed with the reservation if the table is available
                     string query = @"
                 INSERT INTO [UniEats].[dbo].[Reservations] ([user_id], [reservation_date], [number_of_people], [status], [table_number], [created_at])
                 VALUES (@user_id, @reservation_date, @number_of_people, @status, @table_number, @created_at);
-                Select SCOPE_IDENTITY() FROM RESERVATIONS;
-                ";
+                SELECT SCOPE_IDENTITY();";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@user_id", reservation.UserId);
                         command.Parameters.AddWithValue("@reservation_date", reservation.ReservationDate);
                         command.Parameters.AddWithValue("@number_of_people", reservation.NumberOfPeople);
-                        command.Parameters.AddWithValue("@status", "Confirmed");  // Default status
+                        command.Parameters.AddWithValue("@status", "Confirmed");
                         command.Parameters.AddWithValue("@table_number", reservation.TableNumber);
                         command.Parameters.AddWithValue("@created_at", DateTime.Now);
 
-                        int new_ID = (int)command.ExecuteScalar();
-                        Reservation reservation1 = new Reservation
+                        int new_ID = Convert.ToInt32(command.ExecuteScalar()); // Safely cast decimal to int
+
+                        Reservation newReservation = new Reservation
                         {
                             ReservationId = new_ID,
                             UserId = reservation.UserId,
@@ -199,18 +188,28 @@ namespace UniEatsBackEnd.Controllers
                             NumberOfPeople = reservation.NumberOfPeople,
                             Status = "Confirmed",
                             TableNumber = reservation.TableNumber,
-                            CreatedAt = reservation.CreatedAt
+                            CreatedAt = DateTime.Now
                         };
-                        return new GenericResponse<Reservation> { Msg = "Reservation made successfully!", Success = true, data = reservation1 };
 
+                        return new GenericResponse<Reservation>
+                        {
+                            Msg = "Reservation made successfully!",
+                            Success = true,
+                            data = newReservation
+                        };
                     }
                 }
             }
             catch (Exception ex)
             {
-                return new GenericResponse<Reservation> { Msg = ex.Message, Success = false };
+                return new GenericResponse<Reservation>
+                {
+                    Msg = ex.Message,
+                    Success = false
+                };
             }
         }
+
 
 
         // UC-06: Check if Seat is Occupied
@@ -220,36 +219,24 @@ namespace UniEatsBackEnd.Controllers
             try
             {
                 string query = @"
-                    SELECT COUNT(*) 
-                    FROM [UniEats].[dbo].[Reservations]
-                    WHERE [table_number] = @table_number AND CAST([reservation_date] AS DATE) = @reservation_date AND [status] != 'Cancelled'";
+            SELECT COUNT(*) 
+            FROM [UniEats].[dbo].[Reservations]
+            WHERE [table_number] = @table_number AND CAST([reservation_date] AS DATE) = @reservation_date AND [status] != 'Cancelled'";
 
                 using (SqlConnection connection = new SqlConnection(_conn))
                 {
                     connection.Open();
-
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@table_number", tableNumber);
-                        command.Parameters.AddWithValue("@reservation_date", reservationDate);
+                        command.Parameters.AddWithValue("@reservation_date", reservationDate.Date);
 
                         int count = (int)command.ExecuteScalar();
-                        if (count > 0)
+                        return new GenericResponse<bool>
                         {
-                            return new GenericResponse<bool>
-                            {
-                                Success = true,
-                                data = true
-                            };
-                        }
-                        else
-                        {
-                            return new GenericResponse<bool>
-                            {
-                                Success = true,
-                                data = false
-                            };
-                        }
+                            Success = true,
+                            data = count > 0
+                        };
                     }
                 }
             }
@@ -262,6 +249,7 @@ namespace UniEatsBackEnd.Controllers
                 };
             }
         }
+
 
         // Cancel Reservation
         [HttpPost("cancelreservation/{reservationId}")]
