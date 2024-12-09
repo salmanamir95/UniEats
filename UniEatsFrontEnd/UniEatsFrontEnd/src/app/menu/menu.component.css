@@ -5,31 +5,43 @@
 }
 
 
-
-.loading-spinner {
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 2rem;
-  color: #666;
+.menu-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.error-message {
+h1 {
   text-align: center;
-  color: red;
+  margin-bottom: 20px;
+}
+
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+.menu-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item h3 {
+  margin: 0 0 5px;
+}
+
+.menu-item p {
+  margin: 0 0 10px;
+  color: #555;
+}
+
+.price {
   font-weight: bold;
-  margin: 1rem;
-}
-
-.empty-menu {
-  text-align: center;
-  font-size: 1.2rem;
   color: #333;
-  padding: 2rem;
-}
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
 }

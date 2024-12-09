@@ -1,66 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FoodAndMenuService } from '../../services/FoodAndMenu/food-and-menu.service';
-import { CartItemDTO } from '../../interfaces/cart-item-dto';
-import { RealFoodItemDTO } from '../../interfaces/real-food-item-dto';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { MenuItemComponent } from '../menu-item/menu-item.component';
+import { OrderService } from 'src/services/Order/order.service';
+import { OrderDTO } from 'src/interfaces/order-dto';
+import { GenericResponse } from 'src/GenericResponse/generic-response';
 
 @Component({
   selector: 'app-menu',
   standalone: true, // Enables standalone components
-  imports: [CommonModule, MenuItemComponent, NavbarComponent, FooterComponent],
-
+  imports: [CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  menuItems: RealFoodItemDTO[] = [];
-  cartItems: CartItemDTO[] = [];
+  foodItems = [
+    { name: 'Margherita Pizza', description: 'Classic delight with 100% real mozzarella', price: 8.99 },
+    { name: 'Cheeseburger', description: 'Juicy grilled burger with cheddar cheese', price: 7.99 },
+    { name: 'Caesar Salad', description: 'Crisp romaine with parmesan and croutons', price: 6.99 },
+    { name: 'Pasta Alfredo', description: 'Creamy Alfredo sauce with fettuccine', price: 9.99 },
+    { name: 'Tacos', description: 'Soft corn tortillas with your choice of meat', price: 5.99 },
+  ];
 
-  constructor(
-    private foodAndMenuService: FoodAndMenuService,
-    private route: ActivatedRoute,
-  ) {}
+  ngOnInit(): void {
 
-  ngOnInit() {
-    this.fetchMenu();
-  }
-
-  fetchMenu() {
-    this.foodAndMenuService.getMenu().subscribe({
-      next: (response) => {
-        this.menuItems = response?.data || [];
-      },
-      error: (error) => console.error(error),
-    });
-  }
-
-  addToCart(item: RealFoodItemDTO) {
-    const existingItem = this.cartItems.find((ci) => ci.name === item.name);
-    if (existingItem) {
-      existingItem.quantity++;
-    } else {
-      this.cartItems.push({
-        name: item.name,
-        price: item.price,
-        quantity: 1,
-      });
-    }
-  }
-
-  changeQuantity(index: number, quantity: number) {
-    if (quantity <= 0) {
-      this.cartItems.splice(index, 1);
-    } else {
-      this.cartItems[index].quantity = quantity;
-    }
-  }
-
-  clearCart() {
-    this.cartItems = [];
-    alert('Cart cleared');
   }
 }

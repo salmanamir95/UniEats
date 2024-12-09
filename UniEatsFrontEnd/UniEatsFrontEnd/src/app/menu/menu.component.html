@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<div class="menu-container">
+  <h1>Our Menu</h1>
+  <ul class="menu-list">
+    <li *ngFor="let item of foodItems" class="menu-item">
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.description }}</p>
+      <span class="price">\${{ item.price }}</span>
+    </li>
+  </ul>
+</div>
+
+
+
+<app-footer></app-footer>
