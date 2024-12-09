@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login/login.component';
 import { SignupComponent } from './signup/signup/signup.component';
-import { ProductComponent } from './Product/product/product.component';
 import { ErrorLogComponent } from './ErrorLog/error-log/error-log.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -25,8 +24,6 @@ export const routes: Routes = [
   // Route for Signup Page
   { path: 'signup', component: SignupComponent },
 
-  // Route for Product Page
-  { path: 'product/:id', component: ProductComponent },
 
   { path: 'home/:id', component: HomepageComponent },
 

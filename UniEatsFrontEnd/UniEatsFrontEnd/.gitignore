@@ -39,3 +39,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#backend
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore custom log folder
+logs/
