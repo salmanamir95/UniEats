@@ -5,12 +5,9 @@
   </div>
 
   <div class="tables">
-    <app-table
-      *ngFor="let table of tables"
-      [tableNumber]="table.number"
-      [status]="table.status"
-      (tableClick)="onTableSelected(table.number)"
-    ></app-table>
+    <app-table *ngFor="let table of tables" [tableNumber]="table.number" [status]="table.status"
+      (tableClick)="onTableSelected(table.number)"></app-table>
+
   </div>
 
   <div class="selected-tables">

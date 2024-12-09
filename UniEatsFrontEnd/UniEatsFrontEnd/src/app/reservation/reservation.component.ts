@@ -3,31 +3,32 @@ import { TableComponent } from '../table/table.component';
 import { CommonModule } from '@angular/common';
 import { ReservationDTO } from '../../interfaces/reservation-dto';
 import { ReservationService } from '../../services/Reservations/reservation.service';
-import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reservation',
   imports: [TableComponent, CommonModule],
   templateUrl: './reservation.component.html',
-  styleUrls: ['./reservation.component.css']
+  styleUrls: ['./reservation.component.css'],
 })
 export class ReservationComponent implements OnInit {
   tables: { number: number; status: 'selected' | 'available' | 'occupied' }[] = [];
-  selectedTables: number[] = []; // To store selected table numbers
-  userId: number = 0; // Placeholder for userId from URL
+  selectedTables: number[] = [];
+  userId: number = 0;
 
   constructor(
     private reservationService: ReservationService,
-    private route: ActivatedRoute // Inject ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.setAllTablesToOccupied(30);
     this.fetchUserIdFromURL();
     this.initializeTables();
   }
 
   fetchUserIdFromURL() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const idParam = params['id'];
       if (idParam) {
         this.userId = +idParam; // Convert string to number
@@ -37,22 +38,54 @@ export class ReservationComponent implements OnInit {
     });
   }
 
-  // Dynamically initialize table statuses from the server (optional)
+  // Dynamically initialize table statuses from the server
   initializeTables() {
-    this.reservationService.checkAvailableSeats(30).subscribe({
+    const totalTables = 30; // Total number of tables in the restaurant
+
+    this.reservationService.checkAvailableSeats(totalTables).subscribe({
       next: (response) => {
-        this.tables = Array.from({ length: 30 }, (_, i) => ({
-          number: i + 1,
-          status: response?.data?.includes(i + 1) ? 'available' : 'occupied',
-        }));
+        console.log('API Response:', response); // Log the API response
+
+        if (response && response.success) {
+          const reservedTables = Array.isArray(response.data) ? response.data : [];
+          console.log('Reserved Tables:', reservedTables); // Log reserved table numbers
+
+          // Initialize all tables as available first
+          this.tables = Array.from({ length: totalTables }, (_, i) => ({
+            number: i + 1,
+            status: 'available', // Default to 'available'
+          }));
+
+          // Mark tables in the reservedTables array as 'occupied'
+          reservedTables.forEach((tableNumber) => {
+            const tableIndex = tableNumber - 1; // Convert table number to 0-based index
+            if (this.tables[tableIndex]) {
+              this.tables[tableIndex].status = 'available';
+            }
+          });
+        } else {
+          console.warn('Unexpected or null data in response:', response);
+          alert(response?.msg || 'Failed to fetch available tables. Please try again later.');
+          this.setAllTablesToOccupied(totalTables);
+        }
       },
-      error: () => {
-        alert('Failed to fetch available tables');
-      }
+      error: (err) => {
+        console.error('Error fetching available seats:', err);
+        alert('An error occurred while fetching available tables.');
+        this.setAllTablesToOccupied(totalTables);
+      },
     });
   }
 
-  // Handle table selection
+
+  setAllTablesToOccupied(totalTables: number) {
+    // Set all tables to "occupied" as a fallback
+    this.tables = Array.from({ length: totalTables }, (_, i) => ({
+      number: i + 1,
+      status: 'occupied',
+    }));
+  }
+
   onTableSelected(tableNumber: number) {
     const index = this.selectedTables.indexOf(tableNumber);
     if (index === -1) {
@@ -64,7 +97,10 @@ export class ReservationComponent implements OnInit {
     }
   }
 
-  updateTableStatus(tableNumber: number, status: 'selected' | 'available' | 'occupied') {
+  updateTableStatus(
+    tableNumber: number,
+    status: 'selected' | 'available' | 'occupied'
+  ) {
     const table = this.tables.find((t) => t.number === tableNumber);
     if (table) {
       table.status = status;
@@ -78,30 +114,29 @@ export class ReservationComponent implements OnInit {
     }
 
     const reservationDTO: ReservationDTO = {
-      tables: this.selectedTables,
-      reservationDate: new Date(),
       userId: this.userId,
-      numberOfPeople: this.selectedTables.length, // Example: number of people corresponds to table selection
+      reservationDate: new Date(),
+      tables: this.selectedTables,
+      numberOfPeople: this.selectedTables.length,
       status: 'Confirmed',
-      createdAt: new Date(),
     };
 
     this.reservationService.makeReservation(reservationDTO).subscribe({
       next: (response) => {
-        if (response.success) {
-          alert(`Tables ${this.selectedTables.join(', ')} have been reserved!`);
+        if (response?.success) {
+          alert(`Reservation successful for tables ${this.selectedTables.join(', ')}`);
           this.resetSelections();
         } else {
-          alert('Failed to reserve tables.');
+          console.warn('Unexpected reservation response:', response);
+          alert(response?.msg || 'Reservation failed. Please try again later.');
         }
       },
       error: (error) => {
-        console.error('Reservation failed', error);
+        console.error('Reservation error:', error);
         alert('An error occurred while making the reservation.');
-      }
+      },
     });
   }
-
 
   resetSelections() {
     this.selectedTables = [];
