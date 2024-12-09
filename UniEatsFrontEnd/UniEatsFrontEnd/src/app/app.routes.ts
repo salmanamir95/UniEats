@@ -4,7 +4,6 @@ import { SignupComponent } from './signup/signup/signup.component';
 import { ErrorLogComponent } from './ErrorLog/error-log/error-log.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuComponent } from './menu/menu.component';
 import { CheckoutWithCashComponent } from './checkout-with-cash/checkout-with-cash.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -30,8 +29,6 @@ export const routes: Routes = [
   { path: 'resetpassword/:id', component: ResetPasswordComponent },
 
   { path: 'menu/:id', component: MenuComponent },
-
-  { path: 'menu-item/:id', component: MenuItemComponent },
 
   { path: 'checkout-with-card/:id', component: CheckoutWithCashComponent },
 
