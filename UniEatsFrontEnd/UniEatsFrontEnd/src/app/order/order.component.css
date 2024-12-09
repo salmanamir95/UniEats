@@ -1,0 +1,23 @@
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+form input,
+form button {
+  margin: 5px 0;
+}
+
+button {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 10px;
+}

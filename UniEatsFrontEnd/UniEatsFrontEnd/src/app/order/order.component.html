@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>User Orders</h1>
+
+  <!-- Order Placement Form -->
+  <div>
+    <h2>Place New Order</h2>
+    <form (ngSubmit)="placeOrder()">
+      <label>Payment Method:
+        <input
+          type="text"
+          [(ngModel)]="newOrder.paymentMethod"
+          name="paymentMethod"
+          required
+        />
+      </label>
+      <label>Delivery Method:
+        <input
+          type="text"
+          [(ngModel)]="newOrder.deliveryMethod"
+          name="deliveryMethod"
+          required
+        />
+      </label>
+      <label>Table Number:
+        <input
+          type="number"
+          [(ngModel)]="newOrder.tableNumber"
+          name="tableNumber"
+          required
+        />
+      </label>
+      <label>Order Notes:
+        <input
+          type="text"
+          [(ngModel)]="newOrder.orderNotes"
+          name="orderNotes"
+        />
+      </label>
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+
+  <hr />
+
+  <!-- List of Orders -->
+  <div>
+    <h2>Your Order History</h2>
+    <ul *ngIf="orders.length > 0; else noOrders">
+      <li *ngFor="let order of orders">
+        <strong>Order #{{ order.orderId }}</strong> | Status: {{ order.status }} | Payment: {{ order.paymentMethod }}
+        | Delivery: {{ order.deliveryMethod }} | Notes: {{ order.orderNotes }}
+        <button (click)="cancelOrder(order.orderId)">Cancel Order</button>
+      </li>
+    </ul>
+    <ng-template #noOrders>
+      <p>No orders found.</p>
+    </ng-template>
+  </div>
+</div>
