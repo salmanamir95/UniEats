@@ -1,7 +1,7 @@
+import { NavbarAdminComponent } from './../navbar-admin/navbar-admin.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component";
 
 @Component({
   selector: 'app-admin-settings',

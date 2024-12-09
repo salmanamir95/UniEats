@@ -1,9 +1,9 @@
-import { SalesReport } from './../../../models/sales-report';
-import { GenericResponse } from './../../../GenericResponse/generic-response';
-import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { NavbarAdminComponent } from '../navbar-admin/navbar-admin.component';
-import { SalesService } from '../../../services/Sales/sales.service'; // Import SalesService
+import { SalesService } from 'src/services/Sales/sales.service';
+import { SalesReport } from 'src/models/sales-report';
+import { GenericResponse } from 'src/GenericResponse/generic-response';
 
 @Component({
   selector: 'app-hero-page',

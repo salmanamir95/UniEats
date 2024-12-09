@@ -2,6 +2,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Review } from 'src/models/review';
+import { ReviewService } from 'src/services/Review/review.service';
 
 @Component({
   selector: 'app-menu-item',

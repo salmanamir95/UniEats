@@ -1,11 +1,10 @@
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { RealFoodItemDTO } from '../../../interfaces/real-food-item-dto';
-import { FoodItemService } from '../../../services/FoodItem/food-item.service';
-import { GenericResponse } from '../../../GenericResponse/generic-response';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { FormsModule } from '@angular/forms';
-import { NavbarAdminComponent } from "../navbar-admin/navbar-admin.component"; // Import FormsModule
+import { NavbarAdminComponent } from '../navbar-admin/navbar-admin.component';
+import { RealFoodItemDTO } from 'src/interfaces/real-food-item-dto';
+import { FoodItemService } from 'src/services/FoodItem/food-item.service';
+import { GenericResponse } from 'src/GenericResponse/generic-response';
 
 @Component({
   selector: 'app-admin-food',
