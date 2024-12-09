@@ -1,9 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers(); // <-- Add support for controllers
+builder.Services.AddControllers();
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -17,20 +17,38 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Enable logging for better debugging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Build the application
 var app = builder.Build();
+
+// Global exception handling middleware
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        await context.Response.WriteAsync("An unexpected error occurred.");
+    });
+});
 
 // Enable CORS
 app.UseCors("AllowAngularApp");
 
-// Enable Swagger for development
+// Enable Swagger in Development
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API");
+    });
 }
 
-// Enable static file serving (for uploaded images)
+// Enable static file serving
 app.UseStaticFiles();
 
 // Redirect HTTP requests to HTTPS
@@ -39,4 +57,5 @@ app.UseHttpsRedirection();
 // Map Controllers
 app.MapControllers();
 
+// Run the app
 app.Run();

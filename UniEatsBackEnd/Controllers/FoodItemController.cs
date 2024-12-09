@@ -202,7 +202,20 @@ namespace UniEatsBackEnd.Controllers
                 newFoodItem.ItemId = newItemId;
                 newFoodItem.ImageUrl = null; // Nullify the IFormFile after saving to database.
 
-                return new GenericResponse<RealFoodItemDTO> { Success = true, data = newFoodItem };
+                var resultFoodItem = new RealFoodItemDTO
+                {
+                    ItemId = newItemId,
+                    Name = newFoodItem.Name,
+                    Category = newFoodItem.Category,
+                    Price = newFoodItem.Price,
+                    Description = newFoodItem.Description,
+                    ImageUrl = savedImageUrl,
+                    Availability = newFoodItem.Availability,
+                    StockQuantity = newFoodItem.StockQuantity,
+                    Discount = newFoodItem.Discount
+                };
+
+                return new GenericResponse<RealFoodItemDTO> { Success = true , data= resultFoodItem};
             }
             catch (Exception ex)
             {
