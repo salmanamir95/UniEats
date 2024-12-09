@@ -12,16 +12,15 @@ import { GenericResponse } from 'src/GenericResponse/generic-response';
   templateUrl: './admin-food.component.html',
   styleUrls: ['./admin-food.component.css'],
   imports: [
-    ReactiveFormsModule, // Import ReactiveFormsModule
-    FormsModule, // Import FormsModule
-    CommonModule // Import CommonModule (for *ngFor and *ngIf)
-    ,
-    NavbarAdminComponent
-]
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    NavbarAdminComponent,
+  ],
 })
 export class AdminFoodComponent implements OnInit {
-  foodItemForm: FormGroup= new FormGroup({});
-  foodItems: RealFoodItemDTO[] | null = null; // Allow null as a valid type
+  foodItemForm: FormGroup = new FormGroup({});
+  foodItems: RealFoodItemDTO[] | null = null;
   selectedFoodItem: RealFoodItemDTO | null = null;
   searchName: string = '';
   searchCategory: string = '';
@@ -42,10 +41,10 @@ export class AdminFoodComponent implements OnInit {
       discount: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
     });
 
-    // Load initial food items
     this.loadFoodItems();
   }
 
+  /** Load food items from the service */
   loadFoodItems(): void {
     this.loading = true;
     this.foodItemService.searchFood(this.searchName, this.searchCategory).subscribe(
@@ -64,54 +63,18 @@ export class AdminFoodComponent implements OnInit {
     );
   }
 
+  /** Triggered by the Search button to search for food items */
   searchFood(): void {
     this.loadFoodItems();
   }
 
+  /** Handle selection of a food item from the list */
   onSelectFoodItem(foodItem: RealFoodItemDTO): void {
     this.selectedFoodItem = foodItem;
     this.foodItemForm.patchValue(foodItem);
   }
 
-  onAddOrUpdateFoodItem(): void {
-    if (this.foodItemForm.invalid) return;
-
-    const foodItemData = this.foodItemForm.value;
-    if (foodItemData.itemId) {
-      this.updateFoodItem(foodItemData);
-    } else {
-      this.addFoodItem(foodItemData);
-    }
-  }
-
-  addFoodItem(foodItemData: RealFoodItemDTO): void {
-    this.foodItemService.addFoodItem(foodItemData).subscribe(
-      (response: GenericResponse<RealFoodItemDTO>) => {
-        if (response.success) {
-          this.loadFoodItems();
-          this.foodItemForm.reset();
-        }
-      },
-      (error) => {
-        console.error('Error adding food item:', error);
-      }
-    );
-  }
-
-  updateFoodItem(foodItemData: RealFoodItemDTO): void {
-    this.foodItemService.updateFoodItem(foodItemData.itemId!, foodItemData).subscribe(
-      (response: GenericResponse<RealFoodItemDTO>) => {
-        if (response.success) {
-          this.loadFoodItems();
-          this.foodItemForm.reset();
-        }
-      },
-      (error) => {
-        console.error('Error updating food item:', error);
-      }
-    );
-  }
-
+  /** Handle the deletion of a food item */
   onDeleteFoodItem(id: number): void {
     if (confirm('Are you sure you want to delete this food item?')) {
       this.foodItemService.deleteFoodItem(id).subscribe(
@@ -127,8 +90,69 @@ export class AdminFoodComponent implements OnInit {
     }
   }
 
+  /** Add a new food item or update an existing one */
+  onAddOrUpdateFoodItem(): void {
+    if (this.foodItemForm.invalid) return;
+
+    const foodItemData = this.foodItemForm.value;
+
+    if (foodItemData.itemId) {
+      this.updateFoodItem(foodItemData);
+    } else {
+      this.addFoodItem(foodItemData);
+    }
+  }
+
+  /** Call the service to add a food item */
+  addFoodItem(foodItemData: RealFoodItemDTO): void {
+    this.foodItemService.addFoodItem(foodItemData).subscribe(
+      (response: GenericResponse<RealFoodItemDTO>) => {
+        if (response.success) {
+          this.loadFoodItems();
+          this.foodItemForm.reset();
+        }
+      },
+      (error) => {
+        console.error('Error adding food item:', error);
+      }
+    );
+  }
+
+  /** Call the service to update a food item */
+  updateFoodItem(foodItemData: RealFoodItemDTO): void {
+    this.foodItemService.updateFoodItem(foodItemData.itemId!, foodItemData).subscribe(
+      (response: GenericResponse<RealFoodItemDTO>) => {
+        if (response.success) {
+          this.loadFoodItems();
+          this.foodItemForm.reset();
+        }
+      },
+      (error) => {
+        console.error('Error updating food item:', error);
+      }
+    );
+  }
+
+  /** Reset the form to its initial state */
   onResetForm(): void {
     this.foodItemForm.reset();
     this.selectedFoodItem = null;
   }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input?.files?.length) {
+      const file = input.files[0];
+
+      // Example: Handle file uploads (convert to URL for preview or handle upload logic)
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageUrl = reader.result as string;
+        this.foodItemForm.patchValue({ imageUrl }); // Bind the image URL to the form
+      };
+      reader.readAsDataURL(file); // Convert file to Base64 for preview purposes
+    }
+  }
+
 }

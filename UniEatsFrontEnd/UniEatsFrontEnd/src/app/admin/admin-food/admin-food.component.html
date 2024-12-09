@@ -42,17 +42,23 @@
         <input formControlName="category" placeholder="Category" />
         <input formControlName="price" type="number" placeholder="Price" />
         <textarea formControlName="description" placeholder="Description"></textarea>
-        <input formControlName="imageUrl" placeholder="Image URL" />
+
+        <!-- File Upload Section -->
+        <label for="image">Upload Image</label>
+        <input type="file" (change)="onFileChange($event)" />
+
+        <input formControlName="imageUrl" placeholder="Image URL" readonly />
+
         <input formControlName="stockQuantity" type="number" placeholder="Stock Quantity" />
         <input formControlName="discount" type="number" placeholder="Discount" step="0.01" max="1" />
         <label>
           <input formControlName="availability" type="checkbox" />
           Available
         </label>
+
         <button type="submit">{{ selectedFoodItem ? 'Update' : 'Add' }} Food Item</button>
         <button type="button" (click)="onResetForm()">Reset</button>
       </form>
     </div>
   </div>
-
 </div>
