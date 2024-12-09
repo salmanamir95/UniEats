@@ -2,21 +2,43 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
+import { CartItemDTO } from '../../interfaces/cart-item-dto';
+import { CartService } from '../../services/cart/cart.service';
+
 @Component({
-    selector: 'app-menu-item',
-    imports: [CommonModule, FormsModule],
-    templateUrl: './menu-item.component.html',
-    styleUrl: './menu-item.component.css'
+  selector: 'app-menu-item',
+  templateUrl: './menu-item.component.html',
+  styleUrls: ['./menu-item.component.css'],
+  imports: [CommonModule,  FormsModule]
 })
 export class MenuItemComponent {
   @Input() name: string = '';
   @Input() price: number = 0;
-  @Input() imageUrl: string = ''; // The image URL for the food item
+  @Input() imageUrl: string = '';
 
   quantity: number = 1; // Default quantity is 1
 
+  // Assume userId is hardcoded for simplicity; dynamically set this in a real app
+  private userId = 1;
+
+  constructor(private cartService: CartService) {}
+
   addToCart() {
-    // Here you can implement the logic to add the item to the cart
-    console.log(`${this.name} x ${this.quantity} added to cart.`);
+    const cartItem: CartItemDTO = {
+      name: this.name,
+      price: this.price,
+      quantity: this.quantity
+    };
+
+    this.cartService.addToCart(this.userId, cartItem).subscribe({
+      next: (response) => {
+        if (response.success) {
+          console.log('Added to cart successfully!');
+        } else {
+          console.error('Could not add to cart:', response.msg);
+        }
+      },
+      error: (error) => console.error('Error adding to cart:', error),
+    });
   }
 }

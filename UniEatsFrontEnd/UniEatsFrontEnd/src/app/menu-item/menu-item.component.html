@@ -1,12 +1,19 @@
 <div class="menu-item">
-  <img [src]="imageUrl" alt="{{ name }}" class="menu-item-image"/>
+  <img [src]="imageUrl" alt="{{ name }}" class="menu-item-image" />
   <h3>{{ name }}</h3>
   <p>Rs. {{ price }}</p>
 
   <!-- Quantity selection -->
   <label for="quantity">Quantity: </label>
-  <input type="number" [(ngModel)]="quantity" id="quantity" name="quantity" min="1" step="1" />
+  <input
+    type="number"
+    [(ngModel)]="quantity"
+    id="quantity"
+    name="quantity"
+    min="1"
+    step="1"
+  />
 
-  <!-- Optional button to add to cart or perform another action -->
+  <!-- Add to Cart button -->
   <button (click)="addToCart()">Add to Cart</button>
 </div>
