@@ -1,0 +1,9 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore logs
+logs/
+
+# Ignore Visual Studio config files
+.vs/
