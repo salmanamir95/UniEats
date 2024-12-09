@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ReservationDTO } from '../../interfaces/reservation-dto';
 import { ReservationService } from '../../services/Reservations/reservation.service';
 import { ActivatedRoute } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-reservation',
-  imports: [TableComponent, CommonModule],
+  imports: [TableComponent, CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.css'],
 })
@@ -44,38 +46,37 @@ export class ReservationComponent implements OnInit {
 
     this.reservationService.checkAvailableSeats(totalTables).subscribe({
       next: (response) => {
-        console.log('API Response:', response); // Log the API response
+        console.log('API Response:', response);
 
-        if (response && response.success) {
-          const reservedTables = Array.isArray(response.data) ? response.data : [];
-          console.log('Reserved Tables:', reservedTables); // Log reserved table numbers
+        if (response?.success && Array.isArray(response?.data)) {
+          const reservedTables = response.data;
 
-          // Initialize all tables as available first
+          // Dynamically mark tables
           this.tables = Array.from({ length: totalTables }, (_, i) => ({
             number: i + 1,
-            status: 'available', // Default to 'available'
+            status: reservedTables.includes(i + 1) ? 'occupied' : 'available',
           }));
-
-          // Mark tables in the reservedTables array as 'occupied'
-          reservedTables.forEach((tableNumber) => {
-            const tableIndex = tableNumber - 1; // Convert table number to 0-based index
-            if (this.tables[tableIndex]) {
-              this.tables[tableIndex].status = 'available';
-            }
-          });
         } else {
-          console.warn('Unexpected or null data in response:', response);
-          alert(response?.msg || 'Failed to fetch available tables. Please try again later.');
-          this.setAllTablesToOccupied(totalTables);
+          console.error('Error in server response, falling back to all tables as available.');
+          this.setAllTablesToAvailable(totalTables);
         }
       },
       error: (err) => {
         console.error('Error fetching available seats:', err);
         alert('An error occurred while fetching available tables.');
-        this.setAllTablesToOccupied(totalTables);
+        this.setAllTablesToAvailable(totalTables);
       },
     });
   }
+
+  // Fallback: Set all tables to available
+  setAllTablesToAvailable(totalTables: number) {
+    this.tables = Array.from({ length: totalTables }, (_, i) => ({
+      number: i + 1,
+      status: 'available',
+    }));
+  }
+
 
 
   setAllTablesToOccupied(totalTables: number) {
@@ -89,23 +90,26 @@ export class ReservationComponent implements OnInit {
   onTableSelected(tableNumber: number) {
     const index = this.selectedTables.indexOf(tableNumber);
     if (index === -1) {
-      this.selectedTables.push(tableNumber);
-      this.updateTableStatus(tableNumber, 'selected');
+      if (this.tables.find(table => table.status === 'available' && table.number === tableNumber)) {
+        this.selectedTables.push(tableNumber);
+        this.updateTableStatus(tableNumber, 'selected');
+      } else {
+        alert('Table is already occupied or unavailable.');
+      }
     } else {
       this.selectedTables.splice(index, 1);
       this.updateTableStatus(tableNumber, 'available');
     }
   }
 
-  updateTableStatus(
-    tableNumber: number,
-    status: 'selected' | 'available' | 'occupied'
-  ) {
-    const table = this.tables.find((t) => t.number === tableNumber);
+
+  updateTableStatus(tableNumber: number, status: 'selected' | 'available' | 'occupied') {
+    const table = this.tables.find(t => t.number === tableNumber);
     if (table) {
       table.status = status;
     }
   }
+
 
   reserve() {
     if (this.selectedTables.length === 0) {
@@ -126,6 +130,7 @@ export class ReservationComponent implements OnInit {
         if (response?.success) {
           alert(`Reservation successful for tables ${this.selectedTables.join(', ')}`);
           this.resetSelections();
+          this.initializeTables(); // Re-fetch tables dynamically
         } else {
           console.warn('Unexpected reservation response:', response);
           alert(response?.msg || 'Reservation failed. Please try again later.');
@@ -137,6 +142,7 @@ export class ReservationComponent implements OnInit {
       },
     });
   }
+
 
   resetSelections() {
     this.selectedTables = [];

@@ -1,21 +1,25 @@
-<div class="reservation-grid">
-  <div class="reservation-header">
-    <h1>Reservation</h1>
-    <p>Click on a table to select it. Selected tables will be highlighted in yellow.</p>
+<div class="disable">
+  <app-navbar></app-navbar>
+  <div class="reservation-grid">
+    <div class="reservation-header">
+      <h1>Reservation</h1>
+      <p>Click on a table to select it. Selected tables will be highlighted in yellow.</p>
+    </div>
+
+    <div class="tables">
+      <app-table *ngFor="let table of tables" [tableNumber]="table.number" [status]="table.status"
+        (tableClick)="onTableSelected(table.number)"></app-table>
+
+    </div>
+
+    <div class="selected-tables">
+      <h3>Tables Selected</h3>
+      <ul>
+        <li *ngFor="let table of selectedTables">Table {{ table }}</li>
+      </ul>
+    </div>
+
+    <button (click)="reserve()">Reserve</button>
   </div>
-
-  <div class="tables">
-    <app-table *ngFor="let table of tables" [tableNumber]="table.number" [status]="table.status"
-      (tableClick)="onTableSelected(table.number)"></app-table>
-
-  </div>
-
-  <div class="selected-tables">
-    <h3>Tables Selected</h3>
-    <ul>
-      <li *ngFor="let table of selectedTables">Table {{ table }}</li>
-    </ul>
-  </div>
-
-  <button (click)="reserve()">Reserve</button>
+  <app-footer></app-footer>
 </div>
