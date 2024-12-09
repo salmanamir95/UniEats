@@ -12,10 +12,10 @@ import { GenericResponse } from 'GenericResponse/generic-response';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
-  orders: OrderDTO[] = []; // Correct type (always initialized to avoid null reference errors)
+  orders: OrderDTO[] = [];
   userId = 1; // Simulated logged-in user ID
 
-  // New order initialization with proper ISO string date serialization
+  // New order initialization
   newOrder: OrderDTO = {
     orderId: 0,
     userId: 0,
@@ -35,7 +35,7 @@ export class OrderComponent implements OnInit {
   }
 
   /**
-   * Load order history for the current user
+   * Loads order history for the current user
    */
   loadOrderHistory(): void {
     this.orderService.getOrdersByUser(this.userId).subscribe({
@@ -43,23 +43,28 @@ export class OrderComponent implements OnInit {
         if (response?.success && response?.data) {
           this.orders = response.data.map(order => ({
             ...order,
-            orderDate: new Date(order.orderDate).toISOString(), // Ensure all dates are properly normalized
+            orderDate: new Date(order.orderDate).toISOString(),
           }));
         } else {
           alert('No order history found or failed to fetch');
         }
       },
       error: (error) => {
-        console.error('Error fetching order history:', error);
+        console.error('Error loading order history:', error);
         alert('Error loading order history');
       },
     });
   }
 
   /**
-   * Submits a new order
+   * Handles the order submission process
    */
   placeOrder(): void {
+    if (!this.newOrder.paymentMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
     this.newOrder.userId = this.userId;
     this.newOrder.orderDate = new Date().toISOString();
     this.newOrder.status = 'Pending';
@@ -75,15 +80,15 @@ export class OrderComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error while placing the order:', error);
-        alert('Something went wrong!');
+        console.error('Error placing order:', error);
+        alert('Something went wrong');
       },
     });
   }
 
   /**
    * Cancels an order
-   * @param orderId - The ID of the order to cancel
+   * @param orderId - ID of the order to cancel
    */
   cancelOrder(orderId: number): void {
     this.orderService.cancelOrder(orderId).subscribe({
@@ -97,7 +102,7 @@ export class OrderComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error canceling order:', error);
-        alert('Something went wrong!');
+        alert('Something went wrong');
       },
     });
   }

@@ -1,103 +1,32 @@
 <div class="checkout-with-card">
-  <div class="div">
-    <div class="overlap">
-      <div class="personal-information">
-        <div class="group">
-          <div class="overlap-group">
-            <div class="div-wrapper">
-              <div class="text-wrapper">Your Name</div>
-            </div>
-            <div class="text-wrapper-2">Personal Information</div>
-            <div class="group-2">
-              <div class="overlap-2">
-                <div class="text-wrapper">Roll Number</div>
-              </div>
-              <div class="overlap-group-2">
-                <div class="text-wrapper-3">Seat Number</div>
-              </div>
-            </div>
-            <img class="vector" src="img/vector-5.svg" />
-          </div>
-        </div>
-      </div>
-      <img class="rectangle" src="img/rectangle-10.svg" />
-      <div class="text-wrapper-4">Phone Number</div>
-      <img class="img" src="img/rectangle-9.svg" />
-      <div class="text-wrapper-5">Email</div>
+  <header class="header">
+    <div class="overlap-header">
+      <img class="user-icon" src="img/user-1.svg" />
+      <h2>Checkout - Card Payment</h2>
     </div>
-    <div class="overlap-3">
-      <img class="item-card" src="img/item-card.png" />
-      <p class="note-type-in-seat">
-        <span class="span">Note:<br /></span>
-        <span class="text-wrapper-6"><br /></span>
-        <span class="text-wrapper-7">Type 0 in Seat Number for pickup</span>
-      </p>
-    </div>
-    <img class="arrow-back" src="img/arrow-back.svg" />
-    <div class="payment-method-card">
-      <div class="ellipse"></div>
-      <div class="group-3">
-        <div class="overlap-group-3">
-          <div class="text-wrapper-8">EXP Date</div>
-        </div>
-        <div class="overlap-4">
-          <div class="text-wrapper-9">CVC</div>
-        </div>
-      </div>
-      <div class="overlap-5">
-        <div class="text-wrapper-10">Cardholder Name</div>
-      </div>
-      <div class="text-wrapper-11">Payment Methods</div>
-      <div class="overlap-6">
-        <div class="text-wrapper-10">Card Number</div>
-        <div class="overlap-7">
-          <div class="ellipse-2"></div>
-          <div class="ellipse-3"></div>
-        </div>
-      </div>
-      <div class="text-wrapper-12">Cash On Delivery</div>
-      <div class="ellipse-4"></div>
-      <div class="text-wrapper-13">Credit or Debit</div>
-      <img class="vector" src="img/vector-8.svg" />
-    </div>
-    <header class="header">
-      <div class="overlap-8">
-        <div class="header-2"></div>
-        <img class="user" src="img/user-1.svg" />
-        <div class="text-wrapper-14">UniEats</div>
-      </div>
-    </header>
-    <footer class="footer">
-      <div class="overlap-9">
-        <div class="text-wrapper-15">UniEats</div>
-        <div class="text-wrapper-16">Important Link</div>
-        <div class="text-wrapper-17">Follow Us</div>
-        <div class="text-wrapper-18">About Us</div>
-        <div class="text-wrapper-19">UniEats</div>
-        <p class="p">© 2024 All Right Reserved</p>
-        <div class="text-wrapper-20">Contact Us</div>
-        <div class="overlap-group-4">
-          <div class="rectangle-2"></div>
-          <img class="akar-icons-twitter" src="img/akar-icons-twitter-fill.svg" />
-        </div>
-        <div class="overlap-10">
-          <div class="ellipse-5"></div>
-          <div class="rectangle-3"></div>
-          <img class="akar-icons-instagram" src="img/akar-icons-instagram-fill.svg" />
-        </div>
-        <div class="overlap-11">
-          <div class="rectangle-2"></div>
-          <img class="cib-tiktok" src="img/cib-tiktok.svg" />
-        </div>
-        <div class="overlap-12">
-          <div class="rectangle-2"></div>
-          <img class="youtube" src="img/youtube.svg" />
-        </div>
-        <div class="overlap-13">
-          <div class="rectangle-2"></div>
-          <img class="facebook" src="img/facebook.svg" />
-        </div>
-      </div>
-    </footer>
+  </header>
+
+  <div class="card-form-container">
+    <label>Cardholder Name
+      <input type="text" [(ngModel)]="cardDetails.cardholderName" required />
+    </label>
+
+    <label>Card Number
+      <input type="text" [(ngModel)]="cardDetails.cardNumber" required />
+    </label>
+
+    <label>Expiration Date
+      <input type="text" [(ngModel)]="cardDetails.expirationDate" placeholder="MM/YY" required />
+    </label>
+
+    <label>CVV
+      <input type="text" [(ngModel)]="cardDetails.cvv" required />
+    </label>
+
+    <button (click)="completeCardPayment()">Submit Payment</button>
   </div>
+
+  <footer class="footer">
+    <p>© 2024 UniEats - All Rights Reserved</p>
+  </footer>
 </div>
