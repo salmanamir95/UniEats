@@ -5,7 +5,8 @@
     <app-menu-item
       [name]="item.name"
       [price]="item.price"
-      [imageUrl]="item.imageUrl">
+      [imageUrl]="item.imageUrl"
+      (addToCart)="addToCart(item)">
     </app-menu-item>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-
+import { Component, Input, NgModule } from '@angular/core';
 import { CartItemDTO } from '../../interfaces/cart-item-dto';
 import { CartService } from '../../services/cart/cart.service';
 
@@ -9,21 +9,24 @@ import { CartService } from '../../services/cart/cart.service';
   selector: 'app-menu-item',
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.css'],
-  imports: [CommonModule,  FormsModule]
+  imports: [CommonModule, RouterModule, FormsModule]
 })
 export class MenuItemComponent {
   @Input() name: string = '';
   @Input() price: number = 0;
   @Input() imageUrl: string = '';
+  @Input() userId: number = 0; // Dynamically passed userId
 
   quantity: number = 1; // Default quantity is 1
-
-  // Assume userId is hardcoded for simplicity; dynamically set this in a real app
-  private userId = 1;
 
   constructor(private cartService: CartService) {}
 
   addToCart() {
+    if (this.quantity < 1 || isNaN(this.quantity)) {
+      alert('Please select a valid quantity!');
+      return;
+    }
+
     const cartItem: CartItemDTO = {
       name: this.name,
       price: this.price,
@@ -33,12 +36,15 @@ export class MenuItemComponent {
     this.cartService.addToCart(this.userId, cartItem).subscribe({
       next: (response) => {
         if (response.success) {
-          console.log('Added to cart successfully!');
+          alert('Added to cart successfully!');
         } else {
-          console.error('Could not add to cart:', response.msg);
+          alert('Could not add to cart: ' + response.msg);
         }
       },
-      error: (error) => console.error('Error adding to cart:', error),
+      error: (error) => {
+        console.error('Error adding to cart:', error);
+        alert('Error adding to cart. Please try again.');
+      }
     });
   }
 }
