@@ -21,3 +21,8 @@
 h2 {
   font-weight: bold;
 }
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
