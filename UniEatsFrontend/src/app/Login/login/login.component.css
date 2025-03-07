@@ -1,11 +1,6 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  
-  padding: 0;
-}
 
 #login-container {
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background: url('/background.jpg') no-repeat center center/cover;
@@ -16,8 +11,13 @@ html, body {
 
 #login-card {
   background: white;
-  width: 350px;
+  width: 400px;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+h2 {
+  font-weight: bold;
 }
