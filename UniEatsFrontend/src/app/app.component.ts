@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PreLoaderComponent } from "./pre-loader/pre-loader/pre-loader.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PreLoaderComponent],
+  imports: [RouterOutlet, PreLoaderComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
