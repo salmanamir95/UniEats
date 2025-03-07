@@ -1,1 +1,14 @@
-<p>login works!</p>
+<div class="container vh-100 d-flex justify-content-center align-items-center" style="background: url('/background.jpg') no-repeat center center/cover;">
+    <div class="card p-4 text-white" style="background: rgba(0, 0, 0, 0.7); width: 350px;">
+      <h2 class="text-center">Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input type="email" class="form-control" formControlName="email" placeholder="Email" required />
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" formControlName="password" placeholder="Password" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="!loginForm.valid">Login</button>
+      </form>
+    </div>
+  </div>
