@@ -1,9 +1,23 @@
-.container {
-    height: 100vh;
-    background: url('assets/background.jpg') no-repeat center center/cover;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
   
-  .card {
-    background: rgba(0, 0, 0, 0.7) !important;
-  }
-  
+  padding: 0;
+}
+
+#login-container {
+  width: 100vw;
+  height: 100vh;
+  background: url('/background.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-card {
+  background: white;
+  width: 350px;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
