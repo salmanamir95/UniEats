@@ -1,0 +1,68 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">UniEats Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Configure Systems</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="container mt-5">
+    <section class="system-settings">
+        <h2>System Settings</h2>
+        <form>
+            <div class="mb-3">
+                <label for="systemName" class="form-label">System Name:</label>
+                <input type="text" class="form-control" id="systemName" name="systemName" required>
+            </div>
+            <div class="mb-3">
+                <label for="timezone" class="form-label">Timezone:</label>
+                <select class="form-select" id="timezone" name="timezone">
+                    <option value="UTC">UTC</option>
+                    <option value="EST">EST</option>
+                    <option value="PST">PST</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </section>
+    <section class="configuration-options mt-5">
+        <h2>Configuration Options</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Security Settings</h5>
+                        <p class="card-text">Configure security options like password policies and access controls.</p>
+                        <button class="btn btn-sm btn-primary">Configure</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Notification Settings</h5>
+                        <p class="card-text">Set up notification preferences for system events.</p>
+                        <button class="btn btn-sm btn-primary">Configure</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
