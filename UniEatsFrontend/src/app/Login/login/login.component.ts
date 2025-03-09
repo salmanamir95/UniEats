@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginServiceService } from '../Services/login-service.service';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginServiceService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -23,43 +24,30 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const formData = this.loginForm.value;
-  
-      // Use bracket notation to access properties
-      const email = formData['email'];
-      const password = formData['password'];
-  
-      // Retrieve users from session storage (mock login service)
-      const users = JSON.parse(sessionStorage.getItem('users') || '[]');
-      const user = users.find((u: any) => u['email'] === email && u['password'] === password);
+      const { email, password } = this.loginForm.value;
+      const user = this.loginService.login(email, password);
   
       if (user) {
-        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
-  
-        // Redirect based on designation
-        switch (user['designation']) {
-          case 'Admin':
-            this.router.navigate(['/admin-dashboard']);
-            break;
-          case 'Student':
-            this.router.navigate(['/student-dashboard']);
-            break;
-          case 'Employee':
-            this.router.navigate(['/employee-dashboard']);
-            break;
-          default:
-            this.router.navigate(['/']);
-        }
+        this.router.navigate([this.getDashboardRoute(user.designation)], { state: { user } }); // ✅ Pass user object
       } else {
-        alert('Invalid email or password!');
+        this.errorMessage = 'Invalid email or password!';
       }
     } else {
-      alert('Please fill out the form correctly.');
+      this.errorMessage = 'Please fill out the form correctly.';
     }
   }
-  
 
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
+
+  getDashboardRoute(designation: string): string {
+    switch (designation.toLowerCase()) { // ✅ Convert to lowercase for consistency
+      case 'admin': return '/admin-dashboard';
+      case 'student': return '/student-dashboard';
+      case 'employee': return '/employee-dashboard';
+      default: return '/login'; // ✅ Redirect to login if designation is unknown
+    }
+  }
+  
 }
