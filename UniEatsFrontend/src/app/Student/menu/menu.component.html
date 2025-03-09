@@ -1,62 +1,74 @@
 <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">UniEats Student</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Order Food</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Check Balance</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">UniEats Student</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/student-dashboard/menu">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/student-dashboard/order-food">Order Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/student-dashboard/check-balance">Check Balance</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
-    <main class="container mt-5">
-        <section class="menu-list">
-            <h2>Available Menu Items</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Chicken Sandwich</h5>
-                            <p class="card-text">Price: $6.99</p>
-                            <p class="card-text">Rating: 4.5/5</p>
-                            <p class="card-text">Comments: Delicious and fresh!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Salad</h5>
-                            <p class="card-text">Price: $4.99</p>
-                            <p class="card-text">Rating: 4.2/5</p>
-                            <p class="card-text">Comments: Fresh ingredients, great taste!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Drink</h5>
-                            <p class="card-text">Price: $1.99</p>
-                            <p class="card-text">Rating: 4.8/5</p>
-                            <p class="card-text">Comments: Refreshing and cold!</p>
-                        </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-5">
+    <section class="menu-list">
+        <h2 class="text-center mb-4">Available Menu Items</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg hover-effect">
+                    <div class="card-body">
+                        <h5 class="card-title">🍗 Chicken Sandwich</h5>
+                        <p class="card-text"><strong>Price:</strong> $6.99</p>
+                        <p class="card-text"><strong>Rating:</strong> ⭐ 4.5/5</p>
+                        <p class="card-text"><strong>Comments:</strong> Delicious and fresh!</p>
+                        <a href="#" class="btn btn-primary">Order Now</a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg hover-effect">
+                    <div class="card-body">
+                        <h5 class="card-title">🥗 Salad</h5>
+                        <p class="card-text"><strong>Price:</strong> $4.99</p>
+                        <p class="card-text"><strong>Rating:</strong> ⭐ 4.2/5</p>
+                        <p class="card-text"><strong>Comments:</strong> Fresh ingredients, great taste!</p>
+                        <a href="#" class="btn btn-primary">Order Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg hover-effect">
+                    <div class="card-body">
+                        <h5 class="card-title">🥤 Drink</h5>
+                        <p class="card-text"><strong>Price:</strong> $1.99</p>
+                        <p class="card-text"><strong>Rating:</strong> ⭐ 4.8/5</p>
+                        <p class="card-text"><strong>Comments:</strong> Refreshing and cold!</p>
+                        <a href="#" class="btn btn-primary">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Custom Styles -->
+<style>
+    .hover-effect:hover {
+        transform: scale(1.05);
+        transition: 0.3s ease-in-out;
+    }
+</style>
