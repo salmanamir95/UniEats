@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-student',
-  imports: [],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './student.component.html',
-  styleUrl: './student.component.css'
+  styleUrls: ['./student.component.css']
 })
 export class StudentComponent {
 user:any;

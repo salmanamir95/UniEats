@@ -1,72 +1,29 @@
-
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">UniEats</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Order Food</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Check Balance</a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">UniEats</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/menu']">Menu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/order-food']">Order Food</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/check-balance']">Check Balance</a>
+        </li>
+      </ul>
     </div>
-  </nav>
-
-  <div class="vh-100 w-100" style="background-color: #f0f0f0 !important;">
-    <!-- Hero Section -->
-  <section class="hero d-flex justify-content-center align-items-center" style="height: 200px; background-color: #f0f0f0;">
-    <h1 class="display-4">Welcome to UniEats!</h1>
-  </section>
-
-  <!-- Features Section -->
-  <section class="container mt-5">
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <h5 class="card-title">View Menu</h5>
-            <p class="card-text">Check out our daily menu and specials.</p>
-            <a href="#" class="btn btn-primary">View Menu</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <h5 class="card-title">Order Food</h5>
-            <p class="card-text">Place your order online and pick it up at your convenience.</p>
-            <a href="#" class="btn btn-primary">Order Now</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <h5 class="card-title">Check Balance</h5>
-            <p class="card-text">View your current account balance and transaction history.</p>
-            <a href="#" class="btn btn-primary">Check Balance</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-    <!-- Footer -->
-    <footer class="text-center mt-5">
-      <p>&copy; 2023 UniEats. All rights reserved.</p>
-    </footer>
-  
   </div>
+</nav>
 
+<router-outlet></router-outlet>
+<footer class="text-center mt-5 bg-black text-white">
+  <p>&copy; 2023 UniEats. All rights reserved.</p>
+</footer>
