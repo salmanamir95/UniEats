@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'student-dashboard', component: StudentComponent},
   {path: 'menu', component: MenuComponent},
   {path: 'order-food', component: OrderFoodComponent },
+  {path: 'check-balance', component: CheckBalanceComponent },
   { path: 'employee-dashboard', component: EmployeeComponent },
   { path: 'admin-dashboard', component: AdminComponent },
   { path: '**', redirectTo: 'login' }

@@ -1,23 +1,21 @@
-<div class="container-fluid vh-100 vw-100">
+<div class="container-fluid vh-100 vw-100 bg-light">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">UniEats Student</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <a class="navbar-brand fw-bold" routerLink="/student-dashboard">🍽 UniEats Student</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" routerLink="/student-dashboard/menu">Menu</a>
+                            <a class="nav-link" routerLink="/student-dashboard/menu" routerLinkActive="active">Menu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/student-dashboard/order-food">Order Food</a>
+                            <a class="nav-link" routerLink="/student-dashboard/order-food" routerLinkActive="active">Order Food</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/student-dashboard/check-balance">Check Balance</a>
+                            <a class="nav-link" routerLink="/student-dashboard/check-balance" routerLinkActive="active">Check Balance</a>
                         </li>
                     </ul>
                 </div>
@@ -25,46 +23,52 @@
         </nav>
     </header>
     
+    <!-- Hero Section -->
+    <section class="text-center py-5 bg-dark text-white">
+        <h1 class="fw-bold">Welcome to UniEats!</h1>
+        <p class="lead">Explore delicious meals prepared just for you. Order now and enjoy fresh food anytime!</p>
+    </section>
+    
     <main class="container mt-5">
         <section class="menu-list">
-            <h2 class="text-center mb-4">Available Menu Items</h2>
+            <h2 class="text-center mb-4 fw-bold">🍴 Available Menu Items</h2>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-lg hover-effect">
-                        <div class="card-body">
-                            <h5 class="card-title">🍗 Chicken Sandwich</h5>
-                            <p class="card-text"><strong>Price:</strong> $6.99</p>
-                            <p class="card-text"><strong>Rating:</strong> ⭐ 4.5/5</p>
-                            <p class="card-text"><strong>Comments:</strong> Delicious and fresh!</p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-lg hover-effect">
-                        <div class="card-body">
-                            <h5 class="card-title">🥗 Salad</h5>
-                            <p class="card-text"><strong>Price:</strong> $4.99</p>
-                            <p class="card-text"><strong>Rating:</strong> ⭐ 4.2/5</p>
-                            <p class="card-text"><strong>Comments:</strong> Fresh ingredients, great taste!</p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-lg hover-effect">
-                        <div class="card-body">
-                            <h5 class="card-title">🥤 Drink</h5>
-                            <p class="card-text"><strong>Price:</strong> $1.99</p>
-                            <p class="card-text"><strong>Rating:</strong> ⭐ 4.8/5</p>
-                            <p class="card-text"><strong>Comments:</strong> Refreshing and cold!</p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
+                <div class="col-md-4 mb-4" *ngFor="let food of foods; trackBy: trackFoodById">
+                    <div class="card shadow-lg border-0 rounded-4 hover-effect">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ food.name }}</h5>
+                            <p class="card-text"><strong>Price:</strong> ${{ food.price }}</p>
+                            <p class="card-text">
+                                <strong>Rating:</strong> 
+                                ⭐ {{ calculateAverageRating(food.reviews) }}/5
+                            </p>
+                            <p class="card-text text-muted"><strong>Reviews:</strong></p>
+                            <ul class="list-group list-group-flush" *ngIf="food.reviews?.length">
+                                <li class="list-group-item" *ngFor="let review of food.reviews; trackBy: trackReviewById">
+                                    <strong>{{ review.user }}</strong>: {{ review.comment }} (⭐ {{ review.rating }})
+                                </li>
+                            </ul>
+                            <div class="mt-3">
+                                <input type="text" 
+                                       class="form-control mb-2" 
+                                       [(ngModel)]="newReview[food.id].user" 
+                                       placeholder="Your Name"
+                                       required>
+                                <textarea class="form-control mb-2" 
+                                          [(ngModel)]="newReview[food.id].comment" 
+                                          placeholder="Add a review..."
+                                          required></textarea>
+                                <button class="btn btn-success rounded-pill" 
+                                        (click)="addReview(food.id)"
+                                        [disabled]="!isReviewValid(food.id)">
+                                    Submit Review
+                                </button>
+                            </div>
+                            <button class="btn btn-primary rounded-pill mt-3">Order Now</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    
-    
 </div>
